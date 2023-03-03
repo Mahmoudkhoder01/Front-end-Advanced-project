@@ -1,0 +1,47 @@
+.topbar {
+    padding-left: 22rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search {
+    padding: 11px 110px 11px 30px;
+    border: none;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: left;
+}
+
+.search:focus {
+    outline: none;
+}
+
+.admin{
+    display: flex;
+    align-items: center;
+    margin-right: 4rem;
+}
+
+.admin h4{
+    margin: 0;
+}
+
+.end{
+    display: flex;
+    flex-direction: column;
+}
+
+.logOut{
+    align-self: end;
+    cursor: pointer;
+}
+
+
+
