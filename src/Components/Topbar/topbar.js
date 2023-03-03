@@ -19,11 +19,11 @@ function Topbar() {
       </div>
       <div className={classes.admin}>
         <div>
-          <BiUserCircle size={50} className={classes.userLogo} />
+          <BiUserCircle size={60} className={classes.userLogo} />
         </div>
         <div className={classes.end}>
           <h4>Mahmoud khodor</h4>
-          <HiOutlineLogout size={25} className={classes.logOut} />
+          <HiOutlineLogout size={30} className={classes.logOut} />
         </div>
       </div>
     </div>
