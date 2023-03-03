@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 // Import Css Files
 import classes from "./nav.module.css";
-import  "./active.css";
+import "./active.css";
 
 // Impport Icons
 import { MdOutlineClass } from "react-icons/md";
@@ -24,35 +24,38 @@ function Sidebar() {
             alt="SVG Logo"
           />
         </div>
+
         <div className={classes.bar}>
           <NavLink to={"/"}>
-            <RxDashboard />
-            Dashboard
+            <RxDashboard className={classes.icons} size={25} />
+            <span>Dashboard</span>
           </NavLink>
           <NavLink to={"/classroom"}>
-            <MdOutlineClass /> ClassRoom
+            <MdOutlineClass className={classes.icons} size={25} />
+            <span>ClassRoom</span>
           </NavLink>
           <NavLink to={"/sections"}>
-            <HiTableCells />
-            Sections
+            <HiTableCells className={classes.icons} size={25} />
+            <span>Sections</span>
           </NavLink>
           <NavLink to={"/student"}>
-            <BiUser />
-            Students
+            <BiUser className={classes.icons} size={25} />
+            <span>Students</span>
           </NavLink>
           <NavLink to={"/attendance"}>
-            <FaUserCheck />
-            Attendance
+            <FaUserCheck className={classes.icons} size={25} />
+            <span>Attendance</span>
           </NavLink>
           <NavLink to={"/admin"}>
-            <FaUserTie />
-            Admin
+            <FaUserTie className={classes.icons} size={25} />
+            <span>Admins</span>
           </NavLink>
         </div>
+
         <div className={classes.setting}>
           <NavLink to={"/settings"}>
-            <FiSettings />
-            Settings
+            <FiSettings className={classes.icons} size={25} />
+            <span>Settings</span>
           </NavLink>
         </div>
       </nav>
