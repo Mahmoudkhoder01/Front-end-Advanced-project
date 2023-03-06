@@ -8,6 +8,7 @@ function Card() {
         <BiUserCircle size={30} />
         Number of Admins
       </h2>
+      <span>18</span>
     </div>
   );
 }

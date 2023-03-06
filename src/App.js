@@ -11,7 +11,6 @@ import Attendance from "./Pages/Attendance/attendance";
 import Admin from "./Pages/Admins/admin";
 import Settings from "./Pages/Settings/settings";
 import Topbar from "./Components/Topbar/topbar";
-import Card from "./Components/Card/card";
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
       <Sidebar />
       <Topbar />
       <Routes>
-        <Route exact path="/" element={<Card />} />
+        <Route exact path="/" element={<Dashboard />} />
         <Route path="/classroom" element={<ClassRoom />} />
         <Route path="/sections" element={<Sections />} />
         <Route path="/student" element={<Students />} />

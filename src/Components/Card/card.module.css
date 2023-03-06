@@ -1,5 +1,5 @@
 .card{
-    margin-left: 23rem;
+    margin-right: 3rem;
     width: 280px;
     height: 180px;
     border-radius: 15px;
@@ -12,4 +12,20 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    padding-bottom: 2rem;
+}
+
+.card span{
+    position: relative;
+    font-size: 50px;
+}
+
+.card span::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    width: 50px;
+    height: 2px;
 }
