@@ -15,11 +15,6 @@ import { FiSettings } from "react-icons/fi";
 
 function Sidebar() {
 
-
-  const handleClick = (event) => {
-    
-  }
-
   return (
     <Fragment>
       <nav>
@@ -33,36 +28,39 @@ function Sidebar() {
 
         <div className={classes.bar}>
           <NavLink to={"/"}>
-            <RxDashboard
-              className={classes.icons}
-              size={25}
-            />
-            <span className={classes.wave}></span>
+            <RxDashboard className={classes.icons} size={25} />
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Dashboard</span>
           </NavLink>
           <NavLink to={"/classroom"}>
             <MdOutlineClass className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>ClassRoom</span>
           </NavLink>
           <NavLink to={"/sections"}>
             <HiTableCells className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Sections</span>
           </NavLink>
           <NavLink to={"/student"}>
             <BiUser className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Students</span>
           </NavLink>
           <NavLink to={"/attendance"}>
             <FaUserCheck className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Attendance</span>
           </NavLink>
           <NavLink to={"/admin"}>
             <FaUserTie className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Admins</span>
           </NavLink>
         </div>
@@ -70,7 +68,8 @@ function Sidebar() {
         <div className={classes.setting}>
           <NavLink to={"/settings"}>
             <FiSettings className={classes.icons} size={25} />
-            <span className={classes.wave}></span>
+            <b className={classes.wave}></b>
+            <u className={classes.wave2}></u>
             <span>Settings</span>
           </NavLink>
         </div>
