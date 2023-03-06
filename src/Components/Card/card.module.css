@@ -1,0 +1,15 @@
+.card{
+    margin-left: 23rem;
+    width: 280px;
+    height: 180px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: 1px solid #c7c3c3;
+    padding: 10px 15px;
+}
+
+.card h2{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

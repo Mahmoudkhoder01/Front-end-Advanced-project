@@ -1,7 +1,8 @@
 nav{
     width: 20rem;
     height: 100vh;
-    border-right: 5px solid #858181;
+    /* border-right: 5px solid #858181; */
+    background-color: #5541D7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +14,7 @@ nav{
 
 nav a{
     text-decoration: none;
-    color: black;
+    color: white;
     height: 40px;
     margin-top: 1rem;
     padding: 10px;

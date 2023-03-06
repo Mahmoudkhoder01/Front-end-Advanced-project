@@ -1,10 +1,8 @@
-import { Fragment } from "react";
-import classes from './dashboard.module.css'
+import classes from "./dashboard.module.css";
 
 function Dashboard() {
-  return( <Fragment>
-  </Fragment>);
+  return <div>
+  </div>;
 }
 
 export default Dashboard;
-
