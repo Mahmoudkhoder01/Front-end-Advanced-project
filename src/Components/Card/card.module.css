@@ -1,0 +1,46 @@
+.card {
+    margin-right: 3rem;
+    width: 280px;
+    height: 180px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: 1px solid #c7c3c3;
+    padding: 10px 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-bottom: 2rem;
+}
+
+.card span, p{
+    position: relative;
+    font-size: 50px;
+}
+
+.card p{
+    margin-top: 0;
+    width: fit-content;
+}
+
+.card span::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    width: 50px;
+    height: 2px;
+}
+.card p::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    width: 30px;
+    height: 2px;
+}
