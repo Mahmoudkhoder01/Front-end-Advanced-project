@@ -9,6 +9,8 @@
     width: 111%;
     color: black;
     position: relative;
+    display: flex;
+    justify-content: flex-start;
 }
 
 nav .active b {
@@ -50,4 +52,27 @@ nav .active u::before {
     height: 100%;
     background-color: #5541D7;
     border-top-right-radius: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        width: 70px;
+        overflow-x: hidden;
+    }
+
+    .active {
+        width: 326%;
+        display: flex;
+    }
+
+    nav .active b::before,
+    nav .active u::before {
+        width: 39%;
+    }
+
+    .logo {
+        width: 80px;
+        margin-left: 8px;
+        height: 115px;
+    }
 }
