@@ -21,7 +21,7 @@ function Card(props) {
         Number of {props.name}
       </h2>
       {props.number.length === 1 ? (
-        <p>{props.number}</p>
+        <p className={classes.Cardp}>{props.number}</p>
       ) : (
         <span>{props.number}</span>
       )}
