@@ -1,10 +1,78 @@
-.active{
-    background-color: #d8d8d8;
+.active {
+    background-color: #fff;
     font-weight: bold;
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
-    width: 90%;
+    width: 112%;
+    color: black;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+}
+
+nav .active b {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+}
+
+nav .active u {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+}
+
+
+nav .active b::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    width: 99%;
+    height: 100%;
+    background-color: #5541D7;
+    border-bottom-right-radius: 20px;
+}
+
+nav .active u::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    width: 99%;
+    height: 100%;
+    background-color: #5541D7;
+    border-top-right-radius: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        width: 70px;
+        overflow-x: hidden;
+    }
+
+    .active {
+        width: 326%;
+        display: flex;
+    }
+
+    nav .active b::before,
+    nav .active u::before {
+        width: 39%;
+    }
+
+    .logo {
+        width: 80px;
+        margin-left: 8px;
+        height: 115px;
+    }
 }

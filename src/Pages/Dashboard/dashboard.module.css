@@ -1,0 +1,10 @@
+.dashboard {
+    width: 94%;
+    margin: 50px auto;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}

@@ -1,19 +1,17 @@
-nav{
+nav {
     width: 20rem;
     height: 100vh;
-    border-right: 5px solid #858181;
+    background-color: #5541D7;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
-    top: 0;
     overflow: hidden;
 }
 
-nav a{
+nav a {
     text-decoration: none;
-    color: black;
+    color: white;
     height: 40px;
     margin-top: 1rem;
     padding: 10px;
@@ -23,17 +21,18 @@ nav a{
     justify-content: center;
 }
 
-nav a:hover{
-    text-decoration: underline;
+nav img{
+    filter: invert();
+    -webkit-filter: invert();
 }
 
-.setting{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
+.setting {
+    width: 80%;
+    display: flex;
+    align-items: center;
 }
 
-.bar{
+.bar {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,22 +41,35 @@ nav a:hover{
     margin-bottom: 7rem;
 }
 
-.bar, .setting{
-
-}
-
-.logo{
+.logo {
     margin-top: 15px;
     width: 200px;
     height: 200px;
 }
 
-.setting{
+.setting {
     margin-bottom: 10px;
     display: flex;
     align-items: flex-start;
 }
 
-nav span{
+nav span {
     padding-left: 2rem;
+}
+
+.logOut{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+
+@media screen and (max-width: 768px) {
+    .logo {
+        width: 80px;
+        margin-left: 8px;
+        height: 115px;
+    }
 }

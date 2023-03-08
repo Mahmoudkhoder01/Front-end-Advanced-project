@@ -12,6 +12,8 @@ import { HiTableCells } from "react-icons/hi2";
 import { BiUser } from "react-icons/bi";
 import { FaUserCheck, FaUserTie } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
+import { HiOutlineLogout } from "react-icons/hi";
+
 
 function Sidebar() {
   return (
@@ -28,34 +30,54 @@ function Sidebar() {
         <div className={classes.bar}>
           <NavLink to={"/"}>
             <RxDashboard className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>Dashboard</span>
           </NavLink>
           <NavLink to={"/classroom"}>
             <MdOutlineClass className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>ClassRoom</span>
           </NavLink>
           <NavLink to={"/sections"}>
             <HiTableCells className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>Sections</span>
           </NavLink>
           <NavLink to={"/student"}>
             <BiUser className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>Students</span>
           </NavLink>
           <NavLink to={"/attendance"}>
             <FaUserCheck className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>Attendance</span>
           </NavLink>
           <NavLink to={"/admin"}>
             <FaUserTie className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
             <span>Admins</span>
+          </NavLink>
+          <NavLink to={"/settings"}>
+            <FiSettings className={classes.icons} size={25} />
+            <b></b>
+            <u></u>
+            <span>Settings</span>
           </NavLink>
         </div>
 
         <div className={classes.setting}>
-          <NavLink to={"/settings"}>
-            <FiSettings className={classes.icons} size={25} />
-            <span>Settings</span>
+          {/* <HiOutlineLogout size={30} className={classes.logOut} />
+          <a href="s">Log Out</a> */}
+          <NavLink to={"7"}>
+          <HiOutlineLogout size={30} className={classes.logOut}/>
+            <span>Logout</span>
           </NavLink>
         </div>
       </nav>

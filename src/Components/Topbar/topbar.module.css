@@ -1,14 +1,15 @@
 .topbar {
-    padding-left: 22rem;
-    margin-top: 1rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    position: absolute;
+    top: 1rem;
+    right: 0;
 }
 
 .search {
     padding: 11px 110px 11px 30px;
     border: none;
+    border: 2px solid;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;

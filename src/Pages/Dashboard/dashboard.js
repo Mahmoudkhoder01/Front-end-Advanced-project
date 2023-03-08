@@ -1,10 +1,19 @@
-import { Fragment } from "react";
-import classes from './dashboard.module.css'
+import Card from "../../Components/Card/card";
+import Chart from "../../Components/Chart/chart";
+import classes from "./dashboard.module.css";
 
 function Dashboard() {
-  return( <Fragment>
-  </Fragment>);
+  return (
+    <div className={classes.dashboard}>
+      <div className={classes.cards}>
+        <Card name={"Admins"} number={"18"} />
+        <Card name={"Classes"} number={"7"} />
+        <Card name={"Sections"} number={"12"} />
+        <Card name={"Students"} number={"47"} />
+      </div>
+        <Chart />
+    </div>
+  );
 }
 
 export default Dashboard;
-
