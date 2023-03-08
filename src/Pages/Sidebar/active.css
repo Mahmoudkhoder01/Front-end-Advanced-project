@@ -6,7 +6,7 @@
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
-    width: 111%;
+    width: 112%;
     color: black;
     position: relative;
     display: flex;
@@ -37,7 +37,7 @@ nav .active b::before {
     position: absolute;
     top: 0;
     left: -1rem;
-    width: 100%;
+    width: 99%;
     height: 100%;
     background-color: #5541D7;
     border-bottom-right-radius: 20px;
@@ -48,7 +48,7 @@ nav .active u::before {
     position: absolute;
     top: 0;
     left: -1rem;
-    width: 100%;
+    width: 99%;
     height: 100%;
     background-color: #5541D7;
     border-top-right-radius: 20px;

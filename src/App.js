@@ -14,19 +14,23 @@ import Topbar from "./Components/Topbar/topbar";
 
 function App() {
   return (
-    <>
-      <Sidebar />
-      <Topbar />
-      <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-        <Route path="/classroom" element={<ClassRoom />} />
-        <Route path="/sections" element={<Sections />} />
-        <Route path="/student" element={<Students />} />
-        <Route path="/attendance" element={<Attendance />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/setting" element={<Settings />} />
-      </Routes>
-    </>
+    <div className="App">
+      <div className="App-sidebar">
+        <Sidebar />
+        <Topbar />
+      </div>
+      <div className="App-container">
+        <Routes>
+          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/classroom" element={<ClassRoom />} />
+          <Route path="/sections" element={<Sections />} />
+          <Route path="/student" element={<Students />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/setting" element={<Settings />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import classes from './chart.module.css'
 
 const data = [
   {
@@ -90,8 +91,9 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <ResponsiveContainer width="100%" height="100%">
-        <div style={{ marginTop: "5rem" }}>
+      <div className={classes.chart}>
+      <ResponsiveContainer >
+        <div>
           <LineChart
             width={1500}
             height={500}
@@ -119,6 +121,7 @@ export default class Example extends PureComponent {
           </LineChart>
         </div>
       </ResponsiveContainer>
+      </div>
     );
   }
 }
