@@ -31,7 +31,7 @@ export default function () {
 
   return (
     <>
-      <div className={classes.studentCard}>
+      <div className={classes.studentCard}> 
         <div>
           <img
             className={classes.studentAvatar}
