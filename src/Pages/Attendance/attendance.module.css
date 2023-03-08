@@ -1,0 +1,22 @@
+.container {
+    position: absolute;
+    top: 100px;
+    left: 400px;
+    width: calc(90% - 300px);
+    margin-left: 20px;
+    background-color: rgb(183, 221, 255);
+}
+@media(max-width:900px){
+    .container{width:calc(50% - 300px);}
+}
+.Table {
+    width: 100%;
+}
+.Tablecell {
+    padding: 12px;
+}
+.save{
+    position: absolute;
+    left:75%;
+    bottom:10px;
+}
