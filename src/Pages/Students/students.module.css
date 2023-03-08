@@ -1,0 +1,27 @@
+.students{
+    margin-left:25rem;
+    margin-top:100px;
+    max-width: 78rem;
+}
+/* .addStudentBtn{
+    display: block;
+    margin-left:60%;
+    float:right;
+    padding:10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-bottom:30px;
+} */
+.studentGrid{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.header{
+    display:flex;
+    justify-content: space-between;
+}
+.dropdowns{
+    display:flex;
+    gap:10px
+}
