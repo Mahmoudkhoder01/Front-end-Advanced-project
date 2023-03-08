@@ -10,8 +10,8 @@ function Dashboard() {
         <Card name={"Classes"} number={"7"} />
         <Card name={"Sections"} number={"12"} />
         <Card name={"Students"} number={"47"} />
-        <Chart />
       </div>
+        <Chart />
     </div>
   );
 }

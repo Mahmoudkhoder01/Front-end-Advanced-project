@@ -1,0 +1,7 @@
+.adminPage{
+        width: 94%;
+        margin: 50px auto;
+        display: flex;
+        gap: 4rem;
+}
+
