@@ -16,12 +16,12 @@
     padding-bottom: 2rem;
 }
 
-.cardSpan, p{
+.cardSpan, .pCard{
     position: relative;
     font-size: 50px;
 }
 
-.card p{
+.pCard{
     margin-top: 0;
     width: fit-content;
 }
@@ -35,7 +35,7 @@
     width: 50px;
     height: 2px;
 }
-.card p::after {
+.pCard::after {
     content: '';
     position: absolute;
     bottom: 0;
