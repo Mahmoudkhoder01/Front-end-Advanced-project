@@ -23,7 +23,7 @@ function Card(props) {
       {props.number.length === 1 ? (
         <p>{props.number}</p>
       ) : (
-        <span>{props.number}</span>
+        <span className={classes.cardSpan}>{props.number}</span>
       )}
     </div>
   );
