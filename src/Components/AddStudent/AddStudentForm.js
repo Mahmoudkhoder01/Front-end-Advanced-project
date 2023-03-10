@@ -51,8 +51,8 @@ export default function AddStudentForm() {
     }
   }, [selectedImage]);
 
-  function handleRemove(){
-    setImageUrl("")
+  function handleRemove() {
+    setImageUrl("");
   }
 
   return (
