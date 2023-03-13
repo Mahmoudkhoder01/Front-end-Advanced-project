@@ -1,0 +1,35 @@
+#root
+  > div
+  > div.App-container
+  > div
+  > div
+  > div.MuiDataGrid-main.css-204u17-MuiDataGrid-main
+  > div.MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders {
+  background-color: #5541d7 !important;
+  color: white !important;
+  padding: 2.1rem;
+}
+
+
+
+#root
+  > div
+  > div.App-container
+  > div
+  > div
+  > div.MuiDataGrid-main.css-204u17-MuiDataGrid-main
+  > div.MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor.css-1iyq7zh-MuiDataGrid-columnHeaders
+  > div
+  > div
+  > div:nth-child(1)
+  > div.MuiDataGrid-columnHeaderDraggableContainer
+  > div.MuiDataGrid-columnHeaderTitleContainer
+  > div.MuiDataGrid-columnHeaderTitleContainerContent
+  > div {
+  font-size: larger;
+  font-weight: bolder;
+  margin-left: 0.5rem;
+  font-size: 1.7rem;
+ 
+}
+
