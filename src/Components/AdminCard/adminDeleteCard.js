@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+import { Grid } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -18,16 +20,29 @@ const style = {
   p: 4,
 };
 
-export default function AdminDeleteCard() {
+export default function AdminDeleteCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleDelete = (event) => {
+    event.preventDefault();
+    axios
+      .delete(`http://localhost:8000/api/auth/delete/${props.rowId}`)
+      .then((response) => {
+        console.log(response);
+        setOpen(false);
+        // fetchData();
+      })
+      .catch((error) => {
+        console.log("Error editing admin", error);
+      });
+  };
   return (
     <div>
-        <IconButton onClick={handleOpen}>
-          <DeleteIcon />
-        </IconButton>
+      <IconButton onClick={handleOpen}>
+        <DeleteIcon />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -39,7 +54,30 @@ export default function AdminDeleteCard() {
             Delete Admin
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleDelete}
+                  style={{ width: "100%" }}
+                >
+                  Yes
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  style={{ width: "100%" }}
+                  onClick={() => setOpen(false)}
+                >
+                  No
+                </Button>
+              </Grid>
+            </Grid>
           </Typography>
         </Box>
       </Modal>

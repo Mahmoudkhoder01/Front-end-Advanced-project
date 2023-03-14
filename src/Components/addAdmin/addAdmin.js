@@ -8,15 +8,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import classes from "../AddStudent/AddStudentForm.module.css";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import { MdCameraEnhance } from "react-icons/md";
-import { MdDeleteOutline } from "react-icons/md";
-import Stack from "@mui/material/Stack";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import Loading from "../Loading/loading";
 
 const style = {
   position: "absolute",
@@ -35,65 +29,62 @@ export default function AddAdminForm() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [admin, setAdmin] = useState({
     name: "",
     email: "",
     password: "",
-  })
+  });
+
   useEffect(() => {
-    handleSubmit();
+    fetchData();
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // const form = event.target;
-    // const name = form.name.value;
-    // const email = form.email.value;
-    // const password = form.password.value;
+  const fetchData = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/register", {
-        name: admin.name,
-        email: admin.email,
-        password: admin.password,
-      }).then((response)=>{
-        setAdmin({
-          name: "",
-          email: "",
-          password: "",
-        })
-      });
-      setOpen(false)
-      setData(response.data);
+      const response = await axios.get("http://localhost:8000/api/user");
+      setData(response.data.message);
+      setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
-  // axios
-  //       .post(
-  //         "http://localhost:8000/api/auth/section",
-  //         {
-  //           name: section.name,
-  //           content: section.content,
-  //           capacity: section.capacity,
-  //           course_id: section.course_id,
-  //         },
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setData([...data, response.data]);
-  //         setSection({
-  //           name: "",
-  //           content: "",
-  //           capacity: "",
-  //           course_id:""
-  //         });
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setAdmin((prevState) => ({ ...prevState, [name]: value }));
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:8000/api/auth/register", {
+        name: admin.name,
+        email: admin.email,
+        password: admin.password,
+      })
+      .then((response) => {
+        setAdmin({
+          name: "",
+          email: "",
+          password: "",
+        });
+        console.log("added succesffully");
+        setOpen(false);
+        // window.location.reload();
+        fetchData();
+      })
+      .catch((error) => {
+        console.log("Error adding admin", error);
+      });
+  };
 
   return (
-    <div style={{ marginTop: "4rem", transform: "translateX(88rem)" }}>
-      <button className={classes.addStudentBtn} onClick={handleOpen}>
+    <div style={{ marginTop: "4rem" }}>
+      <button
+        className={classes.addStudentBtn}
+        style={{ transform: "translateX(88rem)" }}
+        onClick={handleOpen}
+      >
         <FiPlus />
         Add Admin
       </button>
@@ -113,7 +104,9 @@ export default function AddAdminForm() {
                 <TextField
                   placeholder="Enter admin name"
                   name="name"
+                  value={admin.name}
                   label="Name"
+                  onChange={handleFormChange}
                   variant="outlined"
                   fullWidth
                   required
@@ -123,9 +116,11 @@ export default function AddAdminForm() {
                 <TextField
                   type="email"
                   name="email"
+                  value={admin.email}
                   placeholder="Enter admin email"
                   label="Email"
                   variant="outlined"
+                  onChange={handleFormChange}
                   fullWidth
                   required
                 />
@@ -134,8 +129,10 @@ export default function AddAdminForm() {
                 <TextField
                   type="password"
                   name="password"
+                  value={admin.password}
                   placeholder="Enter admin password"
                   label="Password"
+                  onChange={handleFormChange}
                   variant="outlined"
                   fullWidth
                   required

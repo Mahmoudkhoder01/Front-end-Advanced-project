@@ -7,12 +7,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { MenuItem, Select } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import Classes from "./admin.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -40,28 +34,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(id, name,email, craeted_at, amount, updated_at) {
-  return {
-    id,
-    name,
-    email,
-    craeted_at,
-    amount,
-    updated_at,
-  };
-}
-
 const rowsData = [];
-const filterOptions = [
-  { label: "All", value: "all" },
-  { label: "Incomes", value: "inc" },
-  { label: "Expenses", value: "exp" },
-];
-
 const FixedTables = () => {
   const [filterOption, setFilterOption] = React.useState("all");
   const [sortBy, setSortBy] = React.useState("id");
   const [rows, setRows] = React.useState([...rowsData]);
+  const [open, setOpen] = React.useState(false);
+
+  const [admin, setAdmin] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   // const [rows, setRows] = React.useState([...rowsDataFix])
   const handleFilterChange = (event) => {
     setFilterOption(event.target.value);
@@ -71,13 +55,13 @@ const FixedTables = () => {
     setSortBy(event.target.value);
   };
 
-  const handleEditRow = (id) => {
-    const index = rows.findIndex((row) => row.id === id);
-    if (index !== -1) {
-      const rowToEdit = rows[index];
-      console.log(`Editing row with id ${id}:`, rowToEdit);
-    }
-  };
+  // const handleEditRow = (id) => {
+  //   const index = rows.findIndex((row) => row.id === id);
+  //   if (index !== -1) {
+  //     const rowToEdit = rows[index];
+  //     console.log(`Editing row with id ${id}:`, rowToEdit);
+  //   }
+  // };
 
   const handleDeleteRow = (id) => {
     const index = rows.findIndex((row) => row.id === id);
@@ -122,51 +106,97 @@ const FixedTables = () => {
     }
   };
 
+  // const handleEdit = (event, id) => {
+  //   event.preventDefault();
+  //   axios
+  //     .post(`http://localhost:8000/api/auth/edit/${id}`, {
+  //       _method: "patch",
+  //       name: admin.name,
+  //       email: admin.email,
+  //       password: admin.password,
+  //     })
+  //     .then(() => {
+  //       setOpen(false);
+  //       fetchData();
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error editing admin", error);
+  //     });
+  // };
+
+  const handleEdit = (event, id, name, email, password) => {
+    event.preventDefault();
+
+    axios
+      .post(`http://localhost:8000/api/auth/edit/${id}`, {
+        name,
+        email,
+        password,
+        _method: "patch",
+      })
+      .then((response) => {
+        console.log(response);
+        setOpen(false);
+        // window.location.reload();
+        // fetchData();
+        console.log("added succesffully");
+      })
+      .catch((error) => {
+        console.log("Error adding admin", error);
+      });
+  };
   return (
     <>
       {isLoading ? (
         <>
-        <AddAdminForm/>
-        <TableContainer
-          className={Classes.adminPage}
-          component={Paper}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
-        >
-          <Table>
-            <TableHead>Admins</TableHead>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>ID</StyledTableCell>
-                <StyledTableCell>Name</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
-                <StyledTableCell>Created At</StyledTableCell>
-                <StyledTableCell>Updated At</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.id}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.name}</StyledTableCell>
-                  <StyledTableCell>{row.email}</StyledTableCell>
-                  <StyledTableCell>{row.created_at}</StyledTableCell>
-                  <StyledTableCell>{row.updated_at}</StyledTableCell>
-                  <StyledTableCell style={{display: "flex"}}>
-                    <AdminEditCard onClick={() => handleEditRow(row.id)}/>
-                    <AdminDeleteCard onClick={() => handleDeleteRow(row.id)}/>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+          <AddAdminForm />
+          <TableContainer
+            className={Classes.adminPage}
+            component={Paper}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 10, page: 0 },
+              },
+            }}
+          >
+            <Table>
+              <TableHead>Admins</TableHead>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>ID</StyledTableCell>
+                  <StyledTableCell>NAME</StyledTableCell>
+                  <StyledTableCell>EMAIL</StyledTableCell>
+                  <StyledTableCell>CRAETED AT</StyledTableCell>
+                  <StyledTableCell>UPDATET AT</StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.id}
+                    </StyledTableCell>
+                    <StyledTableCell>{row.name}</StyledTableCell>
+                    <StyledTableCell>{row.email}</StyledTableCell>
+                    <StyledTableCell>{row.created_at}</StyledTableCell>
+                    <StyledTableCell>{row.updated_at}</StyledTableCell>
+                    <StyledTableCell style={{ display: "flex" }}>
+                      <AdminEditCard
+                        adminValue={row.name}
+                        emailValue={row.email}
+                        rowId={row.id}
+                      />
+                      <AdminDeleteCard
+                        onClick={() => handleDeleteRow(row.id)}
+                        rowId={row.id}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </>
       ) : (
         <Loading />
