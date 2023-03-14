@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
+import dayjs from "dayjs";
+
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
@@ -13,6 +16,10 @@ import IconButton from "@mui/material/IconButton";
 import { MdCameraEnhance } from "react-icons/md";
 import { MdClear } from "react-icons/md";
 import Stack from "@mui/material/Stack";
+
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -53,15 +60,43 @@ export default function AddStudentForm(props) {
   const classNameRef = useRef(null);
   const sectionNameRef = useRef(null);
   const dobRef = useRef(null);
+
+  const locale = "en-US"; // or your preferred locale
+  const dateAdapter = new AdapterDayjs({ locale });
   //const imageRef = useRef(null);
 
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const currentDate = new Date();
+  const enrollmentDate = currentDate.toISOString().slice(0, 10);
+  console.log(enrollmentDate);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDateFormat, setSelectedDateFormat] = useState(null);
+
+  const handleDateChange = (date) => {
+    // const inputDate = date.$d.toLocaleDateString("en-US", {
+    //   year: "numeric",
+    //   month: "numeric",
+    //   day: "numeric",
+    // });
+    // const [month, day, year] = inputDate.split("/");
+    // const outputDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
+    //   2,
+    //   "0"
+    // )}`;
+    setSelectedDate(date);
+    const originalDate = date.$d;
+    console.log(originalDate);
+    const transformedDate = originalDate.toISOString().slice(0, 10);
+    console.log(transformedDate);
+    setSelectedDateFormat(transformedDate);
+    console.log(selectedDateFormat);
+  };
 
   const handleFileInputChange = (event) => {
     setSelectedFile(event.target.files[0]);
     // do something with the selected file
   };
-
 
   useEffect(() => {
     if (selectedImage) {
@@ -83,21 +118,19 @@ export default function AddStudentForm(props) {
     const phone = phoneRef.current.value;
     // const className = classNameRef.current.value;
     // const sectionName = sectionNameRef.current.value;
-    const dateOfBirth = dobRef.current.value; // assuming the DatePicker sets the value as a string
+    // const dateOfBirth = dobRef.current.value; // assuming the DatePicker sets the value as a string
     const imageFile = selectedImage;
+    let newStudent = new FormData();
+    newStudent.append("first_name", firstName);
+    newStudent.append("last_name", lastName);
+    newStudent.append("email", email);
+    newStudent.append("phone_number", phone);
+    newStudent.append("section_id", props.selectedSectionId);
+    newStudent.append("birth_date", selectedDateFormat);
+    newStudent.append("enrollment_date", enrollmentDate);
+    newStudent.append("image", selectedFile);
 
-    // create a new student object with the input values
-    const newStudent = {
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      phone_number: phone,
-      section_id: props.selectedSectionId,
-      birth_date: "20-3-2023",
-      image: selectedFile,
-      enrollment_date: "20-3-2023",
-    };
-    console.log(newStudent);
+    console.log("Frontend", newStudent.entries());
     handleAddStudent(newStudent);
   }
 
@@ -181,13 +214,29 @@ export default function AddStudentForm(props) {
               </Grid>
               <Grid xs={12} sm={12} item>
                 {/* <DatePicker label="Basic date picker" /> */}
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Date of Birth"
                     inputRef={dobRef}
                     renderInput={(params) => (
                       <TextField {...params} fullWidth />
                     )}
+                  />
+                </LocalizationProvider> */}
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={selectedDate}
+                    label="Date of Birth"
+                    onChange={handleDateChange}
+                    renderInput={(params) => (<TextField {...params} />)}
+                  />
+                </LocalizationProvider> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={selectedDate}
+                    label="Date of Birth"
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -196,8 +245,8 @@ export default function AddStudentForm(props) {
                 <label htmlFor="myfile">Select a file:</label>
                 <input
                   type="file"
-                  id="myfile"
-                  name="myfile"
+                  id="image"
+                  name="image"
                   onChange={handleFileInputChange}
                 />
                 {/* <input
