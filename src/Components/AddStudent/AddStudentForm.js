@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
@@ -10,7 +11,7 @@ import classes from "./AddStudentForm.module.css";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import { MdCameraEnhance } from "react-icons/md";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdClear } from "react-icons/md";
 import Stack from "@mui/material/Stack";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -37,7 +38,7 @@ const style = {
   p: 4,
 };
 
-export default function AddStudentForm() {
+export default function AddStudentForm(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -45,15 +46,72 @@ export default function AddStudentForm() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const emailRef = useRef(null);
+  const phoneRef = useRef(null);
+  const classNameRef = useRef(null);
+  const sectionNameRef = useRef(null);
+  const dobRef = useRef(null);
+  //const imageRef = useRef(null);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileInputChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    // do something with the selected file
+  };
+
+
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
 
-  function handleRemove(){
-    setImageUrl("")
+  function handleRemove() {
+    setImageUrl("");
   }
+
+  function handleSubmit(event) {
+    event.preventDefault(); // prevent the default form submission behavior
+
+    // retrieve the input values from the form fields
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
+    const email = emailRef.current.value;
+    const phone = phoneRef.current.value;
+    // const className = classNameRef.current.value;
+    // const sectionName = sectionNameRef.current.value;
+    const dateOfBirth = dobRef.current.value; // assuming the DatePicker sets the value as a string
+    const imageFile = selectedImage;
+
+    // create a new student object with the input values
+    const newStudent = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone_number: phone,
+      section_id: props.selectedSectionId,
+      birth_date: "20-3-2023",
+      image: selectedFile,
+      enrollment_date: "20-3-2023",
+    };
+    console.log(newStudent);
+    handleAddStudent(newStudent);
+  }
+
+  const handleAddStudent = async (studentData) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/students`,
+        studentData
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -77,7 +135,7 @@ export default function AddStudentForm() {
             <MdOutlinePersonOutline sx={{ color: "action.active", mr: 1, my: 0.5 }} />
             <TextField id="input-with-sx" label="With sx" variant="standard" />
           </Box> */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <Grid container spacing={1}>
               <Grid xs={12} sm={6} item>
                 <TextField
@@ -86,6 +144,7 @@ export default function AddStudentForm() {
                   variant="outlined"
                   fullWidth
                   required
+                  inputRef={firstNameRef}
                 />
               </Grid>
               <Grid xs={12} sm={6} item>
@@ -95,6 +154,7 @@ export default function AddStudentForm() {
                   variant="outlined"
                   fullWidth
                   required
+                  inputRef={lastNameRef}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -105,6 +165,7 @@ export default function AddStudentForm() {
                   variant="outlined"
                   fullWidth
                   required
+                  inputRef={emailRef}
                 />
               </Grid>
               <Grid xs={12} sm={6} item>
@@ -115,39 +176,31 @@ export default function AddStudentForm() {
                   variant="outlined"
                   fullWidth
                   required
+                  inputRef={phoneRef}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item>
-                <TextField
-                  placeholder="Enter class name"
-                  label="Class"
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid xs={12} sm={6} item>
-                <TextField
-                  placeholder="Enter section name"
-                  label="Section"
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>{" "}
               <Grid xs={12} sm={12} item>
                 {/* <DatePicker label="Basic date picker" /> */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Date of Birth"
+                    inputRef={dobRef}
                     renderInput={(params) => (
                       <TextField {...params} fullWidth />
                     )}
                   />
                 </LocalizationProvider>
               </Grid>
+
               <Grid xs={12} sm={12} item>
+                <label htmlFor="myfile">Select a file:</label>
                 <input
+                  type="file"
+                  id="myfile"
+                  name="myfile"
+                  onChange={handleFileInputChange}
+                />
+                {/* <input
                   accept="image/*"
                   type="file"
                   id="select-image"
@@ -168,10 +221,10 @@ export default function AddStudentForm() {
                       height="200px"
                     />
                     <IconButton aria-label="delete" onClick={handleRemove}>
-                      <MdDeleteOutline />
+                      <MdClear />
                     </IconButton>
                   </Box>
-                )}
+                )} */}
               </Grid>
               <Grid item xs={12}>
                 <Button type="submit" variant="contained" color="primary">
