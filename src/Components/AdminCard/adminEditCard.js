@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -57,82 +58,87 @@ export default function AdminEditCard(props) {
         });
         setOpen(false);
         props.regetData();
+        toast.success("Amin edited successfully");
       })
       .catch((error) => {
         console.log("Error editing admin", error);
+        toast.error(error.response.data)
       });
   };
 
   return (
-    <div>
-      <IconButton onClick={handleOpen}>
-        <EditIcon />
-      </IconButton>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Edit Admin
-          </Typography>
-          <form>
-            <Grid container spacing={1}>
-              <Grid xs={12} sm={12} item>
-                <TextField
-                  placeholder={props.adminValue}
-                  name="name"
-                  value={updatedData.name}
-                  label="Name"
-                  onChange={handleFormChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
+    <>
+      <div>
+        <IconButton onClick={handleOpen}>
+          <EditIcon />
+        </IconButton>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Edit Admin
+            </Typography>
+            <form>
+              <Grid container spacing={1}>
+                <Grid xs={12} sm={12} item>
+                  <TextField
+                    placeholder={props.adminValue}
+                    name="name"
+                    value={updatedData.name}
+                    label="Name"
+                    onChange={handleFormChange}
+                    variant="outlined"
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid xs={12} sm={12} item>
+                  <TextField
+                    type="email"
+                    name="email"
+                    value={updatedData.email}
+                    placeholder={props.emailValue}
+                    label="Email"
+                    variant="outlined"
+                    onChange={handleFormChange}
+                    fullWidth
+                    required
+                  />
+                  item xs={12} sm={12}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    type="password"
+                    name="password"
+                    value={updatedData.password}
+                    placeholder={"Add new password"}
+                    label="Password"
+                    onChange={handleFormChange}
+                    variant="outlined"
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleEdit}
+                  >
+                    Edit Admin
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid xs={12} sm={12} item>
-                <TextField
-                  type="email"
-                  name="email"
-                  value={updatedData.email}
-                  placeholder={props.emailValue}
-                  label="Email"
-                  variant="outlined"
-                  onChange={handleFormChange}
-                  fullWidth
-                  required
-                />
-                item xs={12} sm={12}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  type="password"
-                  name="password"
-                  value={updatedData.password}
-                  placeholder={"Add new password"}
-                  label="Password"
-                  onChange={handleFormChange}
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  onClick={handleEdit}
-                >
-                  Edit Admin
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
-      </Modal>
-    </div>
+            </form>
+          </Box>
+        </Modal>
+      </div>
+      <ToastContainer />
+    </>
   );
 }

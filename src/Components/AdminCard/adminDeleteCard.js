@@ -30,7 +30,6 @@ export default function AdminDeleteCard(props) {
     axios
       .delete(`http://localhost:8000/api/auth/delete/${props.rowId}`)
       .then((response) => {
-        console.log(response);
         setOpen(false);
         props.regetData()
       })

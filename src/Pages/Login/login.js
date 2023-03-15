@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Dashboard from '../Dashboard/dashboard'
+import Dashboard from "../Dashboard/dashboard";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +45,7 @@ const Login = () => {
           <div className={classes.svgImage}>
             <img
               className={classes.image}
-              src={process.env.PUBLIC_URL + "/Assets/login_background (1).svg"}
+              src={process.env.PUBLIC_URL + "/Assets/login_background (2).svg"}
               alt="SVG Logo"
             />
             <img

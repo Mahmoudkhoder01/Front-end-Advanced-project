@@ -14,17 +14,17 @@
 }
 
 .loginImage{
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     position: absolute;
     left: 5%;
-    top: 25%;
+    top: 23%;
 }
 
 .loginForm{
     display: grid;
     place-items: center;
-    flex-basis: 50%;
+    flex-basis: 40%;
 }
 
 .formCentered{
