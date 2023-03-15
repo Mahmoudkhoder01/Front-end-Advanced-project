@@ -40,7 +40,6 @@ function SelectButton(props) {
                 onClick={() => handleClick(option.id)}
               >
                 {option.name || option.section_description}
-
               </MenuItem>
             );
           })}
@@ -49,33 +48,5 @@ function SelectButton(props) {
     </Box>
   );
 }
-
-// function SelectButton(props) {
-//   const [age, setAge] = useState("");
-//   const [data, setData] = useState([]);
-
-//   const handleChange = (event) => {
-//     setData(event.target.value);
-//   };
-//   console.log(data);
-//   return (
-//     <Box sx={{ minWidth: 200 }}>
-//       <FormControl fullWidth sx={{ maxWidth: 300 }}>
-//         <InputLabel id="demo-simple-select-label">{props.labelName}</InputLabel>
-//         <Select
-//           labelId="demo-simple-select-label"
-//           id="demo-simple-select"
-//           value={data}
-//           label="Class"
-//           onChange={handleChange}
-//         >
-//           {data.map((element, index) => {
-//             return <MenuItem key={index}>{props.option}</MenuItem>;
-//           })}
-//         </Select>
-//       </FormControl>
-//     </Box>
-//   );
-// }
 
 export default SelectButton;

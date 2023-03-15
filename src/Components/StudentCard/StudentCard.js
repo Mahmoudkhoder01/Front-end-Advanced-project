@@ -47,7 +47,7 @@ export default function StudentCard(props) {
 
   return (
     <>
-      <div className={classes.studentCard}> 
+      <div className={classes.studentCard}>
         <div>
           <img
             className={classes.studentAvatar}
