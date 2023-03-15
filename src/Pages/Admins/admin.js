@@ -56,7 +56,7 @@ const FixedTables = () => {
     <>
       {isLoading ? (
         <>
-          <AddAdminForm />
+          <AddAdminForm regetData={fetchData}/>
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -93,8 +93,9 @@ const FixedTables = () => {
                         adminValue={row.name}
                         emailValue={row.email}
                         rowId={row.id}
+                        regetData={fetchData}
                       />
-                      <AdminDeleteCard rowId={row.id} />
+                      <AdminDeleteCard rowId={row.id} regetData={fetchData} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

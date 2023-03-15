@@ -32,7 +32,7 @@ export default function AdminDeleteCard(props) {
       .then((response) => {
         console.log(response);
         setOpen(false);
-        // fetchData();
+        props.regetData()
       })
       .catch((error) => {
         console.log("Error editing admin", error);
@@ -72,7 +72,9 @@ export default function AdminDeleteCard(props) {
                   variant="contained"
                   color="primary"
                   style={{ width: "100%" }}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false)
+                  }}
                 >
                   No
                 </Button>

@@ -24,7 +24,7 @@ const style = {
   p: 4,
 };
 
-export default function AddAdminForm() {
+export default function AddAdminForm(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,19 +37,6 @@ export default function AddAdminForm() {
     password: "",
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/user");
-      setData(response.data.message);
-      setIsLoading(true);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -72,7 +59,7 @@ export default function AddAdminForm() {
         });
         console.log("added succesffully");
         setOpen(false);
-        fetchData();
+        props.regetData();
       })
       .catch((error) => {
         console.log("Error adding admin", error);

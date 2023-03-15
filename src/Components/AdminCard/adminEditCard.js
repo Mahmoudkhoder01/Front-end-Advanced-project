@@ -26,32 +26,11 @@ export default function AdminEditCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [data, setData] = useState([]);
   const [updatedData, setUpdatedData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const [selectedAdmin, setSelectedAdmin] = useState(null); // new state variable
-
-  const [admin, setAdmin] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  console.log(props.rowId);
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/user");
-      setData(response.data.message);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -77,6 +56,7 @@ export default function AdminEditCard(props) {
           password: "",
         });
         setOpen(false);
+        props.regetData();
       })
       .catch((error) => {
         console.log("Error editing admin", error);
@@ -113,17 +93,18 @@ export default function AdminEditCard(props) {
                 />
               </Grid>
               <Grid xs={12} sm={12} item>
-                  <TextField
-                    type="email"
-                    name="email"
-                    value={updatedData.email}
-                    placeholder={props.emailValue}
-                    label="Email"
-                    variant="outlined"
-                    onChange={handleFormChange}
-                    fullWidth
-                    required
-                  />item xs={12} sm={12}
+                <TextField
+                  type="email"
+                  name="email"
+                  value={updatedData.email}
+                  placeholder={props.emailValue}
+                  label="Email"
+                  variant="outlined"
+                  onChange={handleFormChange}
+                  fullWidth
+                  required
+                />
+                item xs={12} sm={12}
               </Grid>
               <Grid item xs={12}>
                 <TextField
