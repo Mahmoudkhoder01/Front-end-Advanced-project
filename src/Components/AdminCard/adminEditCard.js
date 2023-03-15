@@ -58,11 +58,15 @@ export default function AdminEditCard(props) {
         });
         setOpen(false);
         props.regetData();
-        toast.success("Amin edited successfully");
+        toast.success("Amin edited successfully", {
+          theme: "colored",
+        });
       })
       .catch((error) => {
         console.log("Error editing admin", error);
-        toast.error(error.response.data)
+        toast.error(error.response.data, {
+          theme: "colored",
+        });
       });
   };
 

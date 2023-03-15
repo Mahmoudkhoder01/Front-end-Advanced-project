@@ -57,7 +57,7 @@ export default function AddAdminForm(props) {
       })
       .catch((error) => {
         // console.log("Error adding admin", error·);
-        console.log(error.response.data);
+        console.log(error);
         toast.error(error.response.data, {
           theme: "colored",
         });
