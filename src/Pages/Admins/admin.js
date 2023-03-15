@@ -46,7 +46,6 @@ const FixedTables = () => {
     email: "",
     password: "",
   });
-  // const [rows, setRows] = React.useState([...rowsDataFix])
   const handleFilterChange = (event) => {
     setFilterOption(event.target.value);
   };
@@ -54,14 +53,6 @@ const FixedTables = () => {
   const handleSortByChange = (event) => {
     setSortBy(event.target.value);
   };
-
-  // const handleEditRow = (id) => {
-  //   const index = rows.findIndex((row) => row.id === id);
-  //   if (index !== -1) {
-  //     const rowToEdit = rows[index];
-  //     console.log(`Editing row with id ${id}:`, rowToEdit);
-  //   }
-  // };
 
   const handleDeleteRow = (id) => {
     const index = rows.findIndex((row) => row.id === id);
@@ -106,45 +97,6 @@ const FixedTables = () => {
     }
   };
 
-  // const handleEdit = (event, id) => {
-  //   event.preventDefault();
-  //   axios
-  //     .post(`http://localhost:8000/api/auth/edit/${id}`, {
-  //       _method: "patch",
-  //       name: admin.name,
-  //       email: admin.email,
-  //       password: admin.password,
-  //     })
-  //     .then(() => {
-  //       setOpen(false);
-  //       fetchData();
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error editing admin", error);
-  //     });
-  // };
-
-  const handleEdit = (event, id, name, email, password) => {
-    event.preventDefault();
-
-    axios
-      .post(`http://localhost:8000/api/auth/edit/${id}`, {
-        name,
-        email,
-        password,
-        _method: "patch",
-      })
-      .then((response) => {
-        console.log(response);
-        setOpen(false);
-        // window.location.reload();
-        // fetchData();
-        console.log("added succesffully");
-      })
-      .catch((error) => {
-        console.log("Error adding admin", error);
-      });
-  };
   return (
     <>
       {isLoading ? (
