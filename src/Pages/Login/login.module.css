@@ -1,0 +1,44 @@
+.login{
+    display: flex;
+}
+
+.svgImage{
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.loginTitle{
+    color: #7a5fee;
+    align-self: center;
+}
+
+.loginImage{
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    left: 5%;
+    top: 25%;
+}
+
+.loginForm{
+    display: grid;
+    place-items: center;
+    flex-basis: 50%;
+}
+
+.formCentered{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.buttonColor{
+    background-color: #7a5fee !important;
+}
+
+.buttonColor:hover{
+    background-color: #a797f0 !important;
+}
+
