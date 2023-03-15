@@ -6,12 +6,15 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
+import axios from "axios";
 import {
   MdPhoneEnabled,
   MdOutlineEmail,
   MdOutlineDateRange,
 } from "react-icons/md";
 
+
+// https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
 const style = {
   position: "absolute",
   top: "50%",
@@ -24,10 +27,23 @@ const style = {
   p: 4,
 };
 
-export default function S() {
+export default function StudentCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+
+  const handleDelete = async (student_id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/students/${student_id}`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <>
@@ -35,18 +51,18 @@ export default function S() {
         <div>
           <img
             className={classes.studentAvatar}
-            src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
+            src={`http://localhost:8000/storage/${props.student.headshot}`}
             alt="profile"
           />
         </div>
         <div className={classes.student}>
           <div className={classes.studentName}>
-            <h3>student name</h3>
+            <h3>{props.student.first_name} {props.student.last_name}</h3>
             <div>
               <IconButton aria-label="edit">
                 <MdModeEdit />
               </IconButton>
-              <IconButton aria-label="delete">
+              <IconButton aria-label="delete" onClick={() => handleDelete(props.student.id)}>
                 <MdDeleteOutline />
               </IconButton>
             </div>
@@ -70,16 +86,16 @@ export default function S() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Student Name
+          {props.student.first_name} {props.student.last_name}
           </Typography>
           <Typography sx={{ mt: 2 }}>
-            <MdOutlineDateRange />
+            <MdOutlineDateRange /> {props.student.birth_date}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <MdOutlineEmail /> studentt@gmail.com
+            <MdOutlineEmail /> {props.student.email}
           </Typography>
           <Typography sx={{ mt: 2 }}>
-            <MdPhoneEnabled />
+            <MdPhoneEnabled /> {props.student.phone_number}
           </Typography>
         </Box>
       </Modal>
