@@ -50,10 +50,12 @@ export default function AddAdminForm() {
       console.error("Error fetching data: ", error);
     }
   };
+
   const handleFormChange = (event) => {
     const { name, value } = event.target;
     setAdmin((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     axios
@@ -70,7 +72,6 @@ export default function AddAdminForm() {
         });
         console.log("added succesffully");
         setOpen(false);
-        // window.location.reload();
         fetchData();
       })
       .catch((error) => {

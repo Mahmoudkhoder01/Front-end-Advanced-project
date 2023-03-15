@@ -34,52 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const rowsData = [];
 const FixedTables = () => {
-  const [filterOption, setFilterOption] = React.useState("all");
-  const [sortBy, setSortBy] = React.useState("id");
-  const [rows, setRows] = React.useState([...rowsData]);
-  const [open, setOpen] = React.useState(false);
-
-  const [admin, setAdmin] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const handleFilterChange = (event) => {
-    setFilterOption(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const handleDeleteRow = (id) => {
-    const index = rows.findIndex((row) => row.id === id);
-    if (index !== -1) {
-      const rowToDelete = rows[index];
-      const newRows = [...rows];
-      newRows.splice(index, 1);
-      setRows(newRows);
-      console.log(`Deleting row with id ${id}:`, rowToDelete);
-    }
-  };
-
-  const filteredRows =
-    filterOption === "all"
-      ? rows
-      : rows.filter((row) => row.type === filterOption);
-
-  const sortedRows = filteredRows.sort((a, b) => {
-    if (a[sortBy] < b[sortBy]) {
-      return -1;
-    }
-    if (a[sortBy] > b[sortBy]) {
-      return 1;
-    }
-    return 0;
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -139,10 +94,7 @@ const FixedTables = () => {
                         emailValue={row.email}
                         rowId={row.id}
                       />
-                      <AdminDeleteCard
-                        onClick={() => handleDeleteRow(row.id)}
-                        rowId={row.id}
-                      />
+                      <AdminDeleteCard rowId={row.id} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}

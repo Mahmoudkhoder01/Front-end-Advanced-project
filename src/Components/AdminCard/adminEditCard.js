@@ -77,7 +77,6 @@ export default function AdminEditCard(props) {
           password: "",
         });
         setOpen(false);
-        // fetchData();
       })
       .catch((error) => {
         console.log("Error editing admin", error);
@@ -124,7 +123,7 @@ export default function AdminEditCard(props) {
                     onChange={handleFormChange}
                     fullWidth
                     required
-                  />
+                  />item xs={12} sm={12}
               </Grid>
               <Grid item xs={12}>
                 <TextField

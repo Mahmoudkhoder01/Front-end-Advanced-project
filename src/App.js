@@ -11,6 +11,7 @@ import Attendance from "./Pages/Attendance/attendance";
 import Admin from "./Pages/Admins/admin";
 import Settings from "./Pages/Settings/settings";
 import Topbar from "./Components/Topbar/topbar";
+import Login from "./Pages/Login/login";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <div className="App-container">
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
+          <Route exact path="/login" element={<Login />} />
           <Route path="/classroom" element={<ClassRoom />} />
           <Route path="/sections" element={<Sections />} />
           <Route path="/student" element={<Students />} />
