@@ -175,7 +175,7 @@ export default function Classroom() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/grade/{id}`).then((response) => {
