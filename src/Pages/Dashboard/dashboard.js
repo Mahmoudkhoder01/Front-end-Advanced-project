@@ -25,7 +25,7 @@ function Dashboard() {
   const getAllClasses = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/grade");
-      setAllAdmins(response.data.message);
+      setAllClasses(response.data.message);
       setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -34,7 +34,7 @@ function Dashboard() {
   const getAllSections = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/section");
-      setAllAdmins(response.data.message);
+      setAllSections(response.data.message);
       setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -43,7 +43,7 @@ function Dashboard() {
   const getAllStudents = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/students");
-      setAllAdmins(response.data.message);
+      setAllStudents(response.data.message);
       setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -52,6 +52,18 @@ function Dashboard() {
 
   useEffect(() => {
     getAllAdmins();
+  }, []);
+
+  useEffect(() => {
+    getAllClasses();
+  }, []);
+
+  useEffect(() => {
+    getAllSections();
+  }, []);
+
+  useEffect(() => {
+    getAllStudents();
   }, []);
 
   return (

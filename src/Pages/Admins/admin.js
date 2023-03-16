@@ -14,6 +14,7 @@ import Loading from "../../Components/Loading/loading";
 import AdminEditCard from "../../Components/AdminCard/adminEditCard";
 import AdminDeleteCard from "../../Components/AdminCard/adminDeleteCard";
 import AddAdminForm from "../../Components/addAdmin/addAdmin";
+import Pagination from "../../Components/paginantion/pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -102,6 +103,7 @@ const FixedTables = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <Pagination />
         </>
       ) : (
         <Loading />
