@@ -1,9 +1,13 @@
-.addStudentBtn{
+.addStudentBtn {
     display: block;
-    /* margin-left:60%; */
-    /* float:right; */
-    padding:10px;
+    padding: 15px;
     font-size: 16px;
     border-radius: 5px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #1565C0;
+    color: white;
+    border: none;
+    gap: 5px;
 }

@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Grid } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -30,12 +31,17 @@ export default function AdminDeleteCard(props) {
     axios
       .delete(`http://localhost:8000/api/auth/delete/${props.rowId}`)
       .then((response) => {
-        console.log(response);
         setOpen(false);
-        // fetchData();
+        props.regetData()
+        toast.success("Admin deleted successfully",{
+          theme: "colored"
+        })
       })
       .catch((error) => {
         console.log("Error editing admin", error);
+        toast.error(error,{
+          theme: "colored"
+        })
       });
   };
   return (
@@ -72,7 +78,9 @@ export default function AdminDeleteCard(props) {
                   variant="contained"
                   color="primary"
                   style={{ width: "100%" }}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false)
+                  }}
                 >
                   No
                 </Button>

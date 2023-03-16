@@ -14,7 +14,7 @@ function Students() {
   const [grades, setGrades] = useState([]);
   const [sections, setSections] = useState([]);
   const [students, setStudents] = useState([]);
-  const [selectedSectionId, setSelectedSectionId] = useState('');
+  const [selectedSectionId, setSelectedSectionId] = useState("");
 
   const getGrades = async () => {
     try {
@@ -27,7 +27,7 @@ function Students() {
   };
 
   const getSections = async (grade_id) => {
-    setSelectedSectionId(grade_id)
+    setSelectedSectionId(grade_id);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/grade/${grade_id}`
@@ -38,8 +38,6 @@ function Students() {
       console.error(error);
     }
   };
-
-
 
   const getStudents = async (section_id) => {
     try {

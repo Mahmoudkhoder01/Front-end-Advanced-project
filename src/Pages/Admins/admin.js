@@ -34,61 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const rowsData = [];
 const FixedTables = () => {
-  const [filterOption, setFilterOption] = React.useState("all");
-  const [sortBy, setSortBy] = React.useState("id");
-  const [rows, setRows] = React.useState([...rowsData]);
-  const [open, setOpen] = React.useState(false);
-
-  const [admin, setAdmin] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  // const [rows, setRows] = React.useState([...rowsDataFix])
-  const handleFilterChange = (event) => {
-    setFilterOption(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  // const handleEditRow = (id) => {
-  //   const index = rows.findIndex((row) => row.id === id);
-  //   if (index !== -1) {
-  //     const rowToEdit = rows[index];
-  //     console.log(`Editing row with id ${id}:`, rowToEdit);
-  //   }
-  // };
-
-  const handleDeleteRow = (id) => {
-    const index = rows.findIndex((row) => row.id === id);
-    if (index !== -1) {
-      const rowToDelete = rows[index];
-      const newRows = [...rows];
-      newRows.splice(index, 1);
-      setRows(newRows);
-      console.log(`Deleting row with id ${id}:`, rowToDelete);
-    }
-  };
-
-  const filteredRows =
-    filterOption === "all"
-      ? rows
-      : rows.filter((row) => row.type === filterOption);
-
-  const sortedRows = filteredRows.sort((a, b) => {
-    if (a[sortBy] < b[sortBy]) {
-      return -1;
-    }
-    if (a[sortBy] > b[sortBy]) {
-      return 1;
-    }
-    return 0;
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -106,50 +52,11 @@ const FixedTables = () => {
     }
   };
 
-  // const handleEdit = (event, id) => {
-  //   event.preventDefault();
-  //   axios
-  //     .post(`http://localhost:8000/api/auth/edit/${id}`, {
-  //       _method: "patch",
-  //       name: admin.name,
-  //       email: admin.email,
-  //       password: admin.password,
-  //     })
-  //     .then(() => {
-  //       setOpen(false);
-  //       fetchData();
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error editing admin", error);
-  //     });
-  // };
-
-  const handleEdit = (event, id, name, email, password) => {
-    event.preventDefault();
-
-    axios
-      .post(`http://localhost:8000/api/auth/edit/${id}`, {
-        name,
-        email,
-        password,
-        _method: "patch",
-      })
-      .then((response) => {
-        console.log(response);
-        setOpen(false);
-        // window.location.reload();
-        // fetchData();
-        console.log("added succesffully");
-      })
-      .catch((error) => {
-        console.log("Error adding admin", error);
-      });
-  };
   return (
     <>
       {isLoading ? (
         <>
-          <AddAdminForm />
+          <AddAdminForm regetData={fetchData}/>
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -186,11 +93,9 @@ const FixedTables = () => {
                         adminValue={row.name}
                         emailValue={row.email}
                         rowId={row.id}
+                        regetData={fetchData}
                       />
-                      <AdminDeleteCard
-                        onClick={() => handleDeleteRow(row.id)}
-                        rowId={row.id}
-                      />
+                      <AdminDeleteCard rowId={row.id} regetData={fetchData} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
