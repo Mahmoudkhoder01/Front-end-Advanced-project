@@ -51,16 +51,12 @@ export default function AddAdminForm(props) {
       .then((response) => {
         setOpen(false);
         props.regetData();
-        toast.success("Amin added succefully", {
-          theme: "colored",
-        });
+        toast.success("Amin added succefully");
       })
       .catch((error) => {
         // console.log("Error adding admin", error·);
         console.log(error);
-        toast.error(error.response.data, {
-          theme: "colored",
-        });
+        toast.error(error.response.data);
       });
   };
 
