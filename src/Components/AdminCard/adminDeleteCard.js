@@ -33,15 +33,11 @@ export default function AdminDeleteCard(props) {
       .then((response) => {
         setOpen(false);
         props.regetData()
-        toast.success("Admin deleted successfully",{
-          theme: "colored"
-        })
+        toast.success("Admin deleted successfully")
       })
       .catch((error) => {
         console.log("Error editing admin", error);
-        toast.error(error,{
-          theme: "colored"
-        })
+        toast.error(error)
       });
   };
   return (
