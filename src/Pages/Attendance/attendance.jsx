@@ -13,14 +13,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import {
-  DateField,
-  LocalizationProvider,
-  DatePicker,
-} from "@mui/x-date-pickers";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useNavigate } from "react-router-dom";
+
 import { Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -65,8 +58,6 @@ const FilterContainer = styled.div`
 `;
 
 const Attendance = () => {
-  const navigate = useNavigate();
-
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
   var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -81,9 +72,7 @@ const Attendance = () => {
   const [sections, setSections] = useState([]);
   const [section_id, setSection_id] = useState(undefined);
   const [disable, setDisable] = useState(false);
-  const [attendances, setAttendances] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [Attendances, setAttendances] = useState({});
   const columns = [
     { field: "id", headerName: "Student ID", width: 150 },
     {
@@ -101,44 +90,34 @@ const Attendance = () => {
       headerName: "Status",
       minWidth: 300,
       // renderCell: (params) => {
-      //   const date = selectedDate;
-      //   const attendances = params.row.attendance;
-      //   const attendance = attendances.find(
-      //     (attendance) => attendance.date === date
-      //   );
-      //   if (attendance) {
-      //     return (
-      //       <RadioGroup>
-      //         <FormControlLabel
-      //           value={attendances}
-      //           control={<Radio />}
-      //           label={attendance.status}
-      //           key={attendance.id}
-      //           disabled
-      //         />
+      //   let id = params.rows.id;
+      //   let attendances=params.row.attendance
+      //   attendances.map((attendance=>{
+      //     attendance.date===date
+      //   }))
+      //   if (attendance)
+      //     <FormControl>
+      //       <RadioGroup value={attendance} row name="controlled-radio-buttons-group" required>
+      //         <FormControlLabel control={<Radio />} />
       //       </RadioGroup>
-      //     );
-      //   } else {
-      //     return (
-      //       <RadioGroup>
-      //         <FormControlLabel
-      //           value="present"
-      //           control={<Radio />}
-      //           label="present"
-      //           key={attendance.id}
-      //         />
-      //       </RadioGroup>
-      //     );
-      //   }
+      //     </FormControl>;
       // },
     },
   ];
+  // const handleChange = (e) => {
+  //   setAttendance(parseInt(e.target.value));
+  //   Attendance({
+  //     ...Attendances,
+  //     status: parseInt(e.target.value),
+  //   });
+  // };
+
   useEffect(() => {
     if (section_id) {
       getStudents(section_id);
-      setAttendances({});
     }
-  }, [section_id, selectedDate]);
+  }, [section_id]);
+  // fetch grades
 
   useEffect(() => {
     const getgrade = async () => {
@@ -155,7 +134,7 @@ const Attendance = () => {
 
     getgrade();
   }, []);
-
+  // get section with grade
   useEffect(() => {
     if (Grade_id) {
       let sections = [];
@@ -165,11 +144,10 @@ const Attendance = () => {
         }
       });
       setSections(sections);
-      setAttendances({});
       setSection_id(sections[0].id);
     }
   }, [Grade_id]);
-
+  //get students by section
   const getStudents = async (section_id) => {
     try {
       const res2 = await axios.get(
@@ -183,30 +161,20 @@ const Attendance = () => {
     }
   };
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/attendance/student/${student_id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setAttendances(res.data.message);
-          console.log(attendances.attendance_date);
-        }
-      });
-  }, [section_id]);
-  // //get attendance
-  // useEffect(() => {
-  //   const getAttendance = async () => {
-  //     try {
-  //       const res = await axios.get(`http://localhost:8000/api/attendance`);
-  //       setAttendances(res.data.message);
-  //       console.log(res.data.message);
-  //       console.log(attendances);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
+    const getAttendance = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8000/api/attendance/section/${section_id}`
+        );
+        setAttendances(res.data.message);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  //   getAttendance();
-  // }, []);
+    getAttendance();
+  }, [section_id]);
+  console.log(Attendances);
 
   // const handleSubmit = (e) => {
   //   console.log("hello1");
@@ -250,18 +218,6 @@ const Attendance = () => {
       <AttendanceContainer>
         <HeadContainer>
           <DateText>Today's date : {selectedDate}</DateText>
-          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              value={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              label="Helper text example"
-              slotProps={{
-                textField: {
-                  helperText: "MM / DD / YYYY",
-                },
-              }}
-            />
-          </LocalizationProvider> */}
           <FilterContainer>
             <FormControl variant="standard" sx={{ width: "100px" }}>
               <InputLabel>Class</InputLabel>

@@ -16,12 +16,20 @@ const StatusRadio = (props) => {
     setStatus(props.attendance.status);
   }, [props.attendance.status]);
 
+  // //get attendance
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/attendance`).then((res) => {
-      if (res.status === 200) {
+    const getAttendance = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/api/attendance`);
         setStatuses(res.data.message);
+        console.log(res.data.message);
+        console.log(statuses);
+      } catch (err) {
+        console.log(err);
       }
-    });
+    };
+
+    getAttendance();
   }, []);
 
   const handleChange = (e) => {
@@ -45,7 +53,7 @@ const StatusRadio = (props) => {
           <FormControlLabel
             value={item.id}
             control={<Radio />}
-            label={item.name}
+            label={item.status}
             key={item.id}
             name={props.id.toString()}
             disabled={props.disabled}
