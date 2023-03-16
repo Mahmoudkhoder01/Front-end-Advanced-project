@@ -18,7 +18,7 @@ function Sidebar(props) {
   if (useLocation().pathname === "/login") return null;
   return (
     <Fragment>
-      <nav>
+      <nav className={classes.sidebar}>
         <div>
           <img
             className={classes.logo}
