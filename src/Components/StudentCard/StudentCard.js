@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import EditStudentForm from "../EditStudentForm/EditStudentForm";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 import {
@@ -59,9 +60,10 @@ export default function StudentCard(props) {
           <div className={classes.studentName}>
             <h3>{props.student.first_name} {props.student.last_name}</h3>
             <div>
-              <IconButton aria-label="edit">
+              {/* <IconButton aria-label="edit">
                 <MdModeEdit />
-              </IconButton>
+              </IconButton> */}
+              <EditStudentForm />
               <IconButton aria-label="delete" onClick={() => handleDelete(props.student.id)}>
                 <MdDeleteOutline />
               </IconButton>
