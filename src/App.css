@@ -6,7 +6,7 @@
   height: 100vh;  
   overflow-y: auto;
   flex-basis: 100%;
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
 }
