@@ -6,13 +6,22 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import lottie from "lottie-web";
-import { defineElement } from "lord-icon-element"; 
-
+import { defineElement } from "lord-icon-element";
+import { Sector } from "recharts";
+import Select from "../../Components/Select/select";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import AddSectionForm from "../../Components/addSection/addSection";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import EditIcon from "@mui/icons-material/Edit";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,11 +42,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 defineElement(lottie.loadAnimation);
 function createData(section, capacity, date, edit, Delete) {
   return { section, capacity, date, edit, Delete };
 }
+const columns = [
+  { field: "id", headerName: "section ID", width: 150 },
+  { field: "section_description", headerName: "Section", width: 150 },
+  { field: "capacity", headerName: "Capacity", width: 150 },
+];
+
+// const FixedTables = () => {
+//   const [filterOption, setFilterOption] = React.useState("all");
+//   const [sortBy, setSortBy] = React.useState("id");
+//   const [rows, setRows] = React.useState([...rowsData]);
+//   // const [rows, setRows] = React.useState([...rowsDataFix])
+//   const handleFilterChange = (event) => {
+//     setFilterOption(event.target.value);
+//   };}
 
 const rowsData = [];
 const filterOptions = [
@@ -47,52 +81,6 @@ const filterOptions = [
 ];
 
 const FixedTables = () => {
-  const [filterOption, setFilterOption] = React.useState("all");
-  const [sortBy, setSortBy] = React.useState("id");
-  const [rows, setRows] = React.useState([...rowsData]);
-  // const [rows, setRows] = React.useState([...rowsDataFix])
-  const handleFilterChange = (event) => {
-    setFilterOption(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const handleEditRow = (id) => {
-    const index = rows.findIndex((row) => row.id === id);
-    if (index !== -1) {
-      const rowToEdit = rows[index];
-      console.log(`Editing row with id ${id}:`, rowToEdit);
-    }
-  };
-
-  const handleDeleteRow = (id) => {
-    const index = rows.findIndex((row) => row.id === id);
-    if (index !== -1) {
-      const rowToDelete = rows[index];
-      const newRows = [...rows];
-      newRows.splice(index, 1);
-      setRows(newRows);
-      console.log(`Deleting row with id ${id}:`, rowToDelete);
-    }
-  };
-
-  const filteredRows =
-    filterOption === "all"
-      ? rows
-      : rows.filter((row) => row.type === filterOption);
-
-  const sortedRows = filteredRows.sort((a, b) => {
-    if (a[sortBy] < b[sortBy]) {
-      return -1;
-    }
-    if (a[sortBy] > b[sortBy]) {
-      return 1;
-    }
-    return 0;
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -100,11 +88,36 @@ const FixedTables = () => {
     fetchData();
   }, []);
 
+  const [open, setOpen] = useState(false);
+  const BasicModal = () => {};
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  // const handleEditRow = (id) => {
+  //   const index = rows.findIndex((row) => row.id === id);
+  //   if (index !== -1) {
+  //     const rowToEdit = rows[index];
+  //     console.log(`Editing row with id ${id}:`, rowToEdit);
+  //   }
+  // };
+
+  // const handleDeleteRow = (id) => {
+  //   const index = rows.findIndex((row) => row.id === id);
+  //   if (index !== -1) {
+  //     const rowToDelete = rows[index];
+  //     const newRows = [...rows];
+  //     newRows.splice(index, 1);
+  //     setRows(newRows);
+  //     console.log(`Deleting row with id ${id}:`, rowToDelete);
+  //   }
+  // };
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/section");
       setData(response.data.message);
       setIsLoading(true);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -113,48 +126,32 @@ const FixedTables = () => {
   return (
     <>
       {isLoading ? (
-        <TableContainer
-          component={Paper}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
-        >
-          <Table>
-            <TableHead>Section</TableHead>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Capacity</StyledTableCell>
-                <StyledTableCell>Date</StyledTableCell>
-                <StyledTableCell>Edit</StyledTableCell>
-                <StyledTableCell>Delete</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.id}
-                  </StyledTableCell>
-                  <TableCell align="right">{row.capacity}</TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
-                  <TableCell align="right">{row.edit}</TableCell>
-                  <TableCell align="right">{row.Delete}</TableCell>
-                  <StyledTableCell>
-                  <IconButton aria-label="edit"></IconButton>
-                  <lord-icon src="https://cdn.lordicon.com/jmkrnisz.json"trigger="hover"style={{width:"30px",height:"30px"}}></lord-icon>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <>
+          <Select
+            labelName="Class"
+            backgroundColor="blue"
+            options={["Class A", "Class B", "Class C"]}
+          />
+          <TableContainer
+            component={Paper}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 10, page: 0 },
+              },
+            }}
+          >
+            <div>
+        <AddSectionForm regetData={fetchData}/>
+            </div>
+          </TableContainer>
+          <DataGrid
+            style={{ margin: "20px" }}
+            columns={columns}
+            rows={data}
+          ></DataGrid>
+        </>
       ) : (
-        <h1 style={{marginLeft:"350px"}}>Loading</h1>
+        <h1 style={{ marginLeft: "350px" }}>Loading</h1>
       )}
     </>
   );
