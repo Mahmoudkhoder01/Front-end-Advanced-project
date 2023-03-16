@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
@@ -9,7 +9,7 @@ useEffect(() => {
     .get(`http://localhost:8000/api/grade`)
     .then((response) => {
       setAPIData(response.data.message);
-      console.log(response.data.message);
+      console.log(APIData);
     })
     .catch((error) => {
       console.log(error);

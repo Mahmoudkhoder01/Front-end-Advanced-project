@@ -12,18 +12,38 @@ import "./classroom.css";
 import postData from "./create.js";
 // import Read from "./read.js";
 import Update from "./update";
+import { Button, Form } from "semantic-ui-react";
+import { FormControl } from '@mui/material';
+import { InputLabel } from '@mui/material';
 
+
+
+
+function formatDate(dateString) {
+  const createdDate = new Date(dateString);
+  return `${createdDate.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  })} 
+  ${createdDate.toLocaleDateString("en-US")}`;
+}
 const columns = [
-  // { field: "id", headerName: "ID", width: 50 },
+  // { field: 'id', headerName: 'ID', width: 70 },
+
   {
-    field: "grade",
+    field: "name",
     headerName: "Grades",
     width: 800,
     editable: true,
-
+    key: "name",
     renderCell: (params) => (
       <Tooltip
-        title={<h1 style={{ fontSize: "1rem" }}>Created @</h1>}
+        title={
+          <h1 style={{ fontSize: "1rem" }}>
+            Created @ {formatDate(params.row.created_at)}
+          </h1>
+        }
         arrow
         placement="right"
       >
@@ -39,19 +59,7 @@ const columns = [
       </Tooltip>
     ),
   },
-  {
-    field: "edit",
-    headerName: "",
-    width: 100,
-    editable: true,
-    align: "center",
-    sortable: false,
-    renderCell: (params) => (
-      <Fab color="blue" size="small" aria-label="edit">
-        <EditIcon onClick={() => Update()} />
-      </Fab>
-    ),
-  },
+
   {
     field: "delete",
     headerName: "",
@@ -60,9 +68,9 @@ const columns = [
     align: "center",
     editable: true,
     sortable: false,
-
+    key: "delete",
     renderCell: (params) => (
-      <Fab color="blue" size="small" aria-label="delete">
+      <Fab color="black" size="small" aria-label="delete">
         <DeleteForeverIcon
           style={{
             cursor: "pointer",
@@ -73,86 +81,129 @@ const columns = [
           onMouseLeave={(e) => {
             e.target.style.color = "black";
           }}
-          onClick={() =>
-            alert(`Do you really want to remove grade ${params.id}?`)
-          }
-        />{" "}
+          onClick={onClickDelete}
+          
+        />
+      </Fab>
+    ),
+  },
+
+  {
+    field: "edit",
+    headerName: "",
+    width: 100,
+    editable: true,
+    align: "center",
+    sortable: false,
+    key: "edit",
+    renderCell: (params) => (
+      <Fab color="blue" size="small" aria-label="edit">
+        <EditIcon
+        //  onClick={() =>    }
+        />
       </Fab>
     ),
   },
   {
-    headerName: (
+    field: "add",
+    headerName: "",
+    width: 100,
+    sortable: false,
+    key: "add",
+    renderHeader: () => (
       <Fab color="blue" size="large" aria-label="add">
         <AddIcon
           style={{ fontSize: "2.5rem", fontWeight: "bolder", margin: "2rem" }}
-          onClick={() =>
-            //  alert(`add grade ?`)}
-            postData()
-          }
+          onClick={() => {
+            document.querySelector("#modal").showModal();
+          }}
         />
       </Fab>
     ),
-    sortable: false,
   },
 ];
 
-// const rows = [
-//   { id: 1, name: "grade 1" },
-//   { id: 2, name: "grade 1" },
-//   { id: 3, name: "grade 1" },
-//   { id: 4, name: "grade 1" },
-//   { id: 5, name: "grade 1" },
-//   { id: 6, name: "grade 1" },
-//   { id: 7, name: "grade 1" },
-//   { id: 8, name: "grade 1" },
-//   { id: 9, name: "grade 1" },
-// ];
-
 export default function Classroom() {
-  const [name, setName] = useState([]);
-  // const [grade_id, setGrade_id] = useState();
+  const [names, setNames] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setNames(response.data.message);
+      console.log(names);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/grade`)
-      .then((response) => {
-        setName(response.data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchData();
   }, []);
-  console.log(name);
-  if (!name) return <h1> loading </h1>;
- 
+
+  const [name, setName] = useState("");
+
+  const postData = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/grade`,
+        {
+          name,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDelete = () => {
+   
+  };
+
+
+  // const onClickDelete = () => {
+  //   () => {
+  //     alert();
+  //     onDelete();
+  //   }
+  // };
+
+  if (!names) return <h1>loading</h1>;
   return (
-    <div key={name.id} >
-      <Box
-        sx={{
-          height: "60%",
-          width: "72%",
-        }}
-      >
-        <DataGrid
-          rows={name}
-          columns={columns}
-          // sortModel={[]}
-          // disableColumnMenu
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          disableRowSelectionOnClick={false}
-          sx={{
-            borderRadius: "1rem",
-          }}
-        />
-      </Box>
-    </div>
+    <Box
+      sx={{
+        height: "64.5%",
+        width: "72%",
+      }}
+    >
+      <DataGrid
+        rows={names}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        getRowId={(name) => name.id}
+      />
+
+
+
+<FormControl>
+  <InputLabel htmlFor="my-input">Email address</InputLabel>
+  <Input id="my-input" aria-describedby="my-helper-text" />
+  <FormHelperText id="my-helper-text">We'll never share your email.</FormHelperText>
+</FormControl>
+
+
+
+
+
+
+
+
+    </Box>
   );
 }
