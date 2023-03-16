@@ -30,9 +30,9 @@ export default function AddSectionForm(props) {
   const handleClose = () => setOpen(false);
 
   const [section, setSection] = useState({
-    name: "",
-    email: "",
-    password: "",
+    section_description: "",
+    capacity: "",
+    grade: "",
   });
 
   const handleFormChange = (event) => {
