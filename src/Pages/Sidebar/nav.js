@@ -14,7 +14,7 @@ import { FaUserCheck, FaUserTie } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogout } from "react-icons/hi";
 
-function Sidebar() {
+function Sidebar(props) {
   if (useLocation().pathname === "/login") return null;
   return (
     <Fragment>

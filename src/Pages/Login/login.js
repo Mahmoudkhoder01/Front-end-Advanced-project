@@ -6,12 +6,14 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Dashboard from "../Dashboard/dashboard";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["name"]);
+  const [superAdmin, setSuperAdmin] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,6 +29,8 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.user.isSuperadmin);
+        setSuperAdmin()
         if (data.access_token) {
           setCookie("auth", data.access_token);
           setLoggedIn(true);
@@ -72,7 +76,7 @@ const Login = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    type="password"
+                    type="password"   
                     name="password"
                     placeholder={"Enter your password"}
                     label="Password"
