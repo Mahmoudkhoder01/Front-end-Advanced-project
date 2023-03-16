@@ -20,8 +20,8 @@ function Card(props) {
         ) : null}
         Number of {props.name}
       </h2>
-      {props.number.length === 1 ? (
 
+      {props.number.length < 10 ? (
         <p className={classes.pCard}>{props.number}</p>
       ) : (
         <span className={classes.cardSpan}>{props.number}</span>

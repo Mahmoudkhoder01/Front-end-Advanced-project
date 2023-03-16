@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 // Import Css Files
 import classes from "./nav.module.css";
@@ -14,8 +14,8 @@ import { FaUserCheck, FaUserTie } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogout } from "react-icons/hi";
 
-
-function Sidebar() {
+function Sidebar(props) {
+  if (useLocation().pathname === "/login") return null;
   return (
     <Fragment>
       <nav>
@@ -76,7 +76,7 @@ function Sidebar() {
           {/* <HiOutlineLogout size={30} className={classes.logOut} />
           <a href="s">Log Out</a> */}
           <NavLink to={"7"}>
-          <HiOutlineLogout size={30} className={classes.logOut}/>
+            <HiOutlineLogout size={30} className={classes.logOut} />
             <span>Logout</span>
           </NavLink>
         </div>

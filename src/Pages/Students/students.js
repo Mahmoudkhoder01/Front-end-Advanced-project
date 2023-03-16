@@ -1,5 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 import { Fragment } from "react";
+import axios from "axios";
 import StudentCard from "../../Components/StudentCard/StudentCard";
 import { FiPlus } from "react-icons/fi";
 import Grid from "@mui/material/Grid";
@@ -9,24 +11,70 @@ import AddStudentForm from "../../Components/AddStudent/AddStudentForm";
 import { useState } from "react";
 import SelectButton from "../../Components/Select/select";
 function Students() {
-  const [data, setData] = useState(["Class A", "Class B", "Class C"]);
-  const [another, setAnother] = useState([
-    "Section A",
-    "Section B",
-    "Section C",
-  ]);
+  const [grades, setGrades] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [selectedSectionId, setSelectedSectionId] = useState("");
+
+  const getGrades = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getSections = async (grade_id) => {
+    setSelectedSectionId(grade_id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/section/grade/${grade_id}`
+      );
+      setSections(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getStudents = async (section_id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/students/section/${section_id}`
+      );
+      setStudents(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getGrades();
+  }, []);
+
   return (
     <Fragment>
       <div className={classes.students}>
         <div className={classes.header}>
           <div className={classes.dropdowns}>
-            <SelectButton labelName="Classe" options={data} />
-            <SelectButton labelName="Section" options={another} />
+            <SelectButton
+              labelName="Class"
+              options={grades}
+              getSections={getSections}
+            />
+            <SelectButton
+              labelName="Section"
+              options={sections}
+              getStudents={getStudents}
+            />
             {/* <DropDown />
             <DropDown /> */}
           </div>
           <div>
-            <AddStudentForm />
+            <AddStudentForm selectedSectionId={selectedSectionId} />
             {/* <button className={classes.addStudentBtn}>
               <FiPlus />
               Add Student
@@ -34,19 +82,9 @@ function Students() {
           </div>
         </div>
         <div className={classes.studentGrid}>
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
-          <StudentCard />
+          {students
+            ? students.map((student) => <StudentCard student={student} />)
+            : ""}
         </div>
       </div>
     </Fragment>
