@@ -69,7 +69,7 @@ export default function AddSectionForm(props) {
           onClick={handleOpen}
         >
           <FiPlus />
-          Add section
+          Add Section
         </button>
         <Modal
           open={open}
@@ -112,8 +112,8 @@ export default function AddSectionForm(props) {
                     type="text"
                     name="grade"
                     value={section.grade}
-                    placeholder="Enter section capacity"
-                    label="capacity"
+                    placeholder="Enter grade id"
+                    label="Grade"
                     variant="outlined"
                     onChange={handleFormChange}
                     fullWidth

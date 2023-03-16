@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 
-export default function AdminDeleteCard(props) {
+export default function SectionDeleteCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,15 +29,19 @@ export default function AdminDeleteCard(props) {
   const handleDelete = (event) => {
     event.preventDefault();
     axios
-      .delete(`http://localhost:8000/api/auth/delete/${props.rowId}`)
+      .delete(`http://localhost:8000/api/section/${props.rowId}`)
       .then((response) => {
         setOpen(false);
         props.regetData()
-        toast.success("Admin deleted successfully")
+        toast.success("Admin deleted successfully",{
+          theme: "colored"
+        })
       })
       .catch((error) => {
         console.log("Error editing admin", error);
-        toast.error(error)
+        toast.error(error,{
+          theme: "colored"
+        })
       });
   };
   return (
