@@ -37,6 +37,7 @@ export default function AdminDeleteCard(props) {
       })
       .catch((error) => {
         console.log("Error deletin setion", error);
+
         toast.error(error)
       });
   };
