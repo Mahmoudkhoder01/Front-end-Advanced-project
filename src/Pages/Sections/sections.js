@@ -65,7 +65,7 @@ const FixedTables = () => {
 console.log(data);
   return (
     <>
-      {isLoading ? (
+      {isLoading ? ( 
         <>
           
           <AddSectionForm regetData={fetchDataByPagination}/>
