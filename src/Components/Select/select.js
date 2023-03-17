@@ -24,7 +24,7 @@ function SelectButton(props) {
   console.log(section);
   return (
     <Box sx={{ minWidth: 200 }}>
-      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5 }}>
+      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5, marginLeft: 10 }}>
         <InputLabel id="demo-simple-select-label">{props.labelName}</InputLabel>
         <Select
           labelId="demo-simple-select-label"

@@ -80,17 +80,16 @@ export default function AddSectionForm(props) {
     newSection.append("section_description", section.section_description);
     newSection.append("capacity", section.capacity);
     newSection.append("grade", props.gradeId);
-    console.log("Frontend", newSection.entries());
     handleAddSection(newSection);
-    props.regetData();
+    props.regetDataFromSection();
   };
-  
+
   return (
     <>
       <div style={{ marginTop: "4rem" }}>
         <button
           className={classes.addStudentBtn}
-          style={{ transform: "translateX(88rem)" }}
+          style={{ transform: "translateX(75rem)" }}
           onClick={handleOpen}
         >
           <FiPlus />

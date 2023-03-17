@@ -43,6 +43,7 @@ const FixedTables = () => {
   const [page, setPage] = useState(1);
 
   const [grades, setGrades] = useState([]);
+  const [allSections, setAllSections] = useState([]);
   const [sections, setSections] = useState([]);
   const [selectedGradeId, setSelectedGradeId] = useState("");
 
@@ -50,6 +51,16 @@ const FixedTables = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/grade`);
       setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getAllSection = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/section`);
+      setAllSections(response.data.message);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -65,7 +76,6 @@ const FixedTables = () => {
       setSections(response.data.message.data);
       setCounter(response.data.message);
       setIsLoading(true);
-      console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -79,6 +89,10 @@ const FixedTables = () => {
     getGrades();
   }, []);
 
+  useEffect(() => {
+    getAllSection();
+  }, []);
+
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
@@ -87,12 +101,17 @@ const FixedTables = () => {
     <>
       {isLoading ? (
         <>
+        <div style={{display: "flex" , alignItems:"center"}}>
           <SelectButton
             labelName="Class"
             options={grades}
             getSections={fetchDataByPagination}
           />
-          <AddSectionForm regetData={fetchDataByPagination} gradeId={selectedGradeId} />
+          <AddSectionForm
+            regetDataFromSection={fetchDataByPagination}
+            gradeId={selectedGradeId}
+          />
+          </div>
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -115,29 +134,33 @@ const FixedTables = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sections ? sections.map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.id}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.section_description}</StyledTableCell>
-                    <StyledTableCell>{row.capacity}</StyledTableCell>
-                    <StyledTableCell>{row.created_at}</StyledTableCell>
-                    <StyledTableCell>{row.updated_at}</StyledTableCell>
-                    <StyledTableCell style={{ display: "flex" }}>
-                      <SectionEditCard
-                        adminValue={row.name}
-                        emailValue={row.email}
-                        rowId={row.id}
-                        regetData={fetchDataByPagination}
-                      />
-                      <SectionDeleteCard
-                        rowId={row.id}
-                        regetData={fetchDataByPagination}
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                )): ""}
+                {sections
+                  ? sections.map((row) => (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {row.id}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {row.section_description}
+                        </StyledTableCell>
+                        <StyledTableCell>{row.capacity}</StyledTableCell>
+                        <StyledTableCell>{row.created_at}</StyledTableCell>
+                        <StyledTableCell>{row.updated_at}</StyledTableCell>
+                        <StyledTableCell style={{ display: "flex" }}>
+                          <SectionEditCard
+                            adminValue={row.name}
+                            emailValue={row.email}
+                            rowId={row.id}
+                            regetData={fetchDataByPagination}
+                          />
+                          <SectionDeleteCard
+                            rowId={row.id}
+                            regetData={fetchDataByPagination}
+                          />
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))
+                  : ""}
               </TableBody>
             </Table>
           </TableContainer>

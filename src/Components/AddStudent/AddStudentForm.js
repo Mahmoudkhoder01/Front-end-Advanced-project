@@ -112,7 +112,6 @@ export default function AddStudentForm(props) {
     newStudent.append("birth_date", selectedDateFormat);
     newStudent.append("enrollment_date", enrollmentDate);
     newStudent.append("image", selectedFile);
-
     console.log("Frontend", newStudent.entries());
     handleAddStudent(newStudent);
   }

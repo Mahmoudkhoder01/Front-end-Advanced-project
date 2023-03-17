@@ -60,7 +60,7 @@ export default function AddClassForm(props) {
       <div style={{ marginTop: "4rem" }}>
         <button
           className={classes.addStudentBtn}
-          style={{ transform: "translateX(88rem)" }}
+          style={{ transform: "translateX(75rem)" }}
           onClick={handleOpen}
         >
           <FiPlus />
