@@ -70,8 +70,9 @@ const FixedTables = () => {
               },
             }}
           >
+            <div className="container">
             <Table>
-              <TableHead>Classes</TableHead>
+              <TableHead className="title">Classes</TableHead>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>ID</StyledTableCell>
@@ -102,6 +103,7 @@ const FixedTables = () => {
                 ))}
               </TableBody>
             </Table>
+            </div>
           </TableContainer>
           <Pagination />
         </>
