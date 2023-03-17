@@ -53,9 +53,9 @@ export default function SectionEditCard(props) {
       .then((response) => {
         console.log(response);
         setUpdatedData({
-            section_description: "",
-            capacity: "",
-            grade: "",
+          section_description: "",
+          capacity: "",
+          grade: "",
         });
         setOpen(false);
         props.regetData();
@@ -84,7 +84,7 @@ export default function SectionEditCard(props) {
               Edit Admin
             </Typography>
             <form>
-            <Grid container spacing={1}>
+              <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
                   <TextField
                     placeholder="Enter Section description"
@@ -109,7 +109,8 @@ export default function SectionEditCard(props) {
                     fullWidth
                     required
                   />
-                </Grid><Grid xs={12} sm={12} item>
+                </Grid>
+                {/* <Grid xs={12} sm={12} item>
                   <TextField
                     type="text"
                     name="grade"
@@ -121,7 +122,7 @@ export default function SectionEditCard(props) {
                     fullWidth
                     required
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"

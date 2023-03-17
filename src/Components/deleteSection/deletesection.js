@@ -33,15 +33,11 @@ export default function SectionDeleteCard(props) {
       .then((response) => {
         setOpen(false);
         props.regetData()
-        toast.success("Admin deleted successfully",{
-          theme: "colored"
-        })
+        toast.success("Section deleted successfully")
       })
       .catch((error) => {
-        console.log("Error editing admin", error);
-        toast.error(error,{
-          theme: "colored"
-        })
+        console.log("Error deletin section", error);
+        toast.error(error.data.message.data)
       });
   };
   return (

@@ -15,6 +15,7 @@ import AddSectionForm from "../../Components/addSection/addSection";
 import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
 import Pagination from "../../Components/paginantion/pagination";
+import SelectButton from "../../Components/Select/select";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,16 +38,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const FixedTables = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [setions, setSetions] = useState([]);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
 
-  const fetchDataByPagination = async () => {
+  const [grades, setGrades] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [selectedGradeId, setSelectedGradeId] = useState("");
+
+  const getGrades = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchDataByPagination = async (grade_id) => {
+    setSelectedGradeId(grade_id);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/section/pagination?page=${page}`
+        `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
       );
-      setData(response.data.message.data);
+      setSections(response.data.message.data);
       setCounter(response.data.message);
       setIsLoading(true);
       console.log(response);
@@ -59,16 +75,24 @@ const FixedTables = () => {
     fetchDataByPagination();
   }, [page]);
 
+  useEffect(() => {
+    getGrades();
+  }, []);
+
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
-console.log(data);
+  console.log(sections);
   return (
     <>
       {isLoading ? (
         <>
-          
-          <AddSectionForm regetData={fetchDataByPagination}/>
+          <SelectButton
+            labelName="Class"
+            options={grades}
+            getSections={fetchDataByPagination}
+          />
+          <AddSectionForm regetData={fetchDataByPagination} gradeId={selectedGradeId} />
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -91,7 +115,7 @@ console.log(data);
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((row) => (
+                {sections ? sections.map((row) => (
                   <StyledTableRow key={row.id}>
                     <StyledTableCell component="th" scope="row">
                       {row.id}
@@ -107,10 +131,13 @@ console.log(data);
                         rowId={row.id}
                         regetData={fetchDataByPagination}
                       />
-                      <SectionDeleteCard rowId={row.id} regetData={fetchDataByPagination} />
+                      <SectionDeleteCard
+                        rowId={row.id}
+                        regetData={fetchDataByPagination}
+                      />
                     </StyledTableCell>
                   </StyledTableRow>
-                ))}
+                )): ""}
               </TableBody>
             </Table>
           </TableContainer>
