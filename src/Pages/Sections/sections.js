@@ -11,9 +11,6 @@ import Classes from "./section.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading/loading";
-import AdminEditCard from "../../Components/AdminCard/adminEditCard";
-import AdminDeleteCard from "../../Components/AdminCard/adminDeleteCard";
-import AddAdminForm from "../../Components/addAdmin/addAdmin";
 import AddSectionForm from "../../Components/addSection/addSection";
 import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
@@ -59,6 +56,7 @@ const FixedTables = () => {
     <>
       {isLoading ? (
         <>
+          
           <AddSectionForm regetData={fetchData}/>
           <TableContainer
             className={Classes.adminPage}

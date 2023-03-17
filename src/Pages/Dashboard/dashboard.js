@@ -4,7 +4,6 @@ import Chart from "../../Components/Chart/chart";
 import classes from "./dashboard.module.css";
 import axios from "axios";
 import Loading from "../../Components/Loading/loading";
-import { useDebugValue } from "react";
 
 function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);

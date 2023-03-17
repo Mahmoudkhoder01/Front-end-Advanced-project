@@ -10,9 +10,6 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading/loading";
-import AdminEditCard from "../../Components/AdminCard/adminEditCard";
-import AdminDeleteCard from "../../Components/AdminCard/adminDeleteCard";
-import AddAdminForm from "../../Components/addAdmin/addAdmin";
 import Pagination from "../../Components/paginantion/pagination";
 import Classes from './classroom.module.css'
 import AddClassForm from "../../Components/addclass/addclass";

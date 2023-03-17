@@ -57,7 +57,7 @@ const FixedTables = () => {
     <>
       {isLoading ? (
         <>
-          <AddAdminForm regetData={fetchData}/>
+          <AddAdminForm regetData={fetchData} />
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -103,7 +103,7 @@ const FixedTables = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Pagination />
+          <Pagination regetData={fetchData} />
         </>
       ) : (
         <Loading />

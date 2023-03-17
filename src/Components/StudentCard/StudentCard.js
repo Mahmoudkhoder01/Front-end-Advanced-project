@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./StudentCard.module.css";
 import { MdModeEdit, MdDeleteOutline } from "react-icons/md";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
