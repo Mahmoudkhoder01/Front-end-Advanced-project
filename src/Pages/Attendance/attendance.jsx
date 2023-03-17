@@ -68,7 +68,6 @@ const FixedTables = () => {
     <>
       {isLoading ? (
         <>
-          <AddSectionForm regetData={fetchDataByPagination} />
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -110,10 +109,6 @@ const FixedTables = () => {
                       <SectionEditCard
                         adminValue={row.name}
                         emailValue={row.email}
-                        rowId={row.id}
-                        regetData={fetchDataByPagination}
-                      />
-                      <SectionDeleteCard
                         rowId={row.id}
                         regetData={fetchDataByPagination}
                       />
