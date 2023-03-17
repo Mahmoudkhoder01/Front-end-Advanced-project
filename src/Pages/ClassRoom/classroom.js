@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading/loading";
 import Pagination from "../../Components/paginantion/pagination";
-import Classes from './classroom.module.css'
+import Classes from "./classroom.module.css";
 import AddClassForm from "../../Components/addclass/addclass";
 import ClassEditCard from "../../Components/editclass/editclass";
 import ClassDeleteCard from "../../Components/deleteclass/deleteclass";
@@ -38,26 +38,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const FixedTables = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [counter, setCounter] = useState([]);
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchDataByPagination = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/grade");
-      setData(response.data.message);
+      const response = await axios.get(
+        `http://localhost:8000/api/grade/pagination?page=${page}`
+      );
+      setData(response.data.message.data);
+      setCounter(response.data.message);
       setIsLoading(true);
+      console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
+  };
+
+  useEffect(() => {
+    fetchDataByPagination();
+  }, [page]);
+
+  const handlePageChange = (event, value) => {
+    setPage(parseInt(event.target.textContent));
   };
 
   return (
     <>
       {isLoading ? (
         <>
-          <AddClassForm regetData={fetchData}/>
+          <AddClassForm regetData={fetchDataByPagination} />
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -91,16 +101,20 @@ const FixedTables = () => {
                       <ClassEditCard
                         adminValue={row.name}
                         rowId={row.id}
-                        regetData={fetchData}
+                        regetData={fetchDataByPagination}
                       />
-                      <ClassDeleteCard rowId={row.id} regetData={fetchData} />
+                      <ClassDeleteCard rowId={row.id} regetData={fetchDataByPagination} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <Pagination />
+          <Pagination
+            onChange={handlePageChange}
+            changepage={page}
+            pagesCounter={counter.last_page}
+          />
         </>
       ) : (
         <Loading />

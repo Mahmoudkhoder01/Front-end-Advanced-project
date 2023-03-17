@@ -14,6 +14,7 @@ import Loading from "../../Components/Loading/loading";
 import AddSectionForm from "../../Components/addSection/addSection";
 import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
+import Pagination from "../../Components/paginantion/pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,27 +38,37 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const FixedTables = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [counter, setCounter] = useState([]);
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchDataByPagination = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/section");
-      setData(response.data.message);
+      const response = await axios.get(
+        `http://localhost:8000/api/section/pagination?page=${page}`
+      );
+      setData(response.data.message.data);
+      setCounter(response.data.message);
       setIsLoading(true);
+      console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
 
+  useEffect(() => {
+    fetchDataByPagination();
+  }, [page]);
+
+  const handlePageChange = (event, value) => {
+    setPage(parseInt(event.target.textContent));
+  };
+console.log(data);
   return (
     <>
       {isLoading ? (
         <>
           
-          <AddSectionForm regetData={fetchData}/>
+          <AddSectionForm regetData={fetchDataByPagination}/>
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -94,15 +105,20 @@ const FixedTables = () => {
                         adminValue={row.name}
                         emailValue={row.email}
                         rowId={row.id}
-                        regetData={fetchData}
+                        regetData={fetchDataByPagination}
                       />
-                      <SectionDeleteCard rowId={row.id} regetData={fetchData} />
+                      <SectionDeleteCard rowId={row.id} regetData={fetchDataByPagination} />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          <Pagination
+            onChange={handlePageChange}
+            changepage={page}
+            pagesCounter={counter.last_page}
+          />
         </>
       ) : (
         <Loading />
