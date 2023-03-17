@@ -47,6 +47,7 @@ export default function AddSectionForm(props) {
         sectionData
       );
       console.log(response.data);
+      props.regetData();
       setOpen(false);
     } catch (error) {
       console.error(error);
@@ -81,7 +82,6 @@ export default function AddSectionForm(props) {
     newSection.append("capacity", section.capacity);
     newSection.append("grade", props.gradeId);
     handleAddSection(newSection);
-    props.regetDataFromSection();
   };
 
   return (

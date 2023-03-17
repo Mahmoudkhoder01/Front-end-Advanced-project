@@ -33,10 +33,10 @@ export default function ClassDeleteCard(props) {
       .then((response) => {
         setOpen(false);
         props.regetData();
-        toast.success("Section deleted successfully");
+        toast.success("Class deleted successfully");
       })
       .catch((error) => {
-        console.log("Error deletin setion", error);
+        console.log("Error deleting class", error);
         toast.error(error);
       });
   };

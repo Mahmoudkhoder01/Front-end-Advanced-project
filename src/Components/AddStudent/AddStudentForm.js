@@ -123,6 +123,8 @@ export default function AddStudentForm(props) {
         studentData
       );
       console.log(response.data);
+      props.regetDataAgain()
+      setOpen(false)
     } catch (error) {
       console.error(error);
     }

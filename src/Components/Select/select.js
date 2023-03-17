@@ -20,8 +20,6 @@ function SelectButton(props) {
     props.getSections ? props.getSections(id) : props.getStudents(id);
   };
 
-  console.log(data);
-  console.log(section);
   return (
     <Box sx={{ minWidth: 200 }}>
       <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5, marginLeft: 10 }}>

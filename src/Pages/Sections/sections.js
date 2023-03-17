@@ -38,7 +38,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const FixedTables = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [setions, setSetions] = useState([]);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -57,31 +56,34 @@ const FixedTables = () => {
     }
   };
 
-  const getAllSection = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/section`);
-      setAllSections(response.data.message);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const fetchDataByPagination = async (grade_id) => {
     setSelectedGradeId(grade_id);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
-      );
-      setSections(response.data.message.data);
-      setCounter(response.data.message);
-      setIsLoading(true);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
+        );
+        setSections(response.data.message.data);
+        setCounter(response.data.message);
+        setIsLoading(true);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    
+    const getAllSectionByGradeId = async (grade_id) => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/section/grade/${grade_id}`);
+        setAllSections(response.data.message);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  useEffect(() => {
+    console.log(selectedGradeId);
+    console.log(allSections);
+  
+    useEffect(() => {
     fetchDataByPagination();
   }, [page]);
 
@@ -90,27 +92,29 @@ const FixedTables = () => {
   }, []);
 
   useEffect(() => {
-    getAllSection();
+    getAllSectionByGradeId();
   }, []);
 
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
+
   console.log(sections);
+
   return (
     <>
       {isLoading ? (
         <>
-        <div style={{display: "flex" , alignItems:"center"}}>
-          <SelectButton
-            labelName="Class"
-            options={grades}
-            getSections={fetchDataByPagination}
-          />
-          <AddSectionForm
-            regetDataFromSection={fetchDataByPagination}
-            gradeId={selectedGradeId}
-          />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <SelectButton
+              labelName="Class"
+              options={grades}
+              getSections={fetchDataByPagination}
+            />
+            <AddSectionForm
+              regetData={fetchDataByPagination}
+              gradeId={selectedGradeId}
+            />
           </div>
           <TableContainer
             className={Classes.adminPage}
@@ -121,6 +125,7 @@ const FixedTables = () => {
               },
             }}
           >
+
             <Table>
               <TableHead>Sections</TableHead>
               <TableHead>
