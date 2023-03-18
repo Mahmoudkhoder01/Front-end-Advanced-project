@@ -65,7 +65,7 @@ const FixedTables = () => {
 console.log(data);
   return (
     <>
-      {isLoading ? (
+      {isLoading ? ( 
         <>
           
           <AddSectionForm regetData={fetchDataByPagination}/>
@@ -98,8 +98,8 @@ console.log(data);
                     </StyledTableCell>
                     <StyledTableCell>{row.section_description}</StyledTableCell>
                     <StyledTableCell>{row.capacity}</StyledTableCell>
-                    <StyledTableCell>{row.created_at}</StyledTableCell>
-                    <StyledTableCell>{row.updated_at}</StyledTableCell>
+                    <StyledTableCell>{row.created_at.slice(0,20)}</StyledTableCell>
+                    <StyledTableCell>{row.updated_at.slice(0,20)}</StyledTableCell>
                     <StyledTableCell style={{ display: "flex" }}>
                       <SectionEditCard
                         adminValue={row.name}

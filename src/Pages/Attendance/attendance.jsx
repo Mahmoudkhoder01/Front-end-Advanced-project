@@ -1,316 +1,232 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import StatusRadio from "./StatusRadio";
-import { DataGrid } from "@mui/x-data-grid";
-import {
-  FormControl,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  InputLabel,
-  ListSubheader,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-
-import { Button } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import CoPresentIcon from "@mui/icons-material/CoPresent";
-
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Classes from "../Admins/admin.module.css";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../../Components/Loading/loading";
+import AddSectionForm from "../../Components/addSection/addSection";
+import SectionEditCard from "../../Components/editSection/editSection";
+import SectionDeleteCard from "../../Components/deleteSection/deletesection";
+import Pagination from "../../Components/paginantion/pagination";
+import AttendanceRadioButtons from "../../Components/attendanceRadioButton/attendanceRadioButton";
+import SelectButton from "../../Components/Select/select";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
-const AttendanceContainer = styled.form`
-  height: 80vh;
-  overflow-y: auto;
-`;
-const HeadContainer = styled.div`
-  margin: 15px;
-  padding: 10px 40px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  @media only screen and (max-width: 1080px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#5541D7",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-const GridContainer = styled.div`
-  min-height: 60vh;
-`;
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
-const DateText = styled.h3`
-  font-size: 22px;
-  font-weight: normal;
-  align-self: center;
-  text-transform: uppercase;
-  margin: 0;
-  white-space: nowrap;
-  margin-right: 20px;
-`;
+const FixedTables = () => {
+  const [value, setValue] = useState(dayjs());
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [counter, setCounter] = useState([]);
+  const [page, setPage] = useState(1);
 
-const FilterContainer = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const Attendance = () => {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, "0");
-  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  var yyyy = today.getFullYear();
-  today = yyyy + "-" + mm + "-" + dd;
-
-  const [selectedDate, setSelectedDate] = useState(today);
-  const [students, setStudents] = useState([]);
-  const [student_id, setStudent_id] = useState();
-  const [grade, setgrade] = useState([]);
-  const [Grade_id, setGrade_id] = useState();
+  const [grades, setGrades] = useState([]);
   const [sections, setSections] = useState([]);
-  const [section_id, setSection_id] = useState(undefined);
-  const [disable, setDisable] = useState(false);
-  const [Attendances, setAttendances] = useState({});
-  const columns = [
-    { field: "id", headerName: "Student ID", width: 150 },
-    {
-      field: "first_name",
-      headerName: "First Name",
-      width: 160,
-    },
-    {
-      field: "last_name",
-      headerName: "Last Name",
-      width: 160,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 300,
-      // renderCell: (params) => {
-      //   let id = params.rows.id;
-      //   let attendances=params.row.attendance
-      //   attendances.map((attendance=>{
-      //     attendance.date===date
-      //   }))
-      //   if (attendance)
-      //     <FormControl>
-      //       <RadioGroup value={attendance} row name="controlled-radio-buttons-group" required>
-      //         <FormControlLabel control={<Radio />} />
-      //       </RadioGroup>
-      //     </FormControl>;
-      // },
-    },
-  ];
-  // const handleChange = (e) => {
-  //   setAttendance(parseInt(e.target.value));
-  //   Attendance({
-  //     ...Attendances,
-  //     status: parseInt(e.target.value),
-  //   });
-  // };
+  const [selectedSectionId, setSelectedSectionId] = useState("");
 
-  useEffect(() => {
-    if (section_id) {
-      getStudents(section_id);
-    }
-  }, [section_id]);
-  // fetch grades
+  const [attendanceBysectionId, setAttendanceBysectionId] = useState([]);
+  const [attendanceByDate, setAttendanceByDate] = useState([]);
 
-  useEffect(() => {
-    const getgrade = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8000/api/grade`);
-        setgrade(res.data.message);
-        console.log(res.data.message);
-        setGrade_id(res.data.message[0].id);
-        console.log(grade);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getgrade();
-  }, []);
-  // get section with grade
-  useEffect(() => {
-    if (Grade_id) {
-      let sections = [];
-      grade.map((c) => {
-        if (c.id === Grade_id) {
-          sections = c.section;
-        }
-      });
-      setSections(sections);
-      setSection_id(sections[0].id);
-    }
-  }, [Grade_id]);
-  //get students by section
-  const getStudents = async (section_id) => {
+  const getGrades = async () => {
     try {
-      const res2 = await axios.get(
-        `http://localhost:8000/api/student_section/${section_id}`
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getSections = async (grade_id) => {
+    setSelectedSectionId(grade_id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/section/grade/${grade_id}`
       );
-      console.log(res2.data.message);
-      setStudents(res2.data.message);
-      setStudent_id(res2.data.message[0].id);
+      setSections(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchDataByPagination = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/students/section/${selectedSectionId}/pagination?page=${page}`
+      );
+      setData(response.data.message.data);
+      setCounter(response.data.message);
+      setIsLoading(true);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  const getAttendance = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/attendance/section/${selectedSectionId}`
+      );
+      setAttendanceBysectionId(res.data.message);
+      filterAttendanceByDate(res.data.message);
+      console.log(res.data.message);
+      console.log(attendanceBysectionId);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const filterAttendanceByDate = (data) => {
+    let filtered = data.filter(
+      (status) => status.attendance_date === value.$d.toISOString().slice(0, 10)
+    );
+    setAttendanceByDate(filtered);
+  };
+
+  // const matchStudentAttend = (id) =>{
+  //  let studentAtten =   attendanceByDate.filter(attendance =>attendance.student_id === id)
+  // }
+
   useEffect(() => {
-    const getAttendance = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8000/api/attendance/section/${section_id}`
-        );
-        setAttendances(res.data.message);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    fetchDataByPagination();
+  }, [page]);
 
+  useEffect(() => {
+    getGrades();
+  }, []);
+
+  useEffect(() => {
     getAttendance();
-  }, [section_id]);
-  console.log(Attendances);
+  }, [selectedSectionId]);
 
-  // const handleSubmit = (e) => {
-  //   console.log("hello1");
-
-  //   e.preventDefault();
-  //   if (Object.keys(attendances).length === 0) return;
-  //   let Attendances = [];
-  //   Object.keys(attendances).forEach((key) => {
-  //     Attendances = [
-  //       ...Attendances,
-  //       {
-  //         student_id: ~~key,
-  //         attendance_date: selectedDate,
-  //         status: Attendances,
-  //       },
-  //     ];
-  //   });
-  //   console.log(Attendances);
-  //   Attendances.forEach(async (attendance) => {
-  //     try {
-  //       const res = await axios.post(`http://localhost:8000/api/attendance`);
-  //       console.log(res);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   });
-
-  //   setAttendances({});
-  // };
+  const handlePageChange = (event, value) => {
+    setPage(parseInt(event.target.textContent));
+  };
+  console.log(data);
+  console.log(attendanceBysectionId);
+  console.log(attendanceByDate);
+  console.log(value.$d.toISOString().slice(0, 10));
   return (
     <>
-      {
-        <CoPresentIcon
-          style={{
-            fontSize: "50px",
-            color: "#204B64",
-            marginLeft: "300px",
-          }}
+      <div>
+        <SelectButton
+          labelName="Class"
+          options={grades}
+          getSections={getSections}
         />
-      }
-      <AttendanceContainer>
-        <HeadContainer>
-          <DateText>Today's date : {selectedDate}</DateText>
-          <FilterContainer>
-            <FormControl variant="standard" sx={{ width: "100px" }}>
-              <InputLabel>Class</InputLabel>
-              <Select
-                label="Class"
-                onChange={(e) => {
-                  setGrade_id(e.target.value);
-                }}
-                value={Grade_id || ""}
-                name="std__Grade_id"
-                required
-              >
-                <ListSubheader>Choose a class</ListSubheader>
-                <MenuItem value="none" hidden>
-                  Choose a class
-                </MenuItem>
-                {grade.map((c) => (
-                  <MenuItem key={c.id} value={c.id}>
-                    {c.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl variant="standard" sx={{ width: "100px" }}>
-              <InputLabel>Section</InputLabel>
-              <Select
-                label="Section"
-                onChange={(e) => setSection_id(e.target.value)}
-                value={section_id || ""}
-                name="section_id"
-                required
-              >
-                <ListSubheader>Choose a section</ListSubheader>
-                {sections.map((c) => (
-                  <MenuItem
-                    key={c.id}
-                    value={c.id}
-                    onClick={() => {
-                      getStudents(c.id);
-                    }}
-                  >
-                    {c.section_description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </FilterContainer>
-          <Button
-            variant="contained"
-            color="success"
-            size="medium"
-            style={{ marginRight: "8px" }}
-            type="submit"
-            endIcon={<SaveIcon />}
-            students
-            disabled={disable}
-          >
-            Save Students
-          </Button>
-          <Button
-            variant="contained"
-            size="medium"
-            style={{ marginRight: "8px" }}
-            type="button"
-            endIcon={<VisibilityIcon />}
-          >
-            View Attendances
-          </Button>
-        </HeadContainer>
-
-        <GridContainer style={{ marginLeft: "200px" }}>
-          <DataGrid
-            rowHeight={75}
-            rows={students}
-            disableSelectionOnClick
-            columns={columns}
-            autoHeight
-            checkboxSelection
-            sx={{
-              "& .one": {
-                bgcolor: "#7879F1 !important",
+        <SelectButton
+          labelName="Section"
+          options={sections}
+          getStudents={fetchDataByPagination}
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              label="Date"
+              defaultValue={dayjs()}
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+      </div>
+      {isLoading ? (
+        <>
+          <TableContainer
+            className={Classes.adminPage}
+            component={Paper}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 10, page: 0 },
               },
-              "& .MuiDataGrid-cell:hover": {
-                color: "#000000",
-                cursor: "pointer",
-              },
-              fontSize: 14,
             }}
+          >
+            <Table>
+              <TableHead>Attendance</TableHead>
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>ID</StyledTableCell>
+                  <StyledTableCell>FIRST NAME</StyledTableCell>
+                  <StyledTableCell>LAST NAME</StyledTableCell>
+                  <StyledTableCell>TAKE ATTENDANCE</StyledTableCell>
+                  <StyledTableCell>CRAETED AT</StyledTableCell>
+                  <StyledTableCell>UPDATET AT</StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.id}
+                    </StyledTableCell>
+                    <StyledTableCell>{row.first_name}</StyledTableCell>
+                    <StyledTableCell>{row.last_name}</StyledTableCell>
+                    <StyledTableCell>
+                    {/* <AttendanceRadioButtons /> */}
+                      <AttendanceRadioButtons attendanceByDate={attendanceByDate} studentId={row.id} />
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {row.created_at.slice(0, 20)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {row.updated_at.slice(0, 20)}
+                    </StyledTableCell>
+                    <StyledTableCell style={{ display: "flex" }}>
+                      <SectionEditCard
+                        adminValue={row.name}
+                        emailValue={row.email}
+                        rowId={row.id}
+                        regetData={fetchDataByPagination}
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Pagination
+            onChange={handlePageChange}
+            changepage={page}
+            pagesCounter={counter.last_page}
           />
-        </GridContainer>
-      </AttendanceContainer>
+        </>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };
 
-export default Attendance;
+export default FixedTables;

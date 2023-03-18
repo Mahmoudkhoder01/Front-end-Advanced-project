@@ -20,7 +20,9 @@ const StatusRadio = (props) => {
   useEffect(() => {
     const getAttendance = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/attendance`);
+        const res = await axios.get(
+          `http://localhost:8000/api/attendance/section/${props.selectedSectionId}`
+        );
         setStatuses(res.data.message);
         console.log(res.data.message);
         console.log(statuses);
@@ -28,9 +30,11 @@ const StatusRadio = (props) => {
         console.log(err);
       }
     };
-
+    
     getAttendance();
   }, []);
+
+  console.log(statuses)
 
   const handleChange = (e) => {
     setStatus(parseInt(e.target.value));
