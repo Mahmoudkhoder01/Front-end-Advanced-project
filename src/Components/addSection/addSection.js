@@ -47,14 +47,16 @@ export default function AddSectionForm(props) {
         sectionData
       );
       console.log(response.data);
-      props.regetData();
       setOpen(false);
+      props.regetData();
+      console.log("Hello world");
+      console.log(props.regetData());
+      toast.success("Section added succefully");
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);
     }
   };
-
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   //   axios
@@ -82,6 +84,7 @@ export default function AddSectionForm(props) {
     newSection.append("capacity", section.capacity);
     newSection.append("grade", props.gradeId);
     handleAddSection(newSection);
+    props.regetData();
   };
 
   return (
@@ -155,18 +158,6 @@ export default function AddSectionForm(props) {
           </Box>
         </Modal>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 }

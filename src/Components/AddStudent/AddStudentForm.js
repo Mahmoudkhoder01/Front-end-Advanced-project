@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {  toast } from "react-toastify";
 
 // import Box from '@mui/material/Box';
 // import Input from '@mui/material/Input';
@@ -123,8 +124,10 @@ export default function AddStudentForm(props) {
         studentData
       );
       console.log(response.data);
-      props.regetDataAgain()
       setOpen(false)
+      props.regetDataAgain()
+      toast.success("Student added succefully");
+
     } catch (error) {
       console.error(error);
     }

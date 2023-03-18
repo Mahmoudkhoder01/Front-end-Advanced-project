@@ -39,10 +39,8 @@ export default function SectionEditCard(props) {
     setUpdatedData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleEdit = (event, id) => {
+  const handleEdit = (event) => {
     event.preventDefault();
-    console.log(id);
-
     axios
       .post(`http://localhost:8000/api/section/${props.rowId}`, {
         _method: "PATCH",
@@ -130,7 +128,7 @@ export default function SectionEditCard(props) {
                     color="primary"
                     onClick={handleEdit}
                   >
-                    Add New Section
+                    Edit Section
                   </Button>
                 </Grid>
               </Grid>

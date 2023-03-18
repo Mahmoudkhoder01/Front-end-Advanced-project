@@ -61,29 +61,32 @@ const FixedTables = () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
-        );
-        setSections(response.data.message.data);
-        setCounter(response.data.message);
-        setIsLoading(true);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-    
-    const getAllSectionByGradeId = async (grade_id) => {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/section/grade/${grade_id}`);
-        setAllSections(response.data.message);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+      );
+      setSections(response.data.message.data);
+      setCounter(response.data.message);
+      setIsLoading(true);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
-    console.log(selectedGradeId);
-    console.log(allSections);
-  
-    useEffect(() => {
+  const getAllSectionByGradeId = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/section/grade/${selectedGradeId}`
+      );
+      setAllSections(response.data.message);
+      setIsLoading(true);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log(allSections);
+  console.log(selectedGradeId);
+
+  useEffect(() => {
     fetchDataByPagination();
   }, [page]);
 
@@ -93,9 +96,9 @@ const FixedTables = () => {
 
   useEffect(() => {
     getAllSectionByGradeId();
-  }, []);
+  }, [selectedGradeId]);
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
   };
 
@@ -112,7 +115,7 @@ const FixedTables = () => {
               getSections={fetchDataByPagination}
             />
             <AddSectionForm
-              regetData={fetchDataByPagination}
+              regetData={getAllSectionByGradeId}
               gradeId={selectedGradeId}
             />
           </div>
@@ -125,7 +128,6 @@ const FixedTables = () => {
               },
             }}
           >
-
             <Table>
               <TableHead>Sections</TableHead>
               <TableHead>
@@ -156,11 +158,11 @@ const FixedTables = () => {
                             adminValue={row.name}
                             emailValue={row.email}
                             rowId={row.id}
-                            regetData={fetchDataByPagination}
+                            regetData={getAllSectionByGradeId}
                           />
                           <SectionDeleteCard
                             rowId={row.id}
-                            regetData={fetchDataByPagination}
+                            regetData={getAllSectionByGradeId}
                           />
                         </StyledTableCell>
                       </StyledTableRow>
