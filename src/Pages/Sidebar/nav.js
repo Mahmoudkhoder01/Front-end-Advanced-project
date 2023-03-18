@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 // Import Css Files
 import classes from "./nav.module.css";
@@ -15,7 +16,10 @@ import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogout } from "react-icons/hi";
 
 function Sidebar(props) {
-  if (useLocation().pathname === "/login") return null;
+  const [cookies] = useCookies(["name"]);
+  const isSuper = !!cookies.isSuperadmin;
+  console.log(cookies);
+  if (useLocation().pathname === "/") return null;
   return (
     <Fragment>
       <nav className={classes.sidebar}>
@@ -28,7 +32,7 @@ function Sidebar(props) {
         </div>
 
         <div className={classes.bar}>
-          <NavLink to={"/"}>
+          <NavLink to={"/dashboard"}>
             <RxDashboard className={classes.icons} size={25} />
             <b></b>
             <u></u>
@@ -58,12 +62,15 @@ function Sidebar(props) {
             <u></u>
             <span>Attendance</span>
           </NavLink>
-          <NavLink to={"/admin"}>
-            <FaUserTie className={classes.icons} size={25} />
-            <b></b>
-            <u></u>
-            <span>Admins</span>
-          </NavLink>
+          {isSuper === "1" ? (
+            <NavLink to={"/admin"}>
+              <FaUserTie className={classes.icons} size={25} />
+              <b></b>
+              <u></u>
+              <span>Admins</span>
+            </NavLink>
+          ) : <Outlet/>}
+
           <NavLink to={"/settings"}>
             <FiSettings className={classes.icons} size={25} />
             <b></b>

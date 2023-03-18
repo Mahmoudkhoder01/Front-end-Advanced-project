@@ -42,21 +42,21 @@ export default function AddSectionForm(props) {
 
   const handleAddSection = async (sectionData) => {
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/section`,
-        sectionData
-      );
-      console.log(response.data);
-      setOpen(false);
-      props.regetData();
-      console.log("Hello world");
-      console.log(props.regetData());
-      toast.success("Section added succefully");
+      const response = await axios
+        .post(`http://localhost:8000/api/section`, sectionData)
+        .then(async (response) => {
+          setOpen(false);
+          props.regetData();
+          console.log("Hello world");
+          console.log(await props.regetData());
+          toast.success("Section added succefully");
+        });
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);
     }
   };
+  
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   //   axios
@@ -84,7 +84,6 @@ export default function AddSectionForm(props) {
     newSection.append("capacity", section.capacity);
     newSection.append("grade", props.gradeId);
     handleAddSection(newSection);
-    props.regetData();
   };
 
   return (
@@ -157,6 +156,7 @@ export default function AddSectionForm(props) {
             </form>
           </Box>
         </Modal>
+        <ToastContainer/>
       </div>
     </>
   );

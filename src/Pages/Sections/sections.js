@@ -72,12 +72,16 @@ const FixedTables = () => {
 
   const getAllSectionByGradeId = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/section/grade/${selectedGradeId}`
-      );
-      setAllSections(response.data.message);
-      setIsLoading(true);
-      console.log(response.data);
+      const response = await axios
+        .get(
+          `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
+        )
+        .then((response) => {
+          setAllSections(response.data.message.data);
+          setCounter(response.data.message);
+          setIsLoading(true);
+          console.log(response.data);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +100,7 @@ const FixedTables = () => {
 
   useEffect(() => {
     getAllSectionByGradeId();
-  }, [selectedGradeId]);
+  }, [selectedGradeId, page]);
 
   const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
@@ -141,8 +145,8 @@ const FixedTables = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sections
-                  ? sections.map((row) => (
+                {allSections
+                  ? allSections.map((row) => (
                       <StyledTableRow key={row.id}>
                         <StyledTableCell component="th" scope="row">
                           {row.id}

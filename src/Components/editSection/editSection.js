@@ -46,7 +46,6 @@ export default function SectionEditCard(props) {
         _method: "PATCH",
         section_description: updatedData.section_description,
         capacity: updatedData.capacity,
-        grade: updatedData.grade,
       })
       .then((response) => {
         console.log(response);
@@ -57,7 +56,15 @@ export default function SectionEditCard(props) {
         });
         setOpen(false);
         props.regetData();
-        toast.success("Section edited successfully");
+        toast.success("Section edited successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((error) => {
         console.log("Error editing admin", error);
