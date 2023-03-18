@@ -16,6 +16,12 @@ import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
 import Pagination from "../../Components/paginantion/pagination";
 import AttendanceRadioButtons from "../../Components/attendanceRadioButton/attendanceRadioButton";
+import SelectButton from "../../Components/Select/select";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,15 +43,46 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const FixedTables = () => {
+  const [value, setValue] = useState(dayjs());
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
 
+  const [grades, setGrades] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [selectedSectionId, setSelectedSectionId] = useState("");
+
+  const [attendanceBysectionId, setAttendanceBysectionId] = useState([]);
+  const [attendanceByDate, setAttendanceByDate] = useState([]);
+
+  const getGrades = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getSections = async (grade_id) => {
+    setSelectedSectionId(grade_id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/section/grade/${grade_id}`
+      );
+      setSections(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const fetchDataByPagination = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/students/section/2/pagination?page=${page}`
+        `http://localhost:8000/api/students/section/${selectedSectionId}/pagination?page=${page}`
       );
       setData(response.data.message.data);
       setCounter(response.data.message);
@@ -56,16 +93,74 @@ const FixedTables = () => {
     }
   };
 
+  const getAttendance = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/attendance/section/${selectedSectionId}`
+      );
+      setAttendanceBysectionId(res.data.message);
+      filterAttendanceByDate(res.data.message);
+      console.log(res.data.message);
+      console.log(attendanceBysectionId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const filterAttendanceByDate = (data) => {
+    let filtered = data.filter(
+      (status) => status.attendance_date === value.$d.toISOString().slice(0, 10)
+    );
+    setAttendanceByDate(filtered);
+  };
+
+  // const matchStudentAttend = (id) =>{
+  //  let studentAtten =   attendanceByDate.filter(attendance =>attendance.student_id === id)
+  // }
+
   useEffect(() => {
     fetchDataByPagination();
   }, [page]);
+
+  useEffect(() => {
+    getGrades();
+  }, []);
+
+  useEffect(() => {
+    getAttendance();
+  }, [selectedSectionId]);
 
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
   console.log(data);
+  console.log(attendanceBysectionId);
+  console.log(attendanceByDate);
+  console.log(value.$d.toISOString().slice(0, 10));
   return (
     <>
+      <div>
+        <SelectButton
+          labelName="Class"
+          options={grades}
+          getSections={getSections}
+        />
+        <SelectButton
+          labelName="Section"
+          options={sections}
+          getStudents={fetchDataByPagination}
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              label="Date"
+              defaultValue={dayjs()}
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+      </div>
       {isLoading ? (
         <>
           <TableContainer
@@ -98,7 +193,10 @@ const FixedTables = () => {
                     </StyledTableCell>
                     <StyledTableCell>{row.first_name}</StyledTableCell>
                     <StyledTableCell>{row.last_name}</StyledTableCell>
-                    <StyledTableCell><AttendanceRadioButtons/></StyledTableCell>
+                    <StyledTableCell>
+                    {/* <AttendanceRadioButtons /> */}
+                      <AttendanceRadioButtons attendanceByDate={attendanceByDate} studentId={row.id} />
+                    </StyledTableCell>
                     <StyledTableCell>
                       {row.created_at.slice(0, 20)}
                     </StyledTableCell>
