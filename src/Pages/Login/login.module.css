@@ -91,9 +91,10 @@
         transform: translate(-60px,60px);
     }
 }
-@media (max-width:300px){
+/* @media (max-width:300px){
   .loginForm{
-    right: 10%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .password,.email{
         height: 10px;
@@ -106,4 +107,4 @@
     width: 40%;
   }
  
-}
+} */
