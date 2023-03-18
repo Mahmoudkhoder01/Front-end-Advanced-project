@@ -30,7 +30,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.user.isSuperadmin);
-        setSuperAdmin()
+        setSuperAdmin();
         if (data.access_token) {
           setCookie("auth", data.access_token);
           setLoggedIn(true);
@@ -64,6 +64,7 @@ const Login = () => {
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={12}>
                   <TextField
+                    className={classes.email}
                     type="email"
                     name="email"
                     placeholder={"Enter your email address"}
@@ -76,7 +77,8 @@ const Login = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    type="password"   
+                    className={classes.password}
+                    type="password"
                     name="password"
                     placeholder={"Enter your password"}
                     label="Password"
