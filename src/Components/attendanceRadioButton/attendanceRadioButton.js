@@ -32,7 +32,11 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 };
 
-export default function UseRadioGroup(props) {
+export default function UseRadioGroup({
+  studentId,
+  attendanceByDate,
+  handleAttendanceChange,
+}) {
   // const [attendance, setAttendance] = useState(null)
   // let studentAtten = null;
 
@@ -47,18 +51,32 @@ export default function UseRadioGroup(props) {
   //   matchStudentAttend(props.studentId);
   // }, []);
 
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    const attendance = attendanceByDate?.find(
+      (status) => status.student_id === studentId
+    );
+    if (attendance) {
+      setValue(attendance.status);
+    } else {
+      setValue(null)
+    }
+  }, [attendanceByDate, studentId]);
+
+  const handleChange = (event) => {
+    const attendance_status = event.target.value;
+    setValue(attendance_status);
+    handleAttendanceChange(studentId, attendance_status);
+  };
+
   return (
     <>
       <RadioGroup
-        name="use-radio-group"
-        defaultValue={
-          props.attendanceByDate.filter(
-            (attendance) => attendance.student_id === props.studentId
-          )[0]
-            ?  props.attendanceByDate?.filter(
-                (attendance) => attendance.student_id === props.studentId
-              )[0].status :"present"
-        }
+        // defaultValue={attendanceByDate}
+        name="attendance"
+        value={value}
+        onChange={handleChange}
         style={{ display: "flex", flexDirection: "row" }}
       >
         <MyFormControlLabel

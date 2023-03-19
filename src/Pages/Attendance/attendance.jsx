@@ -117,6 +117,15 @@ const FixedTables = () => {
   // const matchStudentAttend = (id) =>{
   //  let studentAtten =   attendanceByDate.filter(attendance =>attendance.student_id === id)
   // }
+  const [students, setStudents] = useState([]);
+  const handleAttendanceChange = (event, index) => {
+    const { value } = event.target;
+    setStudents((prevState) => {
+      const updatedStudents = [...prevState];
+      updatedStudents[index].attendance = value;
+      return updatedStudents;
+    });
+  };
 
   useEffect(() => {
     fetchDataByPagination();
@@ -129,6 +138,10 @@ const FixedTables = () => {
   useEffect(() => {
     getAttendance();
   }, [selectedSectionId]);
+
+  useEffect(() => {
+    getAttendance();
+  }, [value]);
 
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
@@ -194,8 +207,21 @@ const FixedTables = () => {
                     <StyledTableCell>{row.first_name}</StyledTableCell>
                     <StyledTableCell>{row.last_name}</StyledTableCell>
                     <StyledTableCell>
-                    {/* <AttendanceRadioButtons /> */}
-                      <AttendanceRadioButtons attendanceByDate={attendanceByDate} studentId={row.id} />
+                      {/* <AttendanceRadioButtons /> */}
+                      <div>
+                        {attendanceByDate.filter(
+                          (attendance) => attendance.student_id === row.id
+                        )[0]
+                          ? attendanceByDate?.filter(
+                              (attendance) => attendance.student_id === row.id
+                            )[0].status
+                          : null}
+                      </div>
+                      <AttendanceRadioButtons
+                        attendanceByDate={attendanceByDate}
+                        studentId={row.id}
+                        handleAttendanceChange={handleAttendanceChange}
+                      />
                     </StyledTableCell>
                     <StyledTableCell>
                       {row.created_at.slice(0, 20)}
