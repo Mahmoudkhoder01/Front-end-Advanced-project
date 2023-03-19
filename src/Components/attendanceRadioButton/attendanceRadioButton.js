@@ -32,25 +32,7 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 };
 
-export default function UseRadioGroup({
-  studentId,
-  attendanceByDate,
-  handleAttendanceChange,
-}) {
-  // const [attendance, setAttendance] = useState(null)
-  // let studentAtten = null;
-
-  // const matchStudentAttend = (id) => {
-  //   studentAtten = props.attendanceByDate?.filter(
-  //     (attendance) => attendance.student_id === id
-  //   );
-  //   console.log(studentAtten);
-  //   // setAttendance(studentAtten)
-  // };
-  // useEffect(() => {
-  //   matchStudentAttend(props.studentId);
-  // }, []);
-
+export default function UseRadioGroup({ studentId, attendanceByDate, handleAttendanceChange}) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -60,15 +42,17 @@ export default function UseRadioGroup({
     if (attendance) {
       setValue(attendance.status);
     } else {
-      setValue(null)
+      setValue(null);
     }
   }, [attendanceByDate, studentId]);
 
   const handleChange = (event) => {
     const attendance_status = event.target.value;
+    console.log(event.target.value);
     setValue(attendance_status);
     handleAttendanceChange(studentId, attendance_status);
   };
+
 
   return (
     <>
@@ -78,14 +62,26 @@ export default function UseRadioGroup({
         value={value}
         onChange={handleChange}
         style={{ display: "flex", flexDirection: "row" }}
+        disabled={attendanceByDate.length !== 0}
       >
         <MyFormControlLabel
           value="present"
           label="Present"
           control={<Radio />}
+          disabled={attendanceByDate.length !== 0}
         />
-        <MyFormControlLabel value="late" label="Late" control={<Radio />} />
-        <MyFormControlLabel value="absent" label="Absent" control={<Radio />} />
+        <MyFormControlLabel
+          value="late"
+          label="Late"
+          control={<Radio />}
+          disabled={attendanceByDate.length !== 0}
+        />
+        <MyFormControlLabel
+          value="absent"
+          label="Absent"
+          control={<Radio />}
+          disabled={attendanceByDate.length !== 0}
+        />
       </RadioGroup>
     </>
   );

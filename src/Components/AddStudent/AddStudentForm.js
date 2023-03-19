@@ -74,16 +74,6 @@ export default function AddStudentForm(props) {
   const [selectedDateFormat, setSelectedDateFormat] = useState(null);
 
   const handleDateChange = (date) => {
-    // const inputDate = date.$d.toLocaleDateString("en-US", {
-    //   year: "numeric",
-    //   month: "numeric",
-    //   day: "numeric",
-    // });
-    // const [month, day, year] = inputDate.split("/");
-    // const outputDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
-    //   2,
-    //   "0"
-    // )}`;
     setSelectedDate(date);
     const originalDate = date.$d;
     console.log(originalDate);

@@ -21,6 +21,8 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+import SaveIcon from "@mui/icons-material/Save";
 import dayjs from "dayjs";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -55,6 +57,7 @@ const FixedTables = () => {
 
   const [attendanceBysectionId, setAttendanceBysectionId] = useState([]);
   const [attendanceByDate, setAttendanceByDate] = useState([]);
+  const [records, setRecords] = useState([]);
 
   const getGrades = async () => {
     try {
@@ -100,12 +103,26 @@ const FixedTables = () => {
       );
       setAttendanceBysectionId(res.data.message);
       filterAttendanceByDate(res.data.message);
+      attendanceRecords();
       console.log(res.data.message);
       console.log(attendanceBysectionId);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const handleTakeAttendance = async()=>{
+    try {
+      console.log(records)
+      const response = await axios.post(
+        `http://localhost:8000/api/attendanceforAll`,
+        {attendances:records}
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const filterAttendanceByDate = (data) => {
     let filtered = data.filter(
@@ -117,15 +134,33 @@ const FixedTables = () => {
   // const matchStudentAttend = (id) =>{
   //  let studentAtten =   attendanceByDate.filter(attendance =>attendance.student_id === id)
   // }
-  const [students, setStudents] = useState([]);
-  const handleAttendanceChange = (event, index) => {
-    const { value } = event.target;
-    setStudents((prevState) => {
-      const updatedStudents = [...prevState];
-      updatedStudents[index].attendance = value;
-      return updatedStudents;
+
+  function handleAttendanceChange(studentId, status) {
+    // update attendance status for student with the given ID
+    const updatedAttendance = records.map((studentAttendance) => {
+      if (studentAttendance.student_id === studentId) {
+        return { ...studentAttendance, status: status };
+      } else {
+        return studentAttendance;
+      }
     });
-  };
+    setRecords(updatedAttendance);
+    console.log("hey");
+  }
+
+  function attendanceRecords() {
+    let attendanceRecords = [];
+    data.map((student) => {
+      attendanceRecords.push({
+        attendance_date: value.$d.toISOString().slice(0, 10),
+        section_id: student.section_id,
+        status: "",
+        student_id: student.id,
+      });
+    });
+
+    setRecords(attendanceRecords);
+  }
 
   useEffect(() => {
     fetchDataByPagination();
@@ -143,12 +178,18 @@ const FixedTables = () => {
     getAttendance();
   }, [value]);
 
+  useEffect(() => {
+    console.log(records);
+  }, [records]);
+
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
+
   console.log(data);
   console.log(attendanceBysectionId);
   console.log(attendanceByDate);
+  console.log(records);
   console.log(value.$d.toISOString().slice(0, 10));
   return (
     <>
@@ -242,6 +283,9 @@ const FixedTables = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <button onClick={handleTakeAttendance}>
+            <SaveIcon />
+          </button>
           <Pagination
             onChange={handlePageChange}
             changepage={page}
