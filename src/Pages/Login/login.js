@@ -33,7 +33,6 @@ const Login = () => {
         console.log(data.user.isSuperadmin);
         if (data.access_token) {
           setCookie("auth", data.access_token);
-          setCookie("isSuperAdmin", data.user.isSuperadmin);
           setLoggedIn(true);
           navigate("/dashboard");
         }

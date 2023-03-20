@@ -50,7 +50,7 @@ const FixedTables = () => {
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [students, setStudents] = useState([]);
   const [grades, setGrades] = useState([]);
   const [sections, setSections] = useState([]);
   const [selectedSectionId, setSelectedSectionId] = useState("");
@@ -91,6 +91,18 @@ const FixedTables = () => {
       setCounter(response.data.message);
       setIsLoading(true);
       console.log(response);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/students/section/${selectedSectionId}`
+      );
+      setStudents(response.data.message);
+      console.log(response.data.message);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -150,7 +162,7 @@ const FixedTables = () => {
 
   function attendanceRecords() {
     let attendanceRecords = [];
-    data.map((student) => {
+    students.map((student) => {
       attendanceRecords.push({
         attendance_date: value.$d.toISOString().slice(0, 10),
         section_id: student.section_id,
@@ -179,6 +191,10 @@ const FixedTables = () => {
   }, [value]);
 
   useEffect(() => {
+    fetchData();
+  }, [selectedSectionId]);
+
+  useEffect(() => {
     console.log(records);
   }, [records]);
 
@@ -186,7 +202,7 @@ const FixedTables = () => {
     setPage(parseInt(event.target.textContent));
   };
 
-  console.log("student",data);
+  console.log("student", data);
   console.log(attendanceBysectionId);
   console.log(attendanceByDate);
   console.log(records);
