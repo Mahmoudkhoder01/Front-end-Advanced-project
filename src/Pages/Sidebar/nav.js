@@ -15,11 +15,13 @@ import { FaUserCheck, FaUserTie } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
 
 function Sidebar(props) {
-  const [cookies, removeCookie] = useCookies(["auth"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
   console.log(cookies);
+
   const logout = () => {
     removeCookie("auth");
   };
+
   if (useLocation().pathname === "/") return null;
 
   const authCookie = Cookies.get("auth");
@@ -30,8 +32,7 @@ function Sidebar(props) {
       const dataUser = JSON.parse(authCookie);
       console.log(dataUser);
       const token = dataUser.access_token;
-      isSuper = dataUser.user.isSuperadmin; // assign value
-      // rest of the code
+      isSuper = dataUser.user.isSuperadmin;
     } catch (error) {
       console.error("Invalid auth cookie:", authCookie);
     }
