@@ -31,7 +31,6 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.user.isSuperadmin);
-        setSuperAdmin();
         if (data.access_token) {
           setCookie("auth", data.access_token);
           setCookie("isSuperAdmin", data.user.isSuperadmin);

@@ -106,7 +106,6 @@ const FixedTables = () => {
     setPage(parseInt(event.target.textContent));
   };
   console.log(sections);
-  console.log(data);
   return (
     <>
       {isLoading ? (
