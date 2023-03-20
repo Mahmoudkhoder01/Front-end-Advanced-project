@@ -1,6 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
+import dayjs from "dayjs";
+import { ToastContainer, toast } from "react-toastify";
+
+import { MdOutlinePersonOutline } from "react-icons/md";
+
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -61,16 +67,6 @@ export default function AddStudentForm(props) {
   const [selectedDateFormat, setSelectedDateFormat] = useState(null);
 
   const handleDateChange = (date) => {
-    // const inputDate = date.$d.toLocaleDateString("en-US", {
-    //   year: "numeric",
-    //   month: "numeric",
-    //   day: "numeric",
-    // });
-    // const [month, day, year] = inputDate.split("/");
-    // const outputDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
-    //   2,
-    //   "0"
-    // )}`;
     setSelectedDate(date);
     const originalDate = date.$d;
     console.log(originalDate);
@@ -123,6 +119,7 @@ export default function AddStudentForm(props) {
         `http://localhost:8000/api/students`,
         studentData
       );
+      toast.success("Student added successfully")
       console.log(response.data);
       setOpen(false)
       props.regetDataAgain()
@@ -130,6 +127,7 @@ export default function AddStudentForm(props) {
 
     } catch (error) {
       console.error(error);
+      toast.error("Student added failed")
     }
   };
 

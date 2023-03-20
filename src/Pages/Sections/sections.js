@@ -105,9 +105,8 @@ const FixedTables = () => {
   const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
   };
-
   console.log(sections);
-
+  console.log(data);
   return (
     <>
       {isLoading ? (
@@ -123,6 +122,7 @@ const FixedTables = () => {
               gradeId={selectedGradeId}
             />
           </div>
+
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -172,6 +172,7 @@ const FixedTables = () => {
                       </StyledTableRow>
                     ))
                   : ""}
+
               </TableBody>
             </Table>
           </TableContainer>

@@ -6,6 +6,7 @@
     position: relative;
     overflow: hidden;
     height: 100vh;
+    width: 60%;
 }
 
 .loginTitle{
@@ -22,9 +23,10 @@
 }
 
 .loginForm{
-    display: grid;
+    display: flex;
     place-items: center;
-    flex-basis: 40%;
+    width: 40%;
+    padding: 0 20px;
 }
 
 .formCentered{
@@ -43,3 +45,98 @@
     background-color: #a797f0 !important;
 }
 
+@media (max-width: 1200px) {
+    .loginForm {
+        width: 50%;
+    }
+
+    .svgImag {
+        width: 50%;
+    }
+
+    .loginImage {
+        width: 450px;
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .loginForm {
+        width: 100%;
+    }
+
+    .svgImage {
+        display: none;
+    }
+
+    .login {
+        height: 100vh;
+        justify-content: center;
+    }
+}
+/* @media  (max-width:1300px) {
+    .svgImage .image {
+        height: 100vh;
+        width: 90vh;
+    }
+
+    .loginImage {
+        height: 70%;
+        width: 70%;
+    }
+}
+@media (min-width:880px) and (max-width:1000px) {
+    .svgImage .image {
+        height: 100vh;
+        width: 60vh;
+    }
+    .loginImage{
+        height: 50%;
+        width: 50%;
+    }
+    .loginForm{
+        width: calc(100%-50vh);
+    }
+}
+@media (max-width:850px){
+    .svgImage{
+        display: none;
+        
+    }
+    .loginForm{
+        width: 30vh;
+        height: 10vh;
+        position: absolute;
+        left: 20%;
+        right: 20%;
+        top: 50%;
+
+    }
+   
+    .loginForm::after{
+        content: url(../../../public/Assets/login.svg);
+        position: fixed;
+        top: 10%;
+        left: 30%;
+        width: 30vh;
+        height: 30vh;
+        transform: translate(-60px,60px);
+    }
+} */
+/* @media (max-width:480px){
+  .loginForm{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .password,.email{
+        height: 10px;
+        width: 200px;
+        margin-top: 40px;
+        margin-bottom: 10px;
+  }
+  .buttonColor{
+    margin-top: 40px;
+    width: 40%;
+  }
+ 
+} */
