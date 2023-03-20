@@ -62,14 +62,12 @@ function Sidebar(props) {
             <u></u>
             <span>Attendance</span>
           </NavLink>
-          {isSuper === "1" ? (
             <NavLink to={"/admin"}>
               <FaUserTie className={classes.icons} size={25} />
               <b></b>
               <u></u>
               <span>Admins</span>
             </NavLink>
-          ) : <Outlet/>}
 
           <NavLink to={"/settings"}>
             <FiSettings className={classes.icons} size={25} />

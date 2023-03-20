@@ -15,6 +15,7 @@ const Login = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["name"]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch("http://localhost:8000/api/auth/login", {
