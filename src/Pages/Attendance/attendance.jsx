@@ -21,7 +21,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import axios from "axios";
 import SaveIcon from "@mui/icons-material/Save";
 import dayjs from "dayjs";
 
@@ -93,7 +93,7 @@ const FixedTables = () => {
       console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
-    }         
+    }
   };
 
   const getAttendance = async () => {
@@ -111,18 +111,18 @@ const FixedTables = () => {
     }
   };
 
-  const handleTakeAttendance = async()=>{
+  const handleTakeAttendance = async () => {
     try {
-      console.log(records)
+      console.log(records);
       const response = await axios.post(
         `http://localhost:8000/api/attendanceforAll`,
-        {attendances:records}
+        { attendances: records }
       );
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const filterAttendanceByDate = (data) => {
     let filtered = data.filter(
