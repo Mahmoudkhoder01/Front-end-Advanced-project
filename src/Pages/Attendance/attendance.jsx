@@ -186,7 +186,7 @@ const FixedTables = () => {
     setPage(parseInt(event.target.textContent));
   };
 
-  console.log(data);
+  console.log("student",data);
   console.log(attendanceBysectionId);
   console.log(attendanceByDate);
   console.log(records);
@@ -264,6 +264,7 @@ const FixedTables = () => {
                           attendanceByDate={attendanceByDate}
                           studentId={row.id}
                           handleAttendanceChange={handleAttendanceChange}
+                          records={records}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
