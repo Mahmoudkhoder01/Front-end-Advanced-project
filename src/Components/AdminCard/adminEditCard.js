@@ -112,7 +112,6 @@ export default function AdminEditCard(props) {
                     fullWidth
                     required
                   />
-                  item xs={12} sm={12}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

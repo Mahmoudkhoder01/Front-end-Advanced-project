@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
+import Cookies from "js-cookie";
 // Import Css Files
 import classes from "./nav.module.css";
 import "./active.css";
@@ -12,14 +12,31 @@ import { RxDashboard } from "react-icons/rx";
 import { HiTableCells } from "react-icons/hi2";
 import { BiUser } from "react-icons/bi";
 import { FaUserCheck, FaUserTie } from "react-icons/fa";
-import { FiSettings } from "react-icons/fi";
 import { HiOutlineLogout } from "react-icons/hi";
 
 function Sidebar(props) {
-  const [cookies] = useCookies(["name"]);
-  const isSuper = !!cookies.isSuperadmin;
+  const [cookies, removeCookie] = useCookies(["auth"]);
   console.log(cookies);
+  const logout = () => {
+    removeCookie("auth");
+  };
   if (useLocation().pathname === "/") return null;
+
+  const authCookie = Cookies.get("auth");
+  let isSuper = false;
+  if (!authCookie) {
+  } else {
+    try {
+      const dataUser = JSON.parse(authCookie);
+      console.log(dataUser);
+      const token = dataUser.access_token;
+      isSuper = dataUser.user.isSuperadmin; // assign value
+      // rest of the code
+    } catch (error) {
+      console.error("Invalid auth cookie:", authCookie);
+    }
+  }
+
   return (
     <Fragment>
       <nav className={classes.sidebar}>
@@ -62,28 +79,21 @@ function Sidebar(props) {
             <u></u>
             <span>Attendance</span>
           </NavLink>
+          {isSuper ? (
             <NavLink to={"/admin"}>
               <FaUserTie className={classes.icons} size={25} />
               <b></b>
               <u></u>
               <span>Admins</span>
             </NavLink>
-
-          <NavLink to={"/settings"}>
-            <FiSettings className={classes.icons} size={25} />
-            <b></b>
-            <u></u>
-            <span>Settings</span>
-          </NavLink>
+          ) : null}
         </div>
 
         <div className={classes.setting}>
-          {/* <HiOutlineLogout size={30} className={classes.logOut} />
-          <a href="s">Log Out</a> */}
-          <NavLink to={"7"}>
+          <Link to={"/"} onClick={logout}>
             <HiOutlineLogout size={30} className={classes.logOut} />
             <span>Logout</span>
-          </NavLink>
+          </Link>
         </div>
       </nav>
     </Fragment>
