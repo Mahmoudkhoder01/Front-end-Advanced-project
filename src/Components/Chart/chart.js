@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import React, { PureComponent } from "react";
+import axios from "axios";
 import {
   LineChart,
   Line,
@@ -11,85 +13,56 @@ import {
 } from "recharts";
 import classes from './chart.module.css'
 
-const data = [
-  {
-    name: "January",
-    Late: 4000,
-    Present: 2400,
-    Absent: 2400,
-  },
-  {
-    name: "February",
-    Late: 3000,
-    Present: 1398,
-    Absent: 2210,
-  },
-  {
-    name: "March",
-    Late: 2000,
-    Present: 9800,
-    Absent: 2290,
-  },
-  {
-    name: "April",
-    Late: 2780,
-    Present: 3908,
-    Absent: 2000,
-  },
-  {
-    name: "May",
-    Late: 1890,
-    Present: 4800,
-    Absent: 2181,
-  },
-  {
-    name: "May",
-    Late: 2390,
-    Present: 3800,
-    Absent: 2500,
-  },
-  {
-    name: "June",
-    Late: 3490,
-    Present: 4300,
-    Absent: 2100,
-  },
-  {
-    name: "August",
-    Late: 3490,
-    Present: 4300,
-    Absent: 2100,
-  },
-  {
-    name: "September",
-    Late: 3490,
-    Present: 4300,
-    Absent: 2700,
-  },
-  {
-    name: "October",
-    Late: 3491,
-    Present: 4600,
-    Absent: 2300,
-  },
-  {
-    name: "November",
-    Late: 3490,
-    Present: 4300,
-    Absent: 2100,
-  },
-  {
-    name: "December",
-    Late: 3490,
-    Present: 4300,
-    Absent: 2100,
-  },
-];
+const Chart = ()=>{
 
-export default class Example extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/simple-line-chart-kec3v";
+const [attendanceData, setAttendanceData] = useState([]);
 
-  render() {
+  useEffect(()=>{
+    axios
+      .get("http://localhost:8000/api/attendance", {
+      })
+      .then((response) => {
+        console.log(response.data.message); 
+        setAttendanceData(response.data.message); // update state with the entire response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  
+  const year = 2023; 
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date(2023, i, 1);
+    return date.toLocaleString('default', { month: 'long' });
+  });
+  
+  const monthlyAttendance = [];
+
+  months.forEach((month) => {
+    // filter the attendance data based on the year and month
+    const filteredAttendance = attendanceData.filter((record) => {
+      const recordDate = new Date(record.attendance_date);
+      return recordDate.getFullYear() === year && recordDate.toLocaleString('default', { month: 'long' }) === month;
+    });
+
+    // count the number of records
+    const presentCount = filteredAttendance.filter((record) => record.status === 'present').length;
+    const lateCount = filteredAttendance.filter((record) => record.status === 'late').length;
+    const absentCount = filteredAttendance.filter((record) => record.status === 'absent').length;
+
+    // add the attendance data to the monthlyAttendance array
+    monthlyAttendance.push({
+      name: month,
+      Present: presentCount,
+      Late: lateCount,
+      Absent: absentCount,
+    });
+  });
+
+  
+  console.log(monthlyAttendance);
+
     return (
       <div className={classes.chart}>
       <ResponsiveContainer >
@@ -97,7 +70,7 @@ export default class Example extends PureComponent {
           <LineChart
             width={1500}
             height={500}
-            data={data}
+            data={monthlyAttendance}
             margin={{
               top: 5,
               right: 30,
@@ -124,4 +97,5 @@ export default class Example extends PureComponent {
       </div>
     );
   }
-}
+
+export default Chart
