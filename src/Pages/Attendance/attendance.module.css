@@ -1,0 +1,10 @@
+.attendanceDropDown{
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.attendance{
+    width: 94%;
+    margin: 20px auto;
+}

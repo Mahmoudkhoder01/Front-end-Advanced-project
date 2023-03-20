@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Classes from "../Admins/admin.module.css";
+import Classes from "../Attendance/attendance.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading/loading";
@@ -93,7 +93,7 @@ const FixedTables = () => {
       console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
-    }         
+    }
   };
 
   const getAttendance = async () => {
@@ -111,18 +111,18 @@ const FixedTables = () => {
     }
   };
 
-  const handleTakeAttendance = async()=>{
+  const handleTakeAttendance = async () => {
     try {
-      console.log(records)
+      console.log(records);
       const response = await axios.post(
         `http://localhost:8000/api/attendanceforAll`,
-        {attendances:records}
+        { attendances: records }
       );
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const filterAttendanceByDate = (data) => {
     let filtered = data.filter(
@@ -186,115 +186,119 @@ const FixedTables = () => {
     setPage(parseInt(event.target.textContent));
   };
 
-  console.log(data);
+  console.log("student",data);
   console.log(attendanceBysectionId);
   console.log(attendanceByDate);
   console.log(records);
   console.log(value.$d.toISOString().slice(0, 10));
+
   return (
     <>
-      <div>
-        <SelectButton
-          labelName="Class"
-          options={grades}
-          getSections={getSections}
-        />
-        <SelectButton
-          labelName="Section"
-          options={sections}
-          getStudents={fetchDataByPagination}
-        />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              label="Date"
-              defaultValue={dayjs()}
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
-      </div>
-      {isLoading ? (
-        <>
-          <TableContainer
-            className={Classes.adminPage}
-            component={Paper}
-            initialState={{
-              pagination: {
-                paginationModel: { pageSize: 10, page: 0 },
-              },
-            }}
-          >
-            <Table>
-              <TableHead>Attendance</TableHead>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>ID</StyledTableCell>
-                  <StyledTableCell>FIRST NAME</StyledTableCell>
-                  <StyledTableCell>LAST NAME</StyledTableCell>
-                  <StyledTableCell>TAKE ATTENDANCE</StyledTableCell>
-                  <StyledTableCell>CRAETED AT</StyledTableCell>
-                  <StyledTableCell>UPDATET AT</StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data.map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.id}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.first_name}</StyledTableCell>
-                    <StyledTableCell>{row.last_name}</StyledTableCell>
-                    <StyledTableCell>
-                      {/* <AttendanceRadioButtons /> */}
-                      <div>
-                        {attendanceByDate.filter(
-                          (attendance) => attendance.student_id === row.id
-                        )[0]
-                          ? attendanceByDate?.filter(
-                              (attendance) => attendance.student_id === row.id
-                            )[0].status
-                          : null}
-                      </div>
-                      <AttendanceRadioButtons
-                        attendanceByDate={attendanceByDate}
-                        studentId={row.id}
-                        handleAttendanceChange={handleAttendanceChange}
-                      />
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {row.created_at.slice(0, 20)}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {row.updated_at.slice(0, 20)}
-                    </StyledTableCell>
-                    <StyledTableCell style={{ display: "flex" }}>
-                      <SectionEditCard
-                        adminValue={row.name}
-                        emailValue={row.email}
-                        rowId={row.id}
-                        regetData={fetchDataByPagination}
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <button onClick={handleTakeAttendance}>
-            <SaveIcon />
-          </button>
-          <Pagination
-            onChange={handlePageChange}
-            changepage={page}
-            pagesCounter={counter.last_page}
+      <div className={Classes.attendance}>
+        <div className={Classes.attendanceDropDown}>
+          <SelectButton
+            labelName="Class"
+            options={grades}
+            getSections={getSections}
           />
-        </>
-      ) : (
-        <Loading />
-      )}
+          <SelectButton
+            labelName="Section"
+            options={sections}
+            getStudents={fetchDataByPagination}
+          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]} sx={{ marginTop: 4 }}>
+              <DatePicker
+                label="Date"
+                defaultValue={dayjs()}
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+        {isLoading ? (
+          <>
+            <TableContainer
+              className={Classes.adminPage}
+              component={Paper}
+              initialState={{
+                pagination: {
+                  paginationModel: { pageSize: 10, page: 0 },
+                },
+              }}
+            >
+              <Table>
+                <TableHead>Attendance</TableHead>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>ID</StyledTableCell>
+                    <StyledTableCell>FIRST NAME</StyledTableCell>
+                    <StyledTableCell>LAST NAME</StyledTableCell>
+                    <StyledTableCell>TAKE ATTENDANCE</StyledTableCell>
+                    <StyledTableCell>CRAETED AT</StyledTableCell>
+                    <StyledTableCell>UPDATET AT</StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row) => (
+                    <StyledTableRow key={row.id}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.id}
+                      </StyledTableCell>
+                      <StyledTableCell>{row.first_name}</StyledTableCell>
+                      <StyledTableCell>{row.last_name}</StyledTableCell>
+                      <StyledTableCell>
+                        {/* <AttendanceRadioButtons /> */}
+                        <div>
+                          {attendanceByDate.filter(
+                            (attendance) => attendance.student_id === row.id
+                          )[0]
+                            ? attendanceByDate?.filter(
+                                (attendance) => attendance.student_id === row.id
+                              )[0].status
+                            : null}
+                        </div>
+                        <AttendanceRadioButtons
+                          attendanceByDate={attendanceByDate}
+                          studentId={row.id}
+                          handleAttendanceChange={handleAttendanceChange}
+                          records={records}
+                        />
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {row.created_at.slice(0, 20)}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        {row.updated_at.slice(0, 20)}
+                      </StyledTableCell>
+                      <StyledTableCell style={{ display: "flex" }}>
+                        <SectionEditCard
+                          adminValue={row.name}
+                          emailValue={row.email}
+                          rowId={row.id}
+                          regetData={fetchDataByPagination}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <button onClick={handleTakeAttendance}>
+              <SaveIcon />
+            </button>
+            <Pagination
+              onChange={handlePageChange}
+              changepage={page}
+              pagesCounter={counter.last_page}
+            />
+          </>
+        ) : (
+          <Loading />
+        )}
+      </div>
     </>
   );
 };

@@ -32,15 +32,22 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 };
 
-export default function UseRadioGroup({ studentId, attendanceByDate, handleAttendanceChange}) {
+export default function UseRadioGroup({ studentId, attendanceByDate, handleAttendanceChange, records}) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const attendance = attendanceByDate?.find(
       (status) => status.student_id === studentId
     );
+
+    const record = records?.find(
+      (attendRecord) => attendRecord.student_id === studentId
+    ); 
+
     if (attendance) {
       setValue(attendance.status);
+    }else if (record){
+       setValue(record.status);
     } else {
       setValue(null);
     }
