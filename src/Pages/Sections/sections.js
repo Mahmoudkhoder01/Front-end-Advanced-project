@@ -62,13 +62,12 @@ const FixedTables = () => {
   const handlePageChange = (event, value) => {
     setPage(parseInt(event.target.textContent));
   };
-console.log(data);
+  console.log(data);
   return (
     <>
-      {isLoading ? ( 
+      {isLoading ? (
         <>
-          
-          <AddSectionForm regetData={fetchDataByPagination}/>
+          <AddSectionForm regetData={fetchDataByPagination} />
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -98,8 +97,12 @@ console.log(data);
                     </StyledTableCell>
                     <StyledTableCell>{row.section_description}</StyledTableCell>
                     <StyledTableCell>{row.capacity}</StyledTableCell>
-                    <StyledTableCell>{row.created_at.slice(0,20)}</StyledTableCell>
-                    <StyledTableCell>{row.updated_at.slice(0,20)}</StyledTableCell>
+                    <StyledTableCell>
+                      {row.created_at.slice(0, 20)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {row.updated_at.slice(0, 20)}
+                    </StyledTableCell>
                     <StyledTableCell style={{ display: "flex" }}>
                       <SectionEditCard
                         adminValue={row.name}
@@ -107,7 +110,10 @@ console.log(data);
                         rowId={row.id}
                         regetData={fetchDataByPagination}
                       />
-                      <SectionDeleteCard rowId={row.id} regetData={fetchDataByPagination} />
+                      <SectionDeleteCard
+                        rowId={row.id}
+                        regetData={fetchDataByPagination}
+                      />
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
