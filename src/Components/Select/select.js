@@ -17,8 +17,8 @@ function SelectButton(props) {
     setSection(event.target.value);
   };
   
-  const handleClick = (id) => {
-    props.getSections ? props.getSections(id) : props.getStudents(id);
+  const handleClick = (item_id) => {
+    props.getSections ? props.getSections(item_id) : props.getStudents(item_id);
   };
 
   return (

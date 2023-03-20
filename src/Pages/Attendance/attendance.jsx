@@ -70,7 +70,7 @@ const FixedTables = () => {
   };
 
   const getSections = async (grade_id) => {
-    setSelectedSectionId(grade_id);
+  
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/grade/${grade_id}`
@@ -82,15 +82,16 @@ const FixedTables = () => {
     }
   };
 
-  const fetchDataByPagination = async () => {
+  const fetchDataByPagination = async (sectionId) => {  
+    setSelectedSectionId(sectionId);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/students/section/${selectedSectionId}/pagination?page=${page}`
+        `http://localhost:8000/api/students/section/${sectionId}/pagination?page=${page}`
       );
       setData(response.data.message.data);
       setCounter(response.data.message);
       setIsLoading(true);
-      console.log(response);
+      console.log("stdents",response);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
