@@ -13,10 +13,9 @@ import Admin from "./Pages/Admins/admin";
 import Settings from "./Pages/Settings/settings";
 import Topbar from "./Components/Topbar/topbar";
 import Login from "./Pages/Login/login";
+import PrivateRoutes from './util/privateRoutes'
 
 function App() {
-
-
   return (
     <div className="App">
       <div className="App-sidebar">
@@ -25,14 +24,17 @@ function App() {
       </div>
       <div className="App-container">
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          
+          <Route element={<PrivateRoutes/>}>
+          <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="/classroom" element={<ClassRoom />} />
           <Route path="/sections" element={<Sections />} />
           <Route path="/student" element={<Students />} />
           <Route path="/attendance" element={<Attendance />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/setting" element={<Settings />} />
+          </Route>
         </Routes>
       </div>
     </div>

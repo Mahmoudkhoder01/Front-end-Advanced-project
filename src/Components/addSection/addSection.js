@@ -40,24 +40,50 @@ export default function AddSectionForm(props) {
     setSection((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleAddSection = async (sectionData) => {
+    try {
+      const response = await axios
+        .post(`http://localhost:8000/api/section`, sectionData)
+        .then(async (response) => {
+          setOpen(false);
+          props.regetData();
+          console.log("Hello world");
+          console.log(await props.regetData());
+          toast.success("Section added succefully");
+        });
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
+  };
+  
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   axios
+  //     .post("http://localhost:8000/api/section", {
+  //       section_description: section.section_description,
+  //       capacity: section.capacity,
+  //       grade: section.grade,
+  //     })
+  //     .then((response) => {
+  //       setOpen(false);
+  //       props.regetData();
+  //       toast.success("Section added succefully");
+  //     })
+  //     .catch((error) => {
+  //       // console.log("Error adding section", error·);
+  //       console.log(error);
+  //       toast.error(error.response.data.message);
+  //     });
+  // };
+
+  const formHandleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:8000/api/section", {
-        section_description: section.section_description,
-        capacity: section.capacity,
-        grade: section.grade,
-      })
-      .then((response) => {
-        setOpen(false);
-        props.regetData();
-        toast.success("Section added succefully");
-      })
-      .catch((error) => {
-        // console.log("Error adding section", error·);
-        console.log(error);
-        toast.error(error.response.data);
-      });
+    let newSection = new FormData();
+    newSection.append("section_description", section.section_description);
+    newSection.append("capacity", section.capacity);
+    newSection.append("grade", props.gradeId);
+    handleAddSection(newSection);
   };
 
   return (
@@ -65,7 +91,7 @@ export default function AddSectionForm(props) {
       <div style={{ marginTop: "4rem" }}>
         <button
           className={classes.addStudentBtn}
-          style={{ transform: "translateX(88rem)" }}
+          style={{ transform: "translateX(75rem)" }}
           onClick={handleOpen}
         >
           <FiPlus />
@@ -81,7 +107,7 @@ export default function AddSectionForm(props) {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Add New Section
             </Typography>
-            <form>
+            <form onSubmit={formHandleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
                   <TextField
@@ -107,7 +133,8 @@ export default function AddSectionForm(props) {
                     fullWidth
                     required
                   />
-                </Grid><Grid xs={12} sm={12} item>
+                </Grid>
+                {/* <Grid xs={12} sm={12} item>
                   <TextField
                     type="text"
                     name="grade"
@@ -119,14 +146,9 @@ export default function AddSectionForm(props) {
                     fullWidth
                     required
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                  >
+                  <Button type="submit" variant="contained" color="primary">
                     Add New Section
                   </Button>
                 </Grid>
@@ -134,19 +156,8 @@ export default function AddSectionForm(props) {
             </form>
           </Box>
         </Modal>
+        <ToastContainer/>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 }

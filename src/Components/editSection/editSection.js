@@ -39,27 +39,32 @@ export default function SectionEditCard(props) {
     setUpdatedData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleEdit = (event, id) => {
+  const handleEdit = (event) => {
     event.preventDefault();
-    console.log(id);
-
     axios
       .post(`http://localhost:8000/api/section/${props.rowId}`, {
         _method: "PATCH",
         section_description: updatedData.section_description,
         capacity: updatedData.capacity,
-        grade: updatedData.grade,
       })
       .then((response) => {
         console.log(response);
         setUpdatedData({
-            section_description: "",
-            capacity: "",
-            grade: "",
+          section_description: "",
+          capacity: "",
+          grade: "",
         });
         setOpen(false);
         props.regetData();
-        toast.success("Section edited successfully");
+        toast.success("Section edited successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((error) => {
         console.log("Error editing admin", error);
@@ -84,7 +89,7 @@ export default function SectionEditCard(props) {
               Edit Admin
             </Typography>
             <form>
-            <Grid container spacing={1}>
+              <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
                   <TextField
                     placeholder="Enter Section description"
@@ -109,7 +114,8 @@ export default function SectionEditCard(props) {
                     fullWidth
                     required
                   />
-                </Grid><Grid xs={12} sm={12} item>
+                </Grid>
+                {/* <Grid xs={12} sm={12} item>
                   <TextField
                     type="text"
                     name="grade"
@@ -121,7 +127,7 @@ export default function SectionEditCard(props) {
                     fullWidth
                     required
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -129,7 +135,7 @@ export default function SectionEditCard(props) {
                     color="primary"
                     onClick={handleEdit}
                   >
-                    Add New Section
+                    Edit Section
                   </Button>
                 </Grid>
               </Grid>

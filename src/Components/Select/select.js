@@ -16,21 +16,25 @@ function SelectButton(props) {
   const handleSectionsChange = (event) => {
     setSection(event.target.value);
   };
+  
   const handleClick = (id) => {
-    props.getSections ? props.getSections(id) : props.getStudents(id)
+    props.getSections ? props.getSections(id) : props.getStudents(id);
   };
-  console.log(data);
-  console.log(section)
+
   return (
     <Box sx={{ minWidth: 200 }}>
-      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5 }} >
+      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5, marginLeft: 10 }}>
         <InputLabel id="demo-simple-select-label">{props.labelName}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={props.labelName == "Class"? data:section}
+          value={props.labelName === "Class" ? data : section}
           label={props.labelName}
-          onChange={props.labelName == "Class"? handleClassesChange : handleSectionsChange}
+          onChange={
+            props.labelName === "Class"
+              ? handleClassesChange
+              : handleSectionsChange
+          }
         >
           {props.options.map((option, index) => {
             return (

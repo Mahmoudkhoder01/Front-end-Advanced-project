@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { ToastContainer, toast } from "react-toastify";
 
 import { MdOutlinePersonOutline } from "react-icons/md";
+
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,11 +14,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import classes from "./AddStudentForm.module.css";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import { MdCameraEnhance } from "react-icons/md";
-import { MdClear } from "react-icons/md";
-import Stack from "@mui/material/Stack";
-
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -25,6 +21,7 @@ import Stack from "@mui/material/Stack";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {  toast } from "react-toastify";
 
 // import Box from '@mui/material/Box';
 // import Input from '@mui/material/Input';
@@ -58,12 +55,7 @@ export default function AddStudentForm(props) {
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
-  const classNameRef = useRef(null);
-  const sectionNameRef = useRef(null);
-  const dobRef = useRef(null);
-
   const locale = "en-US"; // or your preferred locale
-  const dateAdapter = new AdapterDayjs({ locale });
   //const imageRef = useRef(null);
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -95,9 +87,7 @@ export default function AddStudentForm(props) {
     }
   }, [selectedImage]);
 
-  function handleRemove() {
-    setImageUrl("");
-  }
+
 
   function handleSubmit(event) {
     event.preventDefault(); // prevent the default form submission behavior
@@ -110,7 +100,6 @@ export default function AddStudentForm(props) {
     // const className = classNameRef.current.value;
     // const sectionName = sectionNameRef.current.value;
     // const dateOfBirth = dobRef.current.value; // assuming the DatePicker sets the value as a string
-    const imageFile = selectedImage;
     let newStudent = new FormData();
     newStudent.append("first_name", firstName);
     newStudent.append("last_name", lastName);
@@ -120,7 +109,6 @@ export default function AddStudentForm(props) {
     newStudent.append("birth_date", selectedDateFormat);
     newStudent.append("enrollment_date", enrollmentDate);
     newStudent.append("image", selectedFile);
-
     console.log("Frontend", newStudent.entries());
     handleAddStudent(newStudent);
   }
@@ -133,6 +121,10 @@ export default function AddStudentForm(props) {
       );
       toast.success("Student added successfully")
       console.log(response.data);
+      setOpen(false)
+      props.regetDataAgain()
+      toast.success("Student added succefully");
+
     } catch (error) {
       console.error(error);
       toast.error("Student added failed")
@@ -156,7 +148,6 @@ export default function AddStudentForm(props) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add New Student
           </Typography>
-
           {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             <MdOutlinePersonOutline sx={{ color: "action.active", mr: 1, my: 0.5 }} />
             <TextField id="input-with-sx" label="With sx" variant="standard" />

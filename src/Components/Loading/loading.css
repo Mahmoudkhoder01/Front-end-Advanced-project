@@ -19,6 +19,7 @@
   position: absolute;
   width: 20px;
   height: 36px;
+  font-size: 2rem;
   opacity: 0;
   font-family: Helvetica, Arial, sans-serif;
   animation: move 2s linear infinite;
