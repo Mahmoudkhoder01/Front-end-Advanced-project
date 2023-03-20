@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 import dayjs from "dayjs";
+import { ToastContainer, toast } from "react-toastify";
 
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
@@ -130,9 +131,11 @@ export default function AddStudentForm(props) {
         `http://localhost:8000/api/students`,
         studentData
       );
+      toast.success("Student added successfully")
       console.log(response.data);
     } catch (error) {
       console.error(error);
+      toast.error("Student added failed")
     }
   };
 
