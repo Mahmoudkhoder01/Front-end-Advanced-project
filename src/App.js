@@ -10,7 +10,6 @@ import Sidebar from "./Pages/Sidebar/nav";
 import Students from "./Pages/Students/students";
 import Attendance from "./Pages/Attendance/attendance";
 import Admin from "./Pages/Admins/admin";
-import Settings from "./Pages/Settings/settings";
 import Topbar from "./Components/Topbar/topbar";
 import Login from "./Pages/Login/login";
 import PrivateRoutes from './util/privateRoutes'
@@ -33,7 +32,6 @@ function App() {
           <Route path="/student" element={<Students />} />
           <Route path="/attendance" element={<Attendance />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/setting" element={<Settings />} />
           </Route>
         </Routes>
       </div>

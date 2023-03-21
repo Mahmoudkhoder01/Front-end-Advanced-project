@@ -111,7 +111,6 @@ const FixedTables = () => {
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
-
   };
 
   const getAttendance = async () => {
@@ -133,7 +132,6 @@ const FixedTables = () => {
 
   const handleTakeAttendance = async () => {
     try {
-
       console.log("records before submit ", records);
       const response = await axios
         .post(`http://localhost:8000/api/attendanceforAll`, {
@@ -142,7 +140,6 @@ const FixedTables = () => {
         .then(() => {
           getAttendance();
         });
-
     } catch (error) {
       console.error(error);
     }
@@ -181,13 +178,12 @@ const FixedTables = () => {
 
   //edit attendance record
   const editStudentAttendance = async (studentId) => {
-
     const record = records?.find(
       (attendRecord) => attendRecord.student_id === studentId
     );
-    const attendance= attendances?.find(
-      attendance => attendance.student_id === studentId
-    )
+    const attendance = attendances?.find(
+      (attendance) => attendance.student_id === studentId
+    );
 
     console.log("edited record before submit", record);
     console.log("attendance id", attendance.id);
@@ -268,7 +264,10 @@ const FixedTables = () => {
             fetchData={fetchData}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]} sx={{ marginTop: 4 }}>
+            <DemoContainer
+              components={["DatePicker"]}
+              // sx={{ marginTop: 4, marginLeft: 10 }}
+            >
               <DatePicker
                 label="Date"
                 defaultValue={dayjs()}
@@ -277,6 +276,12 @@ const FixedTables = () => {
               />
             </DemoContainer>
           </LocalizationProvider>
+          {isLoading ? (
+            <button className={Classes.saveAttendance} onClick={handleTakeAttendance}>
+              <SaveIcon />
+              Save
+            </button>
+          ) : null}
         </div>
         {isLoading ? (
           <>
@@ -289,8 +294,8 @@ const FixedTables = () => {
                 },
               }}
             >
-              <Table>
-                <TableHead>Attendance</TableHead>
+              <Table sx={{marginTop: 3}}>
+                <TableHead></TableHead>
                 <TableHead>
                   <TableRow>
                     <StyledTableCell>ID</StyledTableCell>
@@ -345,9 +350,6 @@ const FixedTables = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <button onClick={handleTakeAttendance}>
-              <SaveIcon />
-            </button>
             <Pagination
               onChange={handlePageChange}
               changepage={page}
@@ -355,7 +357,9 @@ const FixedTables = () => {
             />
           </>
         ) : (
-          <Loading />
+          <p className={Classes.beforeChoose}>
+            Choose a Class and a Section to take attendance
+          </p>
         )}
       </div>
     </>

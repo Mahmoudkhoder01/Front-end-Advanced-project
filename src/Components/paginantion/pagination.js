@@ -13,7 +13,7 @@ export default function Paginate(props) {
 
   return (
     <div className={classes.pagination}>
-      <Stack spacing={2}>
+      <Stack spacing={2} sx={{marginTop: 3}}>
         <Pagination
           count={props.pagesCounter}
           page={props.changepage}

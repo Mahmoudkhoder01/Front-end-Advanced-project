@@ -72,7 +72,7 @@ const FixedTables = () => {
 
   const getAllSectionByGradeId = async () => {
     try {
-      const response = await axios
+      await axios
         .get(
           `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
         )
@@ -99,7 +99,7 @@ const FixedTables = () => {
   }, []);
 
   useEffect(() => {
-    fetchDataByPagination(selectedGradeId);
+    getAllSectionByGradeId(selectedGradeId);
   }, [selectedGradeId, page]);
 
   const handlePageChange = (event) => {
