@@ -45,20 +45,21 @@ export default function UseRadioGroup({
 }) {
   const [value, setValue] = useState("");
   const [disableBtns, setDisableBtns] = useState(false);
-
+  const [editPressed, setEditPressed] = useState(false);
   const handleEditDisableBtns = async () => {
     console.log("hey");
     setDisableBtns(false);
+    setEditPressed(true);
     console.log(disableBtns);
     // editStudentAttendance(studentId)
   };
 
-  const handleEditAttendance = ()=>{
+  const handleEditAttendance = () => {
     editStudentAttendance(studentId);
-  }
+    setEditPressed(false);
+  };
 
   useEffect(() => {
-    
     console.log("hey", attendances);
     console.log(disableBtns);
     setDisableBtns(attendances?.length !== 0);
@@ -117,14 +118,16 @@ export default function UseRadioGroup({
           control={<Radio />}
           disabled={disableBtns}
         />
+        <IconButton
+          onClick={handleEditAttendance}
+          style={{ display: editPressed ? "block" :"none" }}
+        >
+          <SaveIcon />
+        </IconButton>
+        <IconButton onClick={handleEditDisableBtns}>
+          <EditIcon />
+        </IconButton>
       </RadioGroup>
-
-      <IconButton onClick={handleEditDisableBtns}>
-        <EditIcon />
-      </IconButton>
-      <button onClick={handleEditAttendance}>
-        <SaveIcon />
-      </button>
     </>
   );
 }
