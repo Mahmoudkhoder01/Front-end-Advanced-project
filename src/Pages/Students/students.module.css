@@ -24,3 +24,9 @@
     display:flex;
     gap:10px
 }
+.StudentCard{
+    background-color: red;
+   display: inline;
+   position: fixed;
+   right: 10px;
+}

@@ -7,6 +7,7 @@ import classes from "./students.module.css";
 import AddStudentForm from "../../Components/AddStudent/AddStudentForm";
 import { useState } from "react";
 import SelectButton from "../../Components/Select/select";
+import StudentEditCard from "../../Components/editstudent/editstudent";
 function Students() {
   const [grades, setGrades] = useState([]);
   const [sections, setSections] = useState([]);
@@ -80,7 +81,11 @@ function Students() {
         </div>
         <div className={classes.studentGrid}>
           {students
-            ? students.map((student) => <StudentCard student={student} />)
+            ? students.map((student) => (
+                <>
+                  <StudentCard student={student} />
+                </>
+              ))
             : ""}
         </div>
       </div>

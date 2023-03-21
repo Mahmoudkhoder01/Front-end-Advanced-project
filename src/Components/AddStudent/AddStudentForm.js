@@ -43,6 +43,10 @@ const style = {
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
+  "@media (max-width: 768px)": {
+    width: "95%",
+    maxWidth: "none",
+  },
 };
 
 export default function AddStudentForm(props) {
@@ -130,6 +134,7 @@ export default function AddStudentForm(props) {
         `http://localhost:8000/api/students`,
         studentData
       );
+      setOpen(false);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -265,8 +270,8 @@ export default function AddStudentForm(props) {
                   </Box>
                 )} */}
               </Grid>
-              <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary">
+              <Grid className={classes.add} item xs={12}>
+                <Button type="submit" variant="contained" color="secondary">
                   Add New Student
                 </Button>
               </Grid>

@@ -6,6 +6,7 @@
     height:10vh;
     border:1px solid gray;
     border-radius: 3%;
+    margin: 10px;
 }
 .studentAvatar{
     border-radius: 50%;
@@ -34,14 +35,14 @@
     border-radius: 5px;
 }
 .studentClass{
-    background-color: aqua;
+    background-color: #5541D7;
     margin-right:5px;
     padding:3px;
     border:0.5px solid transparent;
     border-radius: 10%;
 }
 .studentSection{
-    background-color: rgb(228, 140, 140);
+    background-color: #7b6aeb;
     margin-right:5px;
     padding:3px;
     border:0.5px solid transparent;
@@ -50,4 +51,7 @@
 
 .student{
     width:17em;
+}
+.edit{
+    color: #5541D7;
 }
