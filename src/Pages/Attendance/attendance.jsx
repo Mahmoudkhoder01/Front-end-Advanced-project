@@ -132,6 +132,7 @@ const FixedTables = () => {
 
   const handleTakeAttendance = async () => {
     try {
+
       console.log("records before submit ", records);
       const response = await axios
         .post(`http://localhost:8000/api/attendanceforAll`, {
@@ -140,6 +141,7 @@ const FixedTables = () => {
         .then(() => {
           getAttendance();
         });
+
     } catch (error) {
       console.error(error);
     }
