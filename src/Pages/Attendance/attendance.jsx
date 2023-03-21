@@ -111,6 +111,7 @@ const FixedTables = () => {
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
+
   };
 
   const getAttendance = async () => {
