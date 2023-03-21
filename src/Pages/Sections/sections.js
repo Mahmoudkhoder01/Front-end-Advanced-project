@@ -99,7 +99,7 @@ const FixedTables = () => {
   }, []);
 
   useEffect(() => {
-    getAllSectionByGradeId();
+    getAllSectionByGradeId(selectedGradeId);
   }, [selectedGradeId, page]);
 
   const handlePageChange = (event) => {
