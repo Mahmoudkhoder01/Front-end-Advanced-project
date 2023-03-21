@@ -58,15 +58,11 @@ export default function AdminEditCard(props) {
         });
         setOpen(false);
         props.regetData();
-        toast.success("Amin edited successfully", {
-          theme: "colored",
-        });
+        toast.success("Amin edited successfully");
       })
       .catch((error) => {
         console.log("Error editing admin", error);
-        toast.error(error.response.data, {
-          theme: "colored",
-        });
+        toast.error(error.response.data);
       });
   };
 
@@ -112,7 +108,6 @@ export default function AdminEditCard(props) {
                     fullWidth
                     required
                   />
-                  item xs={12} sm={12}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

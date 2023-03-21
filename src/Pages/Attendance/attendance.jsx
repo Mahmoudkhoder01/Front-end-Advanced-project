@@ -117,7 +117,9 @@ const FixedTables = () => {
       const response = await axios.post(
         `http://localhost:8000/api/attendanceforAll`,
         { attendances: records }
-      );
+      ).then(()=>{
+        getAttendance()
+      })
       console.log(response.data);
     } catch (error) {
       console.error(error);
