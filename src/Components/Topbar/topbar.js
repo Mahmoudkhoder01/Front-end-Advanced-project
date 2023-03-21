@@ -2,7 +2,7 @@ import classes from "./topbar.module.css";
 import { useLocation } from "react-router-dom";
 
 function Topbar() {
-  if (useLocation().pathname === "/login") return null;
+  if (useLocation().pathname === "/") return null;
   return (
     <div className={classes.topbar}>
       <div className={classes.admin}>
