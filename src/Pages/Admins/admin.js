@@ -59,7 +59,7 @@ const FixedTables = () => {
     fetchDataByPagination();
   }, [page]);
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
   };
 
@@ -79,7 +79,7 @@ const FixedTables = () => {
             }}
           >
             <Table>
-              <TableHead>Admins</TableHead>
+              <TableHead></TableHead>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>ID</StyledTableCell>

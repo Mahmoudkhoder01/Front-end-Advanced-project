@@ -10,10 +10,6 @@ import Paper from "@mui/material/Paper";
 import Classes from "../Attendance/attendance.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../../Components/Loading/loading";
-import AddSectionForm from "../../Components/addSection/addSection";
-import SectionEditCard from "../../Components/editSection/editSection";
-import SectionDeleteCard from "../../Components/deleteSection/deletesection";
 import Pagination from "../../Components/paginantion/pagination";
 import AttendanceRadioButtons from "../../Components/attendanceRadioButton/attendanceRadioButton";
 import SelectButton from "../../Components/Select/select";
@@ -21,10 +17,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -139,9 +134,11 @@ const FixedTables = () => {
         })
         .then(() => {
           getAttendance();
+          toast.success("Attendance has been saved successfully");
         });
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
     }
   };
 
@@ -197,9 +194,11 @@ const FixedTables = () => {
         .then((response) => {
           console.log(response);
           getAttendance();
+          toast.success("Attendance updated successfully");
         });
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
     }
   };
 
@@ -277,7 +276,10 @@ const FixedTables = () => {
             </DemoContainer>
           </LocalizationProvider>
           {isLoading ? (
-            <button className={Classes.saveAttendance} onClick={handleTakeAttendance}>
+            <button
+              className={Classes.saveAttendance}
+              onClick={handleTakeAttendance}
+            >
               <SaveIcon />
               Save
             </button>
@@ -294,7 +296,7 @@ const FixedTables = () => {
                 },
               }}
             >
-              <Table sx={{marginTop: 3}}>
+              <Table sx={{ marginTop: 3 }}>
                 <TableHead></TableHead>
                 <TableHead>
                   <TableRow>

@@ -88,10 +88,9 @@ export default function AddSectionForm(props) {
 
   return (
     <>
-      <div style={{ marginTop: "4rem" }}>
+      <div>
         <button
           className={classes.addStudentBtn}
-          style={{ transform: "translateX(75rem)" }}
           onClick={handleOpen}
         >
           <FiPlus />
