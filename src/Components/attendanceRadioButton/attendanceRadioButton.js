@@ -5,7 +5,9 @@ import RadioGroup, { useRadioGroup } from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import { useEffect, useState } from "react";
-
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
 const StyledFormControlLabel = styled((props) => (
   <FormControlLabel {...props} />
 ))(({ theme, checked }) => ({
@@ -32,26 +34,54 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 };
 
-export default function UseRadioGroup({ studentId, attendanceByDate, handleAttendanceChange, records}) {
+export default function UseRadioGroup({
+  studentId,
+  attendances,
+  handleAttendanceChange,
+  records,
+  editStudentAttendance,
+  // setDisableBtns,
+  // disableBtns,
+}) {
   const [value, setValue] = useState("");
+  const [disableBtns, setDisableBtns] = useState(false);
+  const [editPressed, setEditPressed] = useState(false);
+  const handleEditDisableBtns = async () => {
+    console.log("hey");
+    setDisableBtns(false);
+    setEditPressed(true);
+    console.log(disableBtns);
+    // editStudentAttendance(studentId)
+  };
+
+  const handleEditAttendance = () => {
+    editStudentAttendance(studentId);
+    setEditPressed(false);
+  };
 
   useEffect(() => {
-    const attendance = attendanceByDate?.find(
-      (status) => status.student_id === studentId
-    );
+    console.log("hey", attendances);
+    console.log(disableBtns);
+    setDisableBtns(attendances?.length !== 0);
+    const attendance =
+      attendances.length !== 0
+        ? attendances.find((attend) => attend.student_id === studentId)
+        : "";
+
+    // const attendance = "";
 
     const record = records?.find(
       (attendRecord) => attendRecord.student_id === studentId
-    ); 
+    );
 
     if (attendance) {
       setValue(attendance.status);
-    }else if (record){
-       setValue(record.status);
+    } else if (record) {
+      setValue(record.status);
     } else {
       setValue(null);
     }
-  }, [attendanceByDate, studentId]);
+  }, [attendances, studentId]);
 
   const handleChange = (event) => {
     const attendance_status = event.target.value;
@@ -59,7 +89,6 @@ export default function UseRadioGroup({ studentId, attendanceByDate, handleAtten
     setValue(attendance_status);
     handleAttendanceChange(studentId, attendance_status);
   };
-
 
   return (
     <>
@@ -69,26 +98,35 @@ export default function UseRadioGroup({ studentId, attendanceByDate, handleAtten
         value={value}
         onChange={handleChange}
         style={{ display: "flex", flexDirection: "row" }}
-        disabled={attendanceByDate.length !== 0}
+        disabled={disableBtns}
       >
         <MyFormControlLabel
           value="present"
           label="Present"
           control={<Radio />}
-          disabled={attendanceByDate.length !== 0}
+          disabled={disableBtns}
         />
         <MyFormControlLabel
           value="late"
           label="Late"
           control={<Radio />}
-          disabled={attendanceByDate.length !== 0}
+          disabled={disableBtns}
         />
         <MyFormControlLabel
           value="absent"
           label="Absent"
           control={<Radio />}
-          disabled={attendanceByDate.length !== 0}
+          disabled={disableBtns}
         />
+        <IconButton
+          onClick={handleEditAttendance}
+          style={{ display: editPressed ? "block" :"none" }}
+        >
+          <SaveIcon />
+        </IconButton>
+        <IconButton onClick={handleEditDisableBtns}>
+          <EditIcon />
+        </IconButton>
       </RadioGroup>
     </>
   );

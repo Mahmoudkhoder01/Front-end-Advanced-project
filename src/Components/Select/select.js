@@ -16,14 +16,22 @@ function SelectButton(props) {
   const handleSectionsChange = (event) => {
     setSection(event.target.value);
   };
-  
-  const handleClick = (id) => {
-    props.getSections ? props.getSections(id) : props.getStudents(id);
+
+  const handleClick = (item_id) => {
+    if (props.getSections) {
+      props.getSections(item_id);
+    } else {
+      props.getStudents(item_id);
+      props.fetchData(item_id);
+    }
   };
 
   return (
     <Box sx={{ minWidth: 200 }}>
-      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 5, marginLeft: 10 }}>
+      <FormControl
+        fullWidth
+        sx={{ maxWidth: 300, marginTop: 5, marginLeft: 10 }}
+      >
         <InputLabel id="demo-simple-select-label">{props.labelName}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
