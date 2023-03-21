@@ -15,6 +15,7 @@ import AddSectionForm from "../../Components/addSection/addSection";
 import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
 import Pagination from "../../Components/paginantion/pagination";
+import SelectButton from "../../Components/Select/select";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,38 +38,90 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const FixedTables = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
 
-  const fetchDataByPagination = async () => {
+  const [grades, setGrades] = useState([]);
+  const [allSections, setAllSections] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [selectedGradeId, setSelectedGradeId] = useState("");
+
+  const getGrades = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/grade`);
+      setGrades(response.data.message);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchDataByPagination = async (grade_id) => {
+    setSelectedGradeId(grade_id);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/section/pagination?page=${page}`
+        `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
       );
-      setData(response.data.message.data);
+      setSections(response.data.message.data);
       setCounter(response.data.message);
       setIsLoading(true);
-      console.log(response);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
 
+  const getAllSectionByGradeId = async () => {
+    try {
+      const response = await axios
+        .get(
+          `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
+        )
+        .then((response) => {
+          setAllSections(response.data.message.data);
+          setCounter(response.data.message);
+          setIsLoading(true);
+          console.log(response.data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log(allSections);
+  console.log(selectedGradeId);
+
   useEffect(() => {
     fetchDataByPagination();
   }, [page]);
 
-  const handlePageChange = (event, value) => {
+  useEffect(() => {
+    getGrades();
+  }, []);
+
+  useEffect(() => {
+    getAllSectionByGradeId(selectedGradeId);
+  }, [selectedGradeId, page]);
+
+  const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
   };
-console.log(data);
+  console.log(sections);
   return (
     <>
-      {isLoading ? ( 
+      {isLoading ? (
         <>
-          
-          <AddSectionForm regetData={fetchDataByPagination}/>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <SelectButton
+              labelName="Class"
+              options={grades}
+              getSections={fetchDataByPagination}
+            />
+            <AddSectionForm
+              regetData={getAllSectionByGradeId}
+              gradeId={selectedGradeId}
+            />
+          </div>
+
           <TableContainer
             className={Classes.adminPage}
             component={Paper}
@@ -91,26 +144,34 @@ console.log(data);
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.id}
-                    </StyledTableCell>
-                    <StyledTableCell>{row.section_description}</StyledTableCell>
-                    <StyledTableCell>{row.capacity}</StyledTableCell>
-                    <StyledTableCell>{row.created_at.slice(0,20)}</StyledTableCell>
-                    <StyledTableCell>{row.updated_at.slice(0,20)}</StyledTableCell>
-                    <StyledTableCell style={{ display: "flex" }}>
-                      <SectionEditCard
-                        adminValue={row.name}
-                        emailValue={row.email}
-                        rowId={row.id}
-                        regetData={fetchDataByPagination}
-                      />
-                      <SectionDeleteCard rowId={row.id} regetData={fetchDataByPagination} />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
+                {allSections
+                  ? allSections.map((row) => (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {row.id}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {row.section_description}
+                        </StyledTableCell>
+                        <StyledTableCell>{row.capacity}</StyledTableCell>
+                        <StyledTableCell>{row.created_at}</StyledTableCell>
+                        <StyledTableCell>{row.updated_at}</StyledTableCell>
+                        <StyledTableCell style={{ display: "flex" }}>
+                          <SectionEditCard
+                            adminValue={row.name}
+                            emailValue={row.email}
+                            rowId={row.id}
+                            regetData={getAllSectionByGradeId}
+                          />
+                          <SectionDeleteCard
+                            rowId={row.id}
+                            regetData={getAllSectionByGradeId}
+                          />
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))
+                  : ""}
+
               </TableBody>
             </Table>
           </TableContainer>

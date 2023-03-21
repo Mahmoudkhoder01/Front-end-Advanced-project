@@ -52,7 +52,7 @@ export default function ClassEditCard(props) {
         });
         setOpen(false);
         props.regetData();
-        toast.success("Amin edited successfully");
+        toast.success("Class edited successfully");
       })
       .catch((error) => {
         console.log("Error editing admin", error);

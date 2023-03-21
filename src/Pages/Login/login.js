@@ -6,14 +6,15 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Dashboard from "../Dashboard/dashboard";
+import { ToastContainer, toast } from "react-toastify";
+import Sidebar from "../Sidebar/nav";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["name"]);
-  const [superAdmin, setSuperAdmin] = useState(false);
+  const [cookies, setCookie] = useCookies(["auth"]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,21 +30,26 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.user.isSuperadmin);
-        setSuperAdmin();
         if (data.access_token) {
-          setCookie("auth", data.access_token);
+          setCookie("auth", JSON.stringify(data));
           setLoggedIn(true);
-          navigate("/");
+          navigate("/dashboard");
+        }
+
+        if (!data.access_token) {
+          toast.error("Access token is required");
+          return;
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error(error.message);
+        console.error(error);
+      });
   };
-
   return (
     <>
       {loggedIn ? (
-        <Dashboard />
+        <Sidebar />
       ) : (
         <div className={classes.login}>
           <div className={classes.svgImage}>
@@ -102,6 +108,7 @@ const Login = () => {
               </Grid>
             </div>
           </div>
+          <ToastContainer />
         </div>
       )}
     </>
