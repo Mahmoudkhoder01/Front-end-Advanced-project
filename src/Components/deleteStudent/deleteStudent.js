@@ -33,10 +33,10 @@ export default function StudentDeleteCard(props) {
       .then((response) => {
         setOpen(false);
         props.regetData()
-        toast.success("Section deleted successfully")
+        toast.success("Student deleted successfully")
       })
       .catch((error) => {
-        console.log("Error deletin section", error);
+        console.log("Error deletin student", error);
         toast.error(error.data.message.data)
       });
   };

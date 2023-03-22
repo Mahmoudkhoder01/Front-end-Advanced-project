@@ -101,8 +101,8 @@ export default function StudentEditCard(props) {
               Edit student
             </Typography>
             <form>
-              <Grid container spacing={1}>
-                <Grid xs={12} sm={12} item>
+              <Grid container spacing={3}>
+                <Grid xs={12} sm={12} item sx={{marginTop: 2}}>
                   <TextField
                     name="first_name"
                     type="text"
@@ -164,7 +164,6 @@ export default function StudentEditCard(props) {
                 <Grid xs={12} sm={12} item>
                   <TextField
                     name="enrollment_date"
-                    label="Enrollement-Date"
                     value={updatedData.enrollment_date}
                     type="date"
                     onChange={handleFormChange}

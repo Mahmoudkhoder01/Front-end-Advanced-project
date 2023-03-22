@@ -1,7 +1,6 @@
 .studentCard{
     display:flex;
     align-items: center;
-    gap:10px;
     width:25em;
     height:10vh;
     border:1px solid gray;
@@ -11,11 +10,12 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    padding: 5px;
+    padding: 5px 20px 20px 20px;
 }
 .studentAvatar{
     border-radius: 50%;
-    margin-left:20px;
+    margin-right:20px;
+    margin-left:10px;
     width:70px;
     height:70px;
 }
@@ -25,6 +25,7 @@
 .studentName{
     justify-content: space-between;
     align-items: center;
+    width: 111%;
 }
 .studentName h3{
     margin-bottom:10px;
@@ -65,4 +66,9 @@
 }
 .studentDetails p span{
     padding: 5px;
+}
+.cardIcons{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

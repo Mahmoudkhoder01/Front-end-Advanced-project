@@ -49,22 +49,22 @@ const FixedTables = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/grade`);
       setGrades(response.data.message);
-      setIsLoading(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const fetchDataByPagination = async (grade_id) => {
     setSelectedGradeId(grade_id);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
-      );
-      setSections(response.data.message.data);
-      setCounter(response.data.message);
-    } catch (error) {
+        );
+        setSections(response.data.message.data);
+        setCounter(response.data.message);
+        setIsLoading(true);
+      } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
@@ -72,8 +72,8 @@ const FixedTables = () => {
   const getAllSectionByGradeId = async () => {
     try {
       await axios
-        .get(
-          `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
+      .get(
+        `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
         )
         .then((response) => {
           setAllSections(response.data.message.data);
@@ -183,7 +183,7 @@ const FixedTables = () => {
           </>
         ) : (
           <p className={Classes.beforeChoose}>
-            Choose a Class and a Class to see the Sections
+            Choose a Class to see the Sections
           </p>
         )}
       </div>

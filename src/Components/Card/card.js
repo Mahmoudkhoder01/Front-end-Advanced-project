@@ -21,11 +21,13 @@ function Card(props) {
         Number of {props.name}
       </h2>
 
-      {props.number.length < 10 ? (
+      {/* {props.number.length < 10 ? (
         <p className={classes.pCard}>{props.number}</p>
       ) : (
         <span className={classes.cardSpan}>{props.number}</span>
-      )}
+      )} */}
+              <span className={classes.cardSpan}>{props.number}</span>
+
     </div>
   );
 }

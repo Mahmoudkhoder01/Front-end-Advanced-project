@@ -151,7 +151,7 @@ export default function AddStudentForm(props) {
           </Box> */}
           <form onSubmit={handleSubmit}>
             <Grid container spacing={1}>
-              <Grid xs={12} sm={6} item>
+              <Grid xs={12} sm={12} item>
                 <TextField
                   placeholder="Enter first name"
                   label="First Name"
@@ -161,7 +161,7 @@ export default function AddStudentForm(props) {
                   inputRef={firstNameRef}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item>
+              <Grid xs={12} sm={12} item>
                 <TextField
                   placeholder="Enter last name"
                   label="Last Name"
@@ -171,7 +171,7 @@ export default function AddStudentForm(props) {
                   inputRef={lastNameRef}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} sm={12}>
                 <TextField
                   type="email"
                   placeholder="Enter email"
@@ -182,7 +182,7 @@ export default function AddStudentForm(props) {
                   inputRef={emailRef}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item>
+              <Grid xs={12} sm={12} item>
                 <TextField
                   type="number"
                   placeholder="Enter phone number"

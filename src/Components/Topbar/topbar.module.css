@@ -36,7 +36,9 @@
 
 .end{
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 20px;
 }
 
 .logOut{
