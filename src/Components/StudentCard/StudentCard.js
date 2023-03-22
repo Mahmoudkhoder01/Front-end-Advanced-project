@@ -12,6 +12,7 @@ import {
   MdOutlineEmail,
   MdOutlineDateRange,
 } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -38,8 +39,10 @@ export default function StudentCard(props) {
       );
       setDeleted(true);
       console.log(response.data);
+      toast.success("Student deleted successfully");
     } catch (error) {
       console.error(error);
+      toast.error(error.message)
     }
   };
 
@@ -71,6 +74,7 @@ export default function StudentCard(props) {
                 className={classes.edit}
                 student={props.student}
                 setStudent={props.setStudentData}
+                regetData={props.regetDataAgain}
               />
             </div>
             <div className={classes.studentDetails}>

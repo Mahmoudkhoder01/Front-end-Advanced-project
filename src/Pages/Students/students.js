@@ -64,7 +64,6 @@ function Students() {
       setPagination(response.data.message.data);
       setCounter(response.data.message);
       console.log(response);
-
       console.log(selectedSectionId);
     } catch (error) {
       console.error(error);
@@ -102,7 +101,10 @@ function Students() {
           </div>
           <div>
             {isLoading ? (
-              <AddStudentForm selectedSectionId={selectedSectionId} />
+              <AddStudentForm
+                selectedSectionId={selectedSectionId}
+                regetDataAgain={getStudentsByPagination}
+              />
             ) : null}
           </div>
         </div>
@@ -112,7 +114,10 @@ function Students() {
               {pagination
                 ? pagination.map((student) => (
                     <>
-                      <StudentCard student={student} />
+                      <StudentCard
+                        student={student}
+                        regetDataAgain={getStudentsByPagination}
+                      />
                     </>
                   ))
                 : ""}

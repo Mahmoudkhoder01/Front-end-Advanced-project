@@ -1,11 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
-import dayjs from "dayjs";
-
-import { MdOutlinePersonOutline } from "react-icons/md";
-
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -21,7 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {  toast } from "react-toastify";
-
+import Classes from './AddStudentForm.module.css'
 // import Box from '@mui/material/Box';
 // import Input from '@mui/material/Input';
 // import InputLabel from '@mui/material/InputLabel';
@@ -122,8 +117,6 @@ export default function AddStudentForm(props) {
         `http://localhost:8000/api/students`,
         studentData
       );
-      setOpen(false);
-      toast.success("Student added successfully")
       console.log(response.data);
       setOpen(false)
       props.regetDataAgain()
@@ -236,6 +229,7 @@ export default function AddStudentForm(props) {
                   id="image"
                   name="image"
                   onChange={handleFileInputChange}
+                  className={Classes.filesInput}
                 />
                 {/* <input
                   accept="image/*"
@@ -264,7 +258,7 @@ export default function AddStudentForm(props) {
                 )} */}
               </Grid>
               <Grid className={classes.add} item xs={12}>
-                <Button type="submit" variant="contained" color="secondary">
+                <Button type="submit" variant="contained" color="primary">
                   Add New Student
                 </Button>
               </Grid>

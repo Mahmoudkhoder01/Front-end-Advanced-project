@@ -12,7 +12,8 @@ import Attendance from "./Pages/Attendance/attendance";
 import Admin from "./Pages/Admins/admin";
 import Topbar from "./Components/Topbar/topbar";
 import Login from "./Pages/Login/login";
-import PrivateRoutes from './util/privateRoutes'
+import PrivateRoutes from "./util/privateRoutes";
+import PrivateSuperAdmin from "./util/privateSuperAdmin";
 
 function App() {
   return (
@@ -24,14 +25,16 @@ function App() {
       <div className="App-container">
         <Routes>
           <Route path="/" element={<Login />} />
-          
-          <Route element={<PrivateRoutes/>}>
-          <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route path="/classroom" element={<ClassRoom />} />
-          <Route path="/sections" element={<Sections />} />
-          <Route path="/student" element={<Students />} />
-          <Route path="/attendance" element={<Attendance />} />
-          <Route path="/admin" element={<Admin />} />
+
+          <Route element={<PrivateRoutes />}>
+            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route path="/classroom" element={<ClassRoom />} />
+            <Route path="/sections" element={<Sections />} />
+            <Route path="/student" element={<Students />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route element={<PrivateSuperAdmin />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
           </Route>
         </Routes>
       </div>
