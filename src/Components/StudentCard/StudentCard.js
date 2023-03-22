@@ -75,11 +75,9 @@ export default function StudentCard(props) {
             </div>
             <div className={classes.studentDetails}>
               <p>
-                <span className={classes.studentClass}>
-                  {props.student.first_name}
-                </span>
+                <span className={classes.studentClass}>{props.gradeName}</span>
                 <span className={classes.studentSection}>
-                  {props.student.last_name}
+                  {props.sectionName}
                 </span>
               </p>
               <button
