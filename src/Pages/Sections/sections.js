@@ -89,16 +89,16 @@ const FixedTables = () => {
   console.log(selectedGradeId);
 
   useEffect(() => {
-    fetchDataByPagination();
+    fetchDataByPagination(selectedGradeId);
   }, [page]);
 
   useEffect(() => {
     getGrades();
   }, []);
 
-  useEffect(() => {
-    getAllSectionByGradeId();
-  }, [selectedGradeId, page]);
+  // useEffect(() => {
+  //   getAllSectionByGradeId();
+  // }, [selectedGradeId, page]);
 
   const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
@@ -145,8 +145,8 @@ const FixedTables = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {allSections
-                    ? allSections.map((row) => (
+                  {sections
+                    ? sections.map((row) => (
                         <StyledTableRow key={row.id}>
                           <StyledTableCell component="th" scope="row">
                             {row.id}
