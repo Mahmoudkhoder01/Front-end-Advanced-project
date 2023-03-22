@@ -75,9 +75,8 @@ export default function StudentEditCard(props) {
           headshot: "",
         });
         setOpen(false);
-
         props.regetData();
-        toast.success("student edited successfully");
+        toast.success("Student edited successfully");
       })
       .catch((error) => {
         console.log("Error editing student", error);
@@ -175,7 +174,8 @@ export default function StudentEditCard(props) {
                   />
                 </Grid>
                 <Grid xs={12} sm={12} item>
-                  <TextField
+                  <input
+                  
                     name="headshot"
                     value={updatedData.headshot}
                     type="file"
@@ -183,6 +183,7 @@ export default function StudentEditCard(props) {
                     variant="outlined"
                     fullWidth
                     required
+                    className={classes.filesInput}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>

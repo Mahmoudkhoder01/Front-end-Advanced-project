@@ -20,6 +20,7 @@
 }
 
 .saveAttendance {
+    transform: translateX(37rem);
     color: white;
     gap: 7px;
     display: flex;
