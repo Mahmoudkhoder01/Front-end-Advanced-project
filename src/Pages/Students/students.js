@@ -127,6 +127,8 @@ function Students() {
                       <StudentCard
                         student={student}
                         regetDataAgain={getStudentsByPagination}
+                        sectionName = {selectedSection}
+                        gradeName= {selectedGrade}
                       />
                     </>
                   ))
