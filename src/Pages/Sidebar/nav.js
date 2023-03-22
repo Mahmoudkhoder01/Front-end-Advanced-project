@@ -22,6 +22,8 @@ function Sidebar(props) {
     removeCookie("auth");
   };
 
+function Sidebar() {
+
   if (useLocation().pathname === "/") return null;
 
   const authCookie = Cookies.get("auth");
@@ -37,7 +39,6 @@ function Sidebar(props) {
       console.error("Invalid auth cookie:", authCookie);
     }
   }
-
   return (
     <Fragment>
       <nav className={classes.sidebar}>
