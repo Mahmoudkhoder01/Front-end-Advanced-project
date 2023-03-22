@@ -330,10 +330,10 @@ const FixedTables = () => {
                         />
                       </StyledTableCell>
                       <StyledTableCell>
-                        {row.created_at.slice(0, 20)}
+                        {row.created_at.slice(0, 10)}
                       </StyledTableCell>
                       <StyledTableCell>
-                        {row.updated_at.slice(0, 20)}
+                        {row.updated_at.slice(0, 10)}
                       </StyledTableCell>
                       <StyledTableCell style={{ display: "flex" }}>
                         {/* <SectionEditCard
