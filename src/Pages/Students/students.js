@@ -14,10 +14,13 @@ function Students() {
   const [sections, setSections] = useState([]);
   const [students, setStudents] = useState([]);
   const [pagination, setPagination] = useState([]);
+  const [selectedClassId, setSelectedClassId] = useState("");
   const [selectedSectionId, setSelectedSectionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState([]);
   const [page, setPage] = useState(1);
+  const [selectedSection, setSelectedSection] = useState('')
+  const [selectedGrade, setSelectedGrade] = useState('')
 
   const getGrades = async () => {
     try {
@@ -30,7 +33,10 @@ function Students() {
   };
 
   const getSections = async (grade_id) => {
-    setSelectedSectionId(grade_id);
+    setSelectedClassId(grade_id);
+    const grade = grades.find(g => g.id === grade_id).name;
+    setSelectedGrade(grade)
+    console.log(selectedGrade)
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/grade/${grade_id}`
@@ -41,9 +47,12 @@ function Students() {
       console.error(error);
     }
   };
-
+   
   const getStudents = async (section_id) => {
     setSelectedSectionId(section_id);
+    const section = sections.find(s => s.id === section_id).section_description;
+    setSelectedSection(section)
+    console.log(section)
     try {
       const response = await axios.get(
         `http://localhost:8000/api/students/section/${section_id}`
@@ -114,6 +123,7 @@ function Students() {
               {pagination
                 ? pagination.map((student) => (
                     <>
+
                       <StudentCard
                         student={student}
                         regetDataAgain={getStudentsByPagination}

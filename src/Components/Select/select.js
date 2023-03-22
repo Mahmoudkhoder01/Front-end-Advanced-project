@@ -22,7 +22,7 @@ function SelectButton(props) {
       props.getSections(item_id);
     } else {
       props.getStudents(item_id);
-      // props.fetchData(item_id);
+      props.fetchData(item_id);
     }
   };
 

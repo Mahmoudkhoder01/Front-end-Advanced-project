@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
 import StudentEditCard from "../editstudent/editstudent";
+import InfoIcon from "@mui/icons-material/Info";
+
 import axios from "axios";
 import {
   MdPhoneEnabled,
@@ -76,22 +78,24 @@ export default function StudentCard(props) {
                 setStudent={props.setStudentData}
                 regetData={props.regetDataAgain}
               />
+              <IconButton onClick={handleOpen}>
+                <InfoIcon sx={{ color: "#5541D7" }} />
+              </IconButton>
+              {/* <IconButton>
+              <MoreVertIcon />
+              </IconButton> */}
             </div>
             <div className={classes.studentDetails}>
-              <p>
-                <span className={classes.studentClass}>
-                  {props.student.first_name}
-                </span>
-                <span className={classes.studentSection}>
-                  {props.student.last_name}
-                </span>
-              </p>
-              <button
-                className={classes.studentDetailsBtn}
-                onClick={handleOpen}
-              >
-                details
-              </button>
+              <div>
+                <p>
+                  <span className={classes.studentClass}>
+                    {props.gradeName}
+                  </span>
+                  <span className={classes.studentSection}>
+                    {props.sectionName}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
