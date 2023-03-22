@@ -123,7 +123,6 @@ function Students() {
               {pagination
                 ? pagination.map((student) => (
                     <>
-
                       <StudentCard
                         student={student}
                         regetDataAgain={getStudentsByPagination}

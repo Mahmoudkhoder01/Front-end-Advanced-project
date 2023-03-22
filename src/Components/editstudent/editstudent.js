@@ -165,7 +165,7 @@ export default function StudentEditCard(props) {
                   <TextField
                     name="enrollment_date"
                     label="Enrollement-Date"
-                    value={updatedData.name}
+                    value={updatedData.enrollment_date}
                     type="date"
                     onChange={handleFormChange}
                     variant="outlined"
@@ -175,7 +175,6 @@ export default function StudentEditCard(props) {
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <input
-                  
                     name="headshot"
                     value={updatedData.headshot}
                     type="file"

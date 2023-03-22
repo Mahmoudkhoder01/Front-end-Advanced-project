@@ -11,6 +11,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    padding: 5px;
 }
 .studentAvatar{
     border-radius: 50%;
@@ -58,4 +59,10 @@
 }
 .edit{
     color: #5541D7;
+}
+.studentDetails p{
+    color: white;
+}
+.studentDetails p span{
+    padding: 5px;
 }
