@@ -20,7 +20,11 @@ function SelectButton(props) {
   const handleClick = (item_id) => {
     if (props.getSections) {
       props.getSections(item_id);
-    } else {
+    }
+    if (props.getStudents){
+      props.getStudents(item_id);
+    }
+    if (props.getStudents && props.fetchData) {
       props.getStudents(item_id);
       props.fetchData(item_id);
     }
@@ -28,10 +32,7 @@ function SelectButton(props) {
 
   return (
     <Box sx={{ minWidth: 200 }}>
-      <FormControl
-        fullWidth
-        sx={{ maxWidth: 300, marginTop: 1 }}
-      >
+      <FormControl fullWidth sx={{ maxWidth: 300, marginTop: 1 }}>
         <InputLabel id="demo-simple-select-label">{props.labelName}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
