@@ -5,8 +5,12 @@
     width:25em;
     height:10vh;
     border:1px solid gray;
-    border-radius: 3%;
     margin: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 .studentAvatar{
     border-radius: 50%;

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./StudentCard.module.css";
-import { MdModeEdit, MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -12,8 +12,8 @@ import {
   MdOutlineEmail,
   MdOutlineDateRange,
 } from "react-icons/md";
+import { toast } from "react-toastify";
 
-// https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,7 +28,6 @@ const style = {
 
 export default function StudentCard(props) {
   const [open, setOpen] = React.useState(false);
-  const [students, setStudents] = React.useState([]);
   const [deleted, setDeleted] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,8 +39,10 @@ export default function StudentCard(props) {
       );
       setDeleted(true);
       console.log(response.data);
+      toast.success("Student deleted successfully");
     } catch (error) {
       console.error(error);
+      toast.error(error.message)
     }
   };
 
@@ -73,6 +74,7 @@ export default function StudentCard(props) {
                 className={classes.edit}
                 student={props.student}
                 setStudent={props.setStudentData}
+                regetData={props.regetDataAgain}
               />
             </div>
             <div className={classes.studentDetails}>
@@ -81,7 +83,6 @@ export default function StudentCard(props) {
                   {props.student.first_name}
                 </span>
                 <span className={classes.studentSection}>
-                  {" "}
                   {props.student.last_name}
                 </span>
               </p>

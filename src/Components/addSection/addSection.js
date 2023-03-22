@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -42,7 +42,7 @@ export default function AddSectionForm(props) {
 
   const handleAddSection = async (sectionData) => {
     try {
-      const response = await axios
+      await axios
         .post(`http://localhost:8000/api/section`, sectionData)
         .then(async (response) => {
           setOpen(false);
@@ -56,7 +56,7 @@ export default function AddSectionForm(props) {
       toast.error(error.response.data.message);
     }
   };
-  
+
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   //   axios
@@ -88,10 +88,9 @@ export default function AddSectionForm(props) {
 
   return (
     <>
-      <div style={{ marginTop: "4rem" }}>
+      <div>
         <button
           className={classes.addStudentBtn}
-          style={{ transform: "translateX(75rem)" }}
           onClick={handleOpen}
         >
           <FiPlus />
@@ -156,7 +155,7 @@ export default function AddSectionForm(props) {
             </form>
           </Box>
         </Modal>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </>
   );

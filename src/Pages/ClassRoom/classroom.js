@@ -78,7 +78,7 @@ const FixedTables = () => {
             }}
           >
             <Table>
-              <TableHead>Classes</TableHead>
+              <TableHead></TableHead>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>ID</StyledTableCell>

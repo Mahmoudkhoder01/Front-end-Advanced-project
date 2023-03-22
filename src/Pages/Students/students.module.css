@@ -19,6 +19,8 @@
 .header{
     display:flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 .dropdowns{
     display:flex;
@@ -29,4 +31,13 @@
    display: inline;
    position: fixed;
    right: 10px;
+}
+
+.beforeChoose {
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5541D7;
+    font-size: 2rem;
 }

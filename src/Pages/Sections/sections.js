@@ -10,7 +10,6 @@ import Paper from "@mui/material/Paper";
 import Classes from "./section.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../../Components/Loading/loading";
 import AddSectionForm from "../../Components/addSection/addSection";
 import SectionEditCard from "../../Components/editSection/editSection";
 import SectionDeleteCard from "../../Components/deleteSection/deletesection";
@@ -50,6 +49,7 @@ const FixedTables = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/grade`);
       setGrades(response.data.message);
+      setIsLoading(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -64,7 +64,6 @@ const FixedTables = () => {
       );
       setSections(response.data.message.data);
       setCounter(response.data.message);
-      setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -72,14 +71,13 @@ const FixedTables = () => {
 
   const getAllSectionByGradeId = async () => {
     try {
-      const response = await axios
+      await axios
         .get(
           `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
         )
         .then((response) => {
           setAllSections(response.data.message.data);
           setCounter(response.data.message);
-          setIsLoading(true);
           console.log(response.data);
         });
     } catch (error) {
@@ -99,91 +97,96 @@ const FixedTables = () => {
   }, []);
 
   useEffect(() => {
-    fetchDataByPagination(selectedGradeId);
+    getAllSectionByGradeId();
   }, [selectedGradeId, page]);
 
   const handlePageChange = (event) => {
     setPage(parseInt(event.target.textContent));
   };
+
   console.log(sections);
+
   return (
     <>
-      {isLoading ? (
-        <>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <SelectButton
-              labelName="Class"
-              options={grades}
-              getSections={fetchDataByPagination}
-            />
+      <div className={Classes.sectionPage}>
+        <div className={Classes.sectionDropDowns}>
+          <SelectButton
+            labelName="Class"
+            options={grades}
+            getSections={fetchDataByPagination}
+          />
+          {isLoading ? (
             <AddSectionForm
               regetData={getAllSectionByGradeId}
               gradeId={selectedGradeId}
             />
-          </div>
-
-          <TableContainer
-            className={Classes.adminPage}
-            component={Paper}
-            initialState={{
-              pagination: {
-                paginationModel: { pageSize: 10, page: 0 },
-              },
-            }}
-          >
-            <Table>
-              <TableHead>Sections</TableHead>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>ID</StyledTableCell>
-                  <StyledTableCell>SECTION DESCRIPTION</StyledTableCell>
-                  <StyledTableCell>CAPACITY</StyledTableCell>
-                  <StyledTableCell>CRAETED AT</StyledTableCell>
-                  <StyledTableCell>UPDATET AT</StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {allSections
-                  ? allSections.map((row) => (
-                      <StyledTableRow key={row.id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.id}
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {row.section_description}
-                        </StyledTableCell>
-                        <StyledTableCell>{row.capacity}</StyledTableCell>
-                        <StyledTableCell>{row.created_at}</StyledTableCell>
-                        <StyledTableCell>{row.updated_at}</StyledTableCell>
-                        <StyledTableCell style={{ display: "flex" }}>
-                          <SectionEditCard
-                            adminValue={row.name}
-                            emailValue={row.email}
-                            rowId={row.id}
-                            regetData={getAllSectionByGradeId}
-                          />
-                          <SectionDeleteCard
-                            rowId={row.id}
-                            regetData={getAllSectionByGradeId}
-                          />
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    ))
-                  : ""}
-
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Pagination
-            onChange={handlePageChange}
-            changepage={page}
-            pagesCounter={counter.last_page}
-          />
-        </>
-      ) : (
-        <Loading />
-      )}
+          ) : null}
+        </div>
+        {isLoading ? (
+          <>
+            <TableContainer
+              component={Paper}
+              initialState={{
+                pagination: {
+                  paginationModel: { pageSize: 10, page: 0 },
+                },
+              }}
+            >
+              <Table>
+                <TableHead></TableHead>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>ID</StyledTableCell>
+                    <StyledTableCell>SECTION DESCRIPTION</StyledTableCell>
+                    <StyledTableCell>CAPACITY</StyledTableCell>
+                    <StyledTableCell>CRAETED AT</StyledTableCell>
+                    <StyledTableCell>UPDATET AT</StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {allSections
+                    ? allSections.map((row) => (
+                        <StyledTableRow key={row.id}>
+                          <StyledTableCell component="th" scope="row">
+                            {row.id}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {row.section_description}
+                          </StyledTableCell>
+                          <StyledTableCell>{row.capacity}</StyledTableCell>
+                          <StyledTableCell>{row.created_at}</StyledTableCell>
+                          <StyledTableCell>{row.updated_at}</StyledTableCell>
+                          <StyledTableCell style={{ display: "flex" }}>
+                            <SectionEditCard
+                              adminValue={row.name}
+                              emailValue={row.email}
+                              rowId={row.id}
+                              regetData={getAllSectionByGradeId}
+                            />
+                            <SectionDeleteCard
+                              rowId={row.id}
+                              regetData={getAllSectionByGradeId}
+                            />
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : ""}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Pagination
+              onChange={handlePageChange}
+              changepage={page}
+              pagesCounter={counter.last_page}
+            />
+          </>
+        ) : (
+          <p className={Classes.beforeChoose}>
+            Choose a Class and a Class to see the Sections
+          </p>
+        )}
+      </div>
     </>
   );
 };
