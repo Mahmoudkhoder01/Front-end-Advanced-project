@@ -15,6 +15,7 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 import { toast } from "react-toastify";
+import StudentDeleteCard from "../deleteStudent/deleteStudent";
 
 const style = {
   position: "absolute",
@@ -34,20 +35,6 @@ export default function StudentCard(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleDelete = async (student_id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8000/api/students/${student_id}`
-      );
-      setDeleted(true);
-      console.log(response.data);
-      toast.success("Student deleted successfully");
-    } catch (error) {
-      console.error(error);
-      toast.error(error.message)
-    }
-  };
-
   return (
     <>
       {!deleted && (
@@ -61,17 +48,13 @@ export default function StudentCard(props) {
           </div>
           <div className={classes.student}>
             <div className={classes.studentName}>
-              <h3>
+              <h4>
                 {props.student.first_name} {props.student.last_name}
-              </h3>
-
-              <IconButton
-                className={classes.edit}
-                aria-label="delete"
-                onClick={() => handleDelete(props.student.id)}
-              >
-                <MdDeleteOutline />
-              </IconButton>
+              </h4>
+              <StudentDeleteCard
+                rowId={props.student.id}
+                regetData={props.regetDataAgain}
+              />
               <StudentEditCard
                 className={classes.edit}
                 student={props.student}
@@ -81,9 +64,6 @@ export default function StudentCard(props) {
               <IconButton onClick={handleOpen}>
                 <InfoIcon sx={{ color: "#5541D7" }} />
               </IconButton>
-              {/* <IconButton>
-              <MoreVertIcon />
-              </IconButton> */}
             </div>
             <div className={classes.studentDetails}>
               <div>
