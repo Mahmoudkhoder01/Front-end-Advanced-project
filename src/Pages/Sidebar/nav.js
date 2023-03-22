@@ -22,7 +22,6 @@ function Sidebar(props) {
     removeCookie("auth");
   };
 
-function Sidebar() {
 
   if (useLocation().pathname === "/") return null;
 
