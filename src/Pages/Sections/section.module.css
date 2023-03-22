@@ -1,0 +1,48 @@
+.sectionPage {
+    width: 94% !important;
+    margin: 50px auto;
+    gap: 4rem;
+}
+
+.tableGrid {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+}
+
+.tableGrid2 {
+    padding: 1rem 0px;
+    display: flex;
+    align-items: center;
+}
+
+.tableGrid2:hover {
+    border-bottom: 1px solid #dad8d8;
+}
+
+.editInput {
+    border: 0;
+    border-bottom: 1px solid #9e9d9d;
+}
+
+.editInput:focus {
+    font-size: medium;
+    outline: 0;
+    border-bottom: 1px solid #9e9d9d;
+}
+
+.sectionDropDowns{
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.beforeChoose {
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5541D7;
+    font-size: 2rem;
+}

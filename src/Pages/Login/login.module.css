@@ -1,0 +1,77 @@
+.login{
+    display: flex;
+}
+
+.svgImage{
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.loginTitle{
+    color: #7a5fee;
+    align-self: center;
+}
+
+.loginImage{
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    left: 5%;
+    top: 23%;
+}
+
+.loginForm{
+    display: grid;
+    place-items: center;
+    flex-basis: 40%;
+}
+
+.formCentered{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonColor{
+    height: 50px;
+    background-color: #7a5fee !important;
+}
+
+.buttonColor:hover{
+    background-color: #a797f0 !important;
+}
+
+
+
+
+@media (max-width: 1200px) {
+    .loginForm {
+        width: 50%;
+    }
+
+    .svgImag {
+        width: 50%;
+    }
+
+    .loginImage {
+        width: 450px;
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .loginForm {
+        width: 100%;
+    }
+
+    .svgImage {
+        display: none;
+    }
+
+    .login {
+        height: 100vh;
+        justify-content: center;
+    }
+}

@@ -1,12 +1,12 @@
 .card {
-    margin-right: 3rem;
     width: 280px;
     height: 180px;
     border-radius: 15px;
     background-color: #ffffff;
-    border: 1px solid #c7c3c3;
     padding: 10px 15px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+    box-shadow: 2px 2px 2px #00000055;
+
 }
 
 .card h2 {
@@ -16,17 +16,18 @@
     padding-bottom: 2rem;
 }
 
-.card span, p{
+
+.cardSpan, .pCard{
     position: relative;
     font-size: 50px;
 }
 
-.card p{
+.pCard{
     margin-top: 0;
     width: fit-content;
 }
 
-.card span::after {
+.cardSpan::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -35,7 +36,7 @@
     width: 50px;
     height: 2px;
 }
-.card p::after {
+.pCard::after {
     content: '';
     position: absolute;
     bottom: 0;

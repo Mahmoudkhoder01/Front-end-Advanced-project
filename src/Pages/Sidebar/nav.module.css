@@ -1,4 +1,4 @@
-nav {
+.sidebar {
     width: 20rem;
     height: 100vh;
     background-color: #5541D7;
@@ -6,8 +6,6 @@ nav {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
-    top: 0;
     overflow: hidden;
 }
 
@@ -28,14 +26,10 @@ nav img{
     -webkit-filter: invert();
 }
 
-nav a:hover {
-    text-decoration: underline;
-}
-
 .setting {
     width: 80%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
 .bar {
@@ -63,7 +57,13 @@ nav span {
     padding-left: 2rem;
 }
 
-
+.logOut{
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
 
 
 @media screen and (max-width: 768px) {
