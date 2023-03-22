@@ -95,8 +95,8 @@ const FixedTables = () => {
                       {row.id}
                     </StyledTableCell>
                     <StyledTableCell>{row.name}</StyledTableCell>
-                    <StyledTableCell>{row.created_at.slice(0,20)}</StyledTableCell>
-                    <StyledTableCell>{row.updated_at.slice(0,20)}</StyledTableCell>
+                    <StyledTableCell>{row.created_at.slice(0,10)}</StyledTableCell>
+                    <StyledTableCell>{row.updated_at.slice(0,10)}</StyledTableCell>
                     <StyledTableCell style={{ display: "flex" }}>
                       <ClassEditCard
                         adminValue={row.name}

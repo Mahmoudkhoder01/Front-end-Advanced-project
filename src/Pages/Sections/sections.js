@@ -155,8 +155,8 @@ const FixedTables = () => {
                             {row.section_description}
                           </StyledTableCell>
                           <StyledTableCell>{row.capacity}</StyledTableCell>
-                          <StyledTableCell>{row.created_at}</StyledTableCell>
-                          <StyledTableCell>{row.updated_at}</StyledTableCell>
+                          <StyledTableCell>{row.created_at.slice(0, 10)}</StyledTableCell>
+                          <StyledTableCell>{row.updated_at.slice(0, 10)}</StyledTableCell>
                           <StyledTableCell style={{ display: "flex" }}>
                             <SectionEditCard
                               adminValue={row.name}
