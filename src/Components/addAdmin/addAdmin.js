@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -127,6 +127,7 @@ export default function AddAdminForm(props) {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
+                    className={classes.addButton}
                   >
                     Add New Admin
                   </Button>

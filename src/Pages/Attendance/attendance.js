@@ -134,7 +134,7 @@ const FixedTables = () => {
         })
         .then(() => {
           getAttendance();
-          toast.success("Attendance has been saved successfully");
+          // toast.success("Attendance has been saved successfully");
         });
     } catch (error) {
       console.error(error);
@@ -194,7 +194,7 @@ const FixedTables = () => {
         .then((response) => {
           console.log(response);
           getAttendance();
-          toast.success("Attendance updated successfully");
+          // toast.success("Attendance updated successfully");
         });
     } catch (error) {
       console.error(error);

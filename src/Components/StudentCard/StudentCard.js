@@ -38,7 +38,7 @@ export default function StudentCard(props) {
   return (
     <>
       {!deleted && (
-        <div className={classes.studentCard}>
+        <div className={classes.studentCard}> 
           <div>
             <img
               className={classes.studentAvatar}
@@ -51,19 +51,21 @@ export default function StudentCard(props) {
               <h4>
                 {props.student.first_name} {props.student.last_name}
               </h4>
-              <StudentDeleteCard
-                rowId={props.student.id}
-                regetData={props.regetDataAgain}
-              />
-              <StudentEditCard
-                className={classes.edit}
-                student={props.student}
-                setStudent={props.setStudentData}
-                regetData={props.regetDataAgain}
-              />
-              <IconButton onClick={handleOpen}>
-                <InfoIcon sx={{ color: "#5541D7" }} />
-              </IconButton>
+              <div className={classes.cardIcons}>
+                <IconButton onClick={handleOpen}>
+                  <InfoIcon sx={{ color: "#5541D7", fontSize: "30px" }} />
+                </IconButton>
+                <StudentEditCard
+                  className={classes.edit}
+                  student={props.student}
+                  setStudent={props.setStudentData}
+                  regetData={props.regetDataAgain}
+                />
+                <StudentDeleteCard
+                  rowId={props.student.id}
+                  regetData={props.regetDataAgain}
+                />
+              </div>
             </div>
             <div className={classes.studentDetails}>
               <div>

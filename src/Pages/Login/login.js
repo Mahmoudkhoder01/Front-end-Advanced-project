@@ -37,7 +37,9 @@ const Login = () => {
         }
 
         if (!data.access_token) {
-          toast.error("Access token is required");
+          toast.error("Unvalidated Email or Password",{
+            autoClose: 1000
+          });
           return;
         }
       })

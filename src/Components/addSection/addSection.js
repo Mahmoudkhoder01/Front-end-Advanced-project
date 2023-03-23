@@ -56,27 +56,7 @@ export default function AddSectionForm(props) {
       toast.error(error.response.data.message);
     }
   };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   axios
-  //     .post("http://localhost:8000/api/section", {
-  //       section_description: section.section_description,
-  //       capacity: section.capacity,
-  //       grade: section.grade,
-  //     })
-  //     .then((response) => {
-  //       setOpen(false);
-  //       props.regetData();
-  //       toast.success("Section added succefully");
-  //     })
-  //     .catch((error) => {
-  //       // console.log("Error adding section", error·);
-  //       console.log(error);
-  //       toast.error(error.response.data.message);
-  //     });
-  // };
-
+  
   const formHandleSubmit = (event) => {
     event.preventDefault();
     let newSection = new FormData();
@@ -133,21 +113,8 @@ export default function AddSectionForm(props) {
                     required
                   />
                 </Grid>
-                {/* <Grid xs={12} sm={12} item>
-                  <TextField
-                    type="text"
-                    name="grade"
-                    value={section.grade}
-                    placeholder="Enter grade id"
-                    label="Grade"
-                    variant="outlined"
-                    onChange={handleFormChange}
-                    fullWidth
-                    required
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button type="submit" variant="contained" className={classes.addButton} >
                     Add New Section
                   </Button>
                 </Grid>

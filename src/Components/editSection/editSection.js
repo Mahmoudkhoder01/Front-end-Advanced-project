@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { isPageKeys } from "@mui/x-data-grid/utils/keyboardUtils";
+import classes from "../AddStudent/AddStudentForm.module.css";
 
 const style = {
   position: "absolute",
@@ -86,7 +86,7 @@ export default function SectionEditCard(props) {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Edit Admin
+              Edit Section
             </Typography>
             <form>
               <Grid container spacing={1}>
@@ -115,25 +115,13 @@ export default function SectionEditCard(props) {
                     required
                   />
                 </Grid>
-                {/* <Grid xs={12} sm={12} item>
-                  <TextField
-                    type="text"
-                    name="grade"
-                    value={updatedData.grade}
-                    placeholder="Enter grade id"
-                    label="Grade"
-                    variant="outlined"
-                    onChange={handleFormChange}
-                    fullWidth
-                    required
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     onClick={handleEdit}
+                    className={classes.addButton}
                   >
                     Edit Section
                   </Button>

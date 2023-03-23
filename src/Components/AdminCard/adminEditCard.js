@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import classes from "../AddStudent/AddStudentForm.module.css";
 
 const style = {
   position: "absolute",
@@ -128,6 +129,7 @@ export default function AdminEditCard(props) {
                     variant="contained"
                     color="primary"
                     onClick={handleEdit}
+                    className={classes.addButton}
                   >
                     Edit Admin
                   </Button>

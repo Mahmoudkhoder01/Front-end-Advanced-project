@@ -7,7 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Grid } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import classes from "./delete.module.css"
 
 const style = {
   position: "absolute",
@@ -53,7 +54,7 @@ export default function ClassDeleteCard(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Delete Admin
+            Delete Class
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <Grid container spacing={1}>
@@ -64,6 +65,7 @@ export default function ClassDeleteCard(props) {
                   color="primary"
                   onClick={handleDelete}
                   style={{ width: "100%" }}
+                  className={classes.deleteButton}
                 >
                   Yes
                 </Button>
@@ -77,6 +79,7 @@ export default function ClassDeleteCard(props) {
                   onClick={() => {
                     setOpen(false);
                   }}
+                  className={classes.deleteButton}
                 >
                   No
                 </Button>

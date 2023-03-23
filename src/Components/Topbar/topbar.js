@@ -1,7 +1,7 @@
 import classes from "./topbar.module.css";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { CgProfile } from "react-icons/cg";
 function Topbar() {
   if (useLocation().pathname === "/") return null;
 
@@ -22,6 +22,7 @@ function Topbar() {
     <div className={classes.topbar}>
       <div className={classes.admin}>
         <div className={classes.end}>
+          <CgProfile/>
           <h4>{adminName}</h4>
         </div>
       </div>

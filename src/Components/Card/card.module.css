@@ -16,32 +16,9 @@
     padding-bottom: 2rem;
 }
 
-
-.cardSpan, .pCard{
+.cardSpan {
+    padding-bottom: 2px;
+    border-bottom: 2px solid black;
     position: relative;
     font-size: 50px;
-}
-
-.pCard{
-    margin-top: 0;
-    width: fit-content;
-}
-
-.cardSpan::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: black;
-    width: 50px;
-    height: 2px;
-}
-.pCard::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: black;
-    width: 30px;
-    height: 2px;
 }

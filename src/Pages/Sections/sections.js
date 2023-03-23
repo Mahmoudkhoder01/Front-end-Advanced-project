@@ -49,7 +49,6 @@ const FixedTables = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/grade`);
       setGrades(response.data.message);
-      setIsLoading(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -64,6 +63,7 @@ const FixedTables = () => {
       );
       setSections(response.data.message.data);
       setCounter(response.data.message);
+      setIsLoading(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -155,8 +155,12 @@ const FixedTables = () => {
                             {row.section_description}
                           </StyledTableCell>
                           <StyledTableCell>{row.capacity}</StyledTableCell>
-                          <StyledTableCell>{row.created_at.slice(0, 10)}</StyledTableCell>
-                          <StyledTableCell>{row.updated_at.slice(0, 10)}</StyledTableCell>
+                          <StyledTableCell>
+                            {row.created_at.slice(0, 10)}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {row.updated_at.slice(0, 10)}
+                          </StyledTableCell>
                           <StyledTableCell style={{ display: "flex" }}>
                             <SectionEditCard
                               adminValue={row.name}
@@ -183,7 +187,7 @@ const FixedTables = () => {
           </>
         ) : (
           <p className={Classes.beforeChoose}>
-            Choose a Class and a Class to see the Sections
+            Choose a Class to see the Sections
           </p>
         )}
       </div>
