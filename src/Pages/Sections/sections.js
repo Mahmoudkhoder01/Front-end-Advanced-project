@@ -54,17 +54,17 @@ const FixedTables = () => {
       console.error(error);
     }
   };
-  
+
   const fetchDataByPagination = async (grade_id) => {
     setSelectedGradeId(grade_id);
     try {
       const response = await axios.get(
         `http://localhost:8000/api/section/${grade_id}/pagination?page=${page}`
-        );
-        setSections(response.data.message.data);
-        setCounter(response.data.message);
-        setIsLoading(true);
-      } catch (error) {
+      );
+      setSections(response.data.message.data);
+      setCounter(response.data.message);
+      setIsLoading(true);
+    } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
@@ -72,8 +72,8 @@ const FixedTables = () => {
   const getAllSectionByGradeId = async () => {
     try {
       await axios
-      .get(
-        `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
+        .get(
+          `http://localhost:8000/api/section/${selectedGradeId}/pagination?page=${page}`
         )
         .then((response) => {
           setAllSections(response.data.message.data);
@@ -155,8 +155,12 @@ const FixedTables = () => {
                             {row.section_description}
                           </StyledTableCell>
                           <StyledTableCell>{row.capacity}</StyledTableCell>
-                          <StyledTableCell>{row.created_at.slice(0, 10)}</StyledTableCell>
-                          <StyledTableCell>{row.updated_at.slice(0, 10)}</StyledTableCell>
+                          <StyledTableCell>
+                            {row.created_at.slice(0, 10)}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {row.updated_at.slice(0, 10)}
+                          </StyledTableCell>
                           <StyledTableCell style={{ display: "flex" }}>
                             <SectionEditCard
                               adminValue={row.name}

@@ -7,7 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Grid } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import classes from "../deleteclass/delete.module.css"
 
 const style = {
   position: "absolute",
@@ -65,6 +66,7 @@ export default function AdminDeleteCard(props) {
                   color="primary"
                   onClick={handleDelete}
                   style={{ width: "100%" }}
+                  className={classes.deleteButton}
                 >
                   Yes
                 </Button>
@@ -78,6 +80,7 @@ export default function AdminDeleteCard(props) {
                   onClick={() => {
                     setOpen(false)
                   }}
+                  className={classes.deleteButton}
                 >
                   No
                 </Button>

@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import classes from "../AddStudent/AddStudentForm.module.css";
 
 const style = {
   position: "absolute",
@@ -74,7 +75,7 @@ export default function ClassEditCard(props) {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Edit Admin
+              Edit Class
             </Typography>
             <form>
               <Grid container spacing={1}>
@@ -96,6 +97,7 @@ export default function ClassEditCard(props) {
                     variant="contained"
                     color="primary"
                     onClick={handleEdit}
+                    className={classes.addButton}
                   >
                     Edit Class
                   </Button>

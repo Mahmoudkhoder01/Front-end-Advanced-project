@@ -7,7 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Grid } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import classes from "../deleteclass/delete.module.css";
 
 const style = {
   position: "absolute",
@@ -32,12 +33,12 @@ export default function SectionDeleteCard(props) {
       .delete(`http://localhost:8000/api/section/${props.rowId}`)
       .then((response) => {
         setOpen(false);
-        props.regetData()
-        toast.success("Section deleted successfully")
+        props.regetData();
+        toast.success("Section deleted successfully");
       })
       .catch((error) => {
         console.log("Error deletin section", error);
-        toast.error(error.data.message.data)
+        toast.error(error.data.message.data);
       });
   };
   return (
@@ -53,7 +54,7 @@ export default function SectionDeleteCard(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Delete Admin
+            Delete Section
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <Grid container spacing={1}>
@@ -64,6 +65,7 @@ export default function SectionDeleteCard(props) {
                   color="primary"
                   onClick={handleDelete}
                   style={{ width: "100%" }}
+                  className={classes.deleteButton}
                 >
                   Yes
                 </Button>
@@ -75,8 +77,9 @@ export default function SectionDeleteCard(props) {
                   color="primary"
                   style={{ width: "100%" }}
                   onClick={() => {
-                    setOpen(false)
+                    setOpen(false);
                   }}
+                  className={classes.deleteButton}
                 >
                   No
                 </Button>

@@ -96,6 +96,7 @@ export default function AddClassForm(props) {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
+                    className={classes.addButton}
                   >
                     Add Class
                   </Button>

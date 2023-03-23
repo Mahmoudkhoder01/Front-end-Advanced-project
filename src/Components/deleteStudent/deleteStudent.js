@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Grid } from "@mui/material";
 import { toast } from "react-toastify";
+import classes from "../deleteclass/delete.module.css";
 
 const style = {
   position: "absolute",
@@ -32,12 +33,12 @@ export default function StudentDeleteCard(props) {
       .delete(`http://localhost:8000/api/students/${props.rowId}`)
       .then((response) => {
         setOpen(false);
-        props.regetData()
-        toast.success("Student deleted successfully")
+        props.regetData();
+        toast.success("Student deleted successfully");
       })
       .catch((error) => {
         console.log("Error deletin student", error);
-        toast.error(error.data.message.data)
+        toast.error(error.data.message.data);
       });
   };
   return (
@@ -64,6 +65,7 @@ export default function StudentDeleteCard(props) {
                   color="primary"
                   onClick={handleDelete}
                   style={{ width: "100%" }}
+                  className={classes.deleteButton}
                 >
                   Yes
                 </Button>
@@ -75,8 +77,9 @@ export default function StudentDeleteCard(props) {
                   color="primary"
                   style={{ width: "100%" }}
                   onClick={() => {
-                    setOpen(false)
+                    setOpen(false);
                   }}
+                  className={classes.deleteButton}
                 >
                   No
                 </Button>

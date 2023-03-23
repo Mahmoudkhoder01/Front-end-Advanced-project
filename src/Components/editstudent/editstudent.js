@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 import classes from "./editstudent.module.css";
 import { ToastContainer, toast } from "react-toastify";
+import Classes from "../AddStudent/AddStudentForm.module.css";
 
 const style = {
   position: "absolute",
@@ -80,7 +81,8 @@ export default function StudentEditCard(props) {
       })
       .catch((error) => {
         console.log("Error editing student", error);
-        toast.error(error.response);
+        toast.error(error.response.data.message);
+        console.log(error.response.data.message);
       });
   };
 
@@ -181,7 +183,7 @@ export default function StudentEditCard(props) {
                     variant="outlined"
                     fullWidth
                     required
-                    className={classes.filesInput}
+                    className={`${classes.filesInput} ${Classes.filesInput}`}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -190,6 +192,7 @@ export default function StudentEditCard(props) {
                     variant="contained"
                     color="primary"
                     onClick={handleEdit}
+                    className={Classes.addButton}
                   >
                     Edit student
                   </Button>
