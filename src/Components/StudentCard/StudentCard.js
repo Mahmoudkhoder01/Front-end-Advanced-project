@@ -60,6 +60,7 @@ export default function StudentCard(props) {
                   student={props.student}
                   setStudent={props.setStudentData}
                   regetData={props.regetDataAgain}
+                  selectedSectionId={props.selectedSectionId}
                 />
                 <StudentDeleteCard
                   rowId={props.student.id}

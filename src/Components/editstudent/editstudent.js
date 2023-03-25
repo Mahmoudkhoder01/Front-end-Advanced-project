@@ -29,6 +29,7 @@ export default function StudentEditCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [updatedImageUrl, setUpdatedImageUrl] = useState(null);
   const [updatedData, setUpdatedData] = useState({
     first_name: "",
     last_name: "",
@@ -37,7 +38,6 @@ export default function StudentEditCard(props) {
     password: "",
     phone_number: "",
     enrollment_date: "",
-    headshot: "",
   });
   console.log(props.student.id);
 
@@ -49,21 +49,29 @@ export default function StudentEditCard(props) {
     }));
   };
 
+  const handleImageChange = (event) => {
+    setUpdatedImageUrl(event.target.files[0]);
+  };
   const handleEdit = (event, id) => {
     event.preventDefault();
     console.log(id);
+    let updatedStudent = new FormData();
+    updatedStudent.append("first_name", updatedData.first_name);
+    updatedStudent.append("last_name", updatedData.last_name);
+    updatedStudent.append("email", updatedData.email);
+    updatedStudent.append("phone_number", updatedData.phone_number);
+    updatedStudent.append("section_id", props.selectedSectionId);
+    updatedStudent.append("birth_date", updatedData.birth_date);
+    updatedStudent.append("enrollment_date", updatedData.enrollment_date);
+    updatedStudent.append("image", updatedImageUrl);
+    updatedStudent.append("_method", "PATCH");
+    console.log("Frontend", updatedStudent.entries());
 
     axios
-      .post(`http://localhost:8000/api/students/${props.student.id}`, {
-        _method: "PATCH",
-        first_name: updatedData.first_name,
-        last_name: updatedData.last_name,
-        email: updatedData.email,
-        birth_date: updatedData.birth_date,
-        phone_number: updatedData.phone_number,
-        enrollment_date: updatedData.enrollment_date,
-        headshot: updatedData.headshot,
-      })
+      .post(
+        `http://localhost:8000/api/students/${props.student.id}`,
+        updatedStudent
+      )
       .then((response) => {
         console.log(response);
         setUpdatedData({
@@ -73,7 +81,7 @@ export default function StudentEditCard(props) {
           birth_date: "",
           phone_number: "",
           enrollment_date: "",
-          headshot: "",
+          imageUrl: "",
         });
         setOpen(false);
         props.regetData();
@@ -104,7 +112,7 @@ export default function StudentEditCard(props) {
             </Typography>
             <form>
               <Grid container spacing={3}>
-                <Grid xs={12} sm={12} item sx={{marginTop: 2}}>
+                <Grid xs={12} sm={12} item sx={{ marginTop: 2 }}>
                   <TextField
                     name="first_name"
                     type="text"
@@ -177,9 +185,9 @@ export default function StudentEditCard(props) {
                 <Grid xs={12} sm={12} item>
                   <input
                     name="headshot"
-                    value={updatedData.headshot}
+                    // value={updatedImageUrl}
                     type="file"
-                    onChange={handleFormChange}
+                    onChange={handleImageChange}
                     variant="outlined"
                     fullWidth
                     required

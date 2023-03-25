@@ -74,7 +74,7 @@ export default function AddStudentForm(props) {
   }, [selectedImage]);
 
   function handleSubmit(event) {
-    event.preventDefault(); // prevent the default form submission behavior
+    event.preventDefault();
 
     // retrieve the input values from the form fields
     const firstName = firstNameRef.current.value;
