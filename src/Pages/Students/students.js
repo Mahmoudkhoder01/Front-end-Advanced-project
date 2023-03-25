@@ -128,6 +128,7 @@ function Students() {
                         regetDataAgain={getStudentsByPagination}
                         sectionName = {selectedSection}
                         gradeName= {selectedGrade}
+                        selectedSectionId = {selectedSectionId}
                       />
                     </>
                   ))
