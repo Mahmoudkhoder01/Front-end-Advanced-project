@@ -33,7 +33,7 @@ export default function SectionDeleteCard(props) {
       .delete(`http://localhost:8000/api/section/${props.rowId}`)
       .then((response) => {
         setOpen(false);
-        props.regetData();
+        props.regetData(props.gradeId);
         toast.success("Section deleted successfully");
       })
       .catch((error) => {
