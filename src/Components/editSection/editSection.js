@@ -55,7 +55,7 @@ export default function SectionEditCard(props) {
           grade: "",
         });
         setOpen(false);
-        props.regetData();
+        props.regetData(props.gradeId);
         toast.success("Section edited successfully", {
           position: "top-right",
           autoClose: 5000,

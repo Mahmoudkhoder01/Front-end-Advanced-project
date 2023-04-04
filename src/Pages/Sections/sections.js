@@ -117,7 +117,7 @@ const FixedTables = () => {
           />
           {isLoading ? (
             <AddSectionForm
-              regetData={getAllSectionByGradeId}
+              regetData={fetchDataByPagination}
               gradeId={selectedGradeId}
             />
           ) : null}
@@ -166,11 +166,13 @@ const FixedTables = () => {
                               adminValue={row.name}
                               emailValue={row.email}
                               rowId={row.id}
-                              regetData={getAllSectionByGradeId}
+                              regetData={fetchDataByPagination}
+                              gradeId={selectedGradeId}
                             />
                             <SectionDeleteCard
                               rowId={row.id}
-                              regetData={getAllSectionByGradeId}
+                              regetData={fetchDataByPagination}
+                              gradeId={selectedGradeId}
                             />
                           </StyledTableCell>
                         </StyledTableRow>

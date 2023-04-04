@@ -46,11 +46,11 @@ export default function AddSectionForm(props) {
         .post(`http://localhost:8000/api/section`, sectionData)
         .then(async (response) => {
           setOpen(false);
-          props.regetData();
+          // props.regetData();
           console.log("Hello world");
           console.log(await props.regetData());
           toast.success("Section added succefully");
-        });
+        }).then(()=>{props.regetData(props.gradeId);});
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);
